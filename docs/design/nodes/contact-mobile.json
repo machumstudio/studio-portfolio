@@ -1,0 +1,2847 @@
+{
+ "n": "Contact Page - Mobile",
+ "w": 390,
+ "h": 3553,
+ "fill": "Dark/03",
+ "c": [
+  {
+   "n": "Navbar",
+   "t": "FRAME",
+   "w": 390,
+   "h": 108,
+   "layout": "row",
+   "gap": 50,
+   "pad": "0 16 0 16",
+   "align": "SPACE_BETWEEN/CENTER",
+   "sz": "FH",
+   "stroke": "mixedpx Dark/12",
+   "c": [
+    {
+     "n": "Container",
+     "t": "FRAME",
+     "w": 358,
+     "h": 108,
+     "layout": "row",
+     "gap": 273,
+     "pad": "40 0 0 16",
+     "align": "SPACE_BETWEEN/CENTER",
+     "sz": "FH",
+     "stroke": "mixedpx Dark/12",
+     "c": [
+      {
+       "n": "Logo",
+       "t": "FRAME",
+       "w": 89,
+       "h": 18,
+       "sz": "FF",
+       "c": [
+        {
+         "n": "Damien",
+         "t": "GROUP",
+         "w": 90,
+         "h": 18,
+         "sz": "FF",
+         "c": [
+          {
+           "n": "Vector",
+           "t": "VECTOR",
+           "w": 14,
+           "h": 18,
+           "sz": "FF",
+           "fill": "Absolute/White"
+          },
+          {
+           "n": "Vector",
+           "t": "VECTOR",
+           "w": 12,
+           "h": 18,
+           "sz": "FF",
+           "fill": "Absolute/White"
+          },
+          {
+           "n": "Vector",
+           "t": "VECTOR",
+           "w": 3,
+           "h": 18,
+           "sz": "FF",
+           "fill": "Absolute/White"
+          },
+          {
+           "n": "Vector",
+           "t": "VECTOR",
+           "w": 18,
+           "h": 18,
+           "sz": "FF",
+           "fill": "Absolute/White"
+          },
+          {
+           "n": "Vector",
+           "t": "VECTOR",
+           "w": 15,
+           "h": 18,
+           "sz": "FF",
+           "fill": "Absolute/White"
+          },
+          {
+           "n": "Vector",
+           "t": "VECTOR",
+           "w": 14,
+           "h": 18,
+           "sz": "FF",
+           "fill": "Absolute/White"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "n": "Button",
+       "t": "FRAME",
+       "w": 68,
+       "h": 68,
+       "layout": "row",
+       "gap": 10,
+       "pad": "20 20 20 20",
+       "align": "MIN/CENTER",
+       "sz": "HH",
+       "stroke": "mixedpx Dark/12",
+       "c": [
+        {
+         "n": "Icon",
+         "t": "FRAME",
+         "w": 28,
+         "h": 28,
+         "sz": "FF",
+         "c": [
+          {
+           "n": "Vector (Stroke)",
+           "t": "VECTOR",
+           "w": 21,
+           "h": 14,
+           "sz": "FF",
+           "fill": "Absolute/White"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "n": "Container",
+   "t": "FRAME",
+   "w": 357,
+   "h": 506,
+   "layout": "col",
+   "gap": 30,
+   "align": "MIN/MIN",
+   "sz": "FH",
+   "c": [
+    {
+     "n": "Sub Container",
+     "t": "FRAME",
+     "w": 357,
+     "h": 267,
+     "layout": "col",
+     "gap": -24,
+     "align": "CENTER/CENTER",
+     "sz": "FH",
+     "c": [
+      {
+       "n": "Image",
+       "t": "BOOLEAN_OPERATION",
+       "w": 357,
+       "h": 229,
+       "sz": "FF",
+       "fill": "IMAGE",
+       "r": 72
+      },
+      {
+       "n": "Buttons Container",
+       "t": "FRAME",
+       "w": 174,
+       "h": 62,
+       "layout": "row",
+       "gap": 6,
+       "pad": "6 6 6 6",
+       "align": "MAX/CENTER",
+       "sz": "HH",
+       "fill": "Dark/03",
+       "stroke": "1px Dark/12",
+       "r": 100,
+       "c": [
+        {
+         "n": "Button",
+         "t": "FRAME",
+         "w": 50,
+         "h": 50,
+         "layout": "row",
+         "gap": 10,
+         "pad": "16 16 16 16",
+         "align": "MIN/CENTER",
+         "sz": "HH",
+         "fill": "Dark/12",
+         "stroke": "1px GRADIENT_LINEAR",
+         "r": 100,
+         "c": [
+          {
+           "n": "Icon",
+           "t": "FRAME",
+           "w": 18,
+           "h": 18,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Vector",
+             "t": "VECTOR",
+             "w": 18,
+             "h": 18,
+             "sz": "FF",
+             "fill": "Absolute/White"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "n": "Button",
+         "t": "FRAME",
+         "w": 50,
+         "h": 50,
+         "layout": "row",
+         "gap": 10,
+         "pad": "16 16 16 16",
+         "align": "MIN/CENTER",
+         "sz": "HH",
+         "fill": "Dark/12",
+         "stroke": "1px GRADIENT_LINEAR",
+         "r": 100,
+         "c": [
+          {
+           "n": "Icon",
+           "t": "FRAME",
+           "w": 18,
+           "h": 18,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Vector",
+             "t": "VECTOR",
+             "w": 18,
+             "h": 15,
+             "sz": "FF",
+             "fill": "Absolute/White"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "n": "Button",
+         "t": "FRAME",
+         "w": 50,
+         "h": 50,
+         "layout": "row",
+         "gap": 10,
+         "pad": "16 16 16 16",
+         "align": "MIN/CENTER",
+         "sz": "HH",
+         "fill": "Dark/12",
+         "stroke": "1px GRADIENT_LINEAR",
+         "r": 100,
+         "c": [
+          {
+           "n": "Icon",
+           "t": "FRAME",
+           "w": 18,
+           "h": 18,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Vector",
+             "t": "VECTOR",
+             "w": 18,
+             "h": 18,
+             "sz": "FF",
+             "fill": "Absolute/White"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "n": "Sub Container",
+     "t": "FRAME",
+     "w": 357,
+     "h": 209,
+     "layout": "col",
+     "gap": 24,
+     "align": "MIN/MIN",
+     "sz": "FH",
+     "c": [
+      {
+       "n": "Text Container",
+       "t": "FRAME",
+       "w": 357,
+       "h": 59,
+       "layout": "col",
+       "gap": 2,
+       "align": "MIN/MIN",
+       "sz": "FH",
+       "c": [
+        {
+         "n": "Text",
+         "t": "TEXT",
+         "w": 357,
+         "sz": "FH",
+         "fill": "Grey/50",
+         "text": "Contact Me",
+         "fs": 14,
+         "font": "SemiBold",
+         "case": "UPPER"
+        },
+        {
+         "n": "Heading",
+         "t": "TEXT",
+         "w": 357,
+         "sz": "FH",
+         "fill": "Absolute/White",
+         "text": "Get in Touch with Me",
+         "fs": 28,
+         "font": "SemiBold",
+         "case": "UPPER"
+        }
+       ]
+      },
+      {
+       "n": "Paragraph",
+       "t": "TEXT",
+       "w": 357,
+       "sz": "FH",
+       "fill": "Grey/50",
+       "text": "Step into a world of timeless photography with Damien Braun. Explore our range of photography services, each crafted to ",
+       "fs": 14,
+       "font": "Regular",
+       "lh": "150%"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "n": "Sub Container",
+   "t": "FRAME",
+   "w": 358,
+   "h": 1083,
+   "layout": "col",
+   "gap": 0,
+   "align": "MIN/MIN",
+   "sz": "FH",
+   "c": [
+    {
+     "n": "Container",
+     "t": "FRAME",
+     "w": 358,
+     "h": 319,
+     "layout": "col",
+     "gap": 40,
+     "pad": "40 0 40 0",
+     "align": "CENTER/MIN",
+     "sz": "FH",
+     "stroke": "mixedpx Dark/12",
+     "c": [
+      {
+       "n": "Text Container",
+       "t": "FRAME",
+       "w": 358,
+       "h": 115,
+       "layout": "col",
+       "gap": 14,
+       "align": "MIN/MIN",
+       "sz": "FH",
+       "c": [
+        {
+         "n": "Heading",
+         "t": "TEXT",
+         "w": 358,
+         "sz": "FH",
+         "fill": "Grey/50",
+         "text": "Contact Information",
+         "fs": 28,
+         "font": "SemiBold",
+         "case": "UPPER"
+        },
+        {
+         "n": "Paragraph",
+         "t": "TEXT",
+         "w": 358,
+         "sz": "FH",
+         "fill": "Grey/50",
+         "text": "Feel free to reach out to us through various channels. We are available by phone, email, and social media for your conve",
+         "fs": 14,
+         "font": "Regular",
+         "lh": "150%"
+        }
+       ]
+      },
+      {
+       "n": "Buttons Container",
+       "t": "FRAME",
+       "w": 358,
+       "h": 84,
+       "layout": "col",
+       "gap": 20,
+       "align": "CENTER/MIN",
+       "sz": "FH",
+       "c": [
+        {
+         "n": "Button",
+         "t": "FRAME",
+         "w": 157,
+         "h": 32,
+         "layout": "row",
+         "gap": 6,
+         "pad": "4 0 4 0",
+         "align": "MIN/MIN",
+         "sz": "HH",
+         "stroke": "mixedpx Dark/20",
+         "c": [
+          {
+           "n": "Text",
+           "t": "TEXT",
+           "w": 127,
+           "sz": "HH",
+           "fill": "Grey/95",
+           "text": "+1-123-456-7890",
+           "fs": 16,
+           "font": "Medium",
+           "case": "UPPER"
+          },
+          {
+           "n": "Icon",
+           "t": "FRAME",
+           "w": 24,
+           "h": 24,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Vector 431 (Stroke)",
+             "t": "VECTOR",
+             "w": 17,
+             "h": 17,
+             "sz": "FF",
+             "fill": "#ffffff"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "n": "Button",
+         "t": "FRAME",
+         "w": 308,
+         "h": 32,
+         "layout": "row",
+         "gap": 6,
+         "pad": "4 0 4 0",
+         "align": "MIN/MIN",
+         "sz": "HH",
+         "stroke": "mixedpx Dark/20",
+         "c": [
+          {
+           "n": "Text",
+           "t": "TEXT",
+           "w": 278,
+           "sz": "HH",
+           "fill": "Grey/95",
+           "text": "info@damien braunphotography.com",
+           "fs": 16,
+           "font": "Medium"
+          },
+          {
+           "n": "Icon",
+           "t": "FRAME",
+           "w": 24,
+           "h": 24,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Vector 431 (Stroke)",
+             "t": "VECTOR",
+             "w": 17,
+             "h": 17,
+             "sz": "FF",
+             "fill": "#ffffff"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "n": "Container",
+     "t": "FRAME",
+     "w": 358,
+     "h": 764,
+     "layout": "col",
+     "gap": 40,
+     "pad": "40 0 0 0",
+     "align": "MIN/MIN",
+     "sz": "FH",
+     "stroke": "mixedpx Dark/12",
+     "c": [
+      {
+       "n": "Text Container",
+       "t": "FRAME",
+       "w": 358,
+       "h": 115,
+       "layout": "col",
+       "gap": 14,
+       "align": "MIN/MIN",
+       "sz": "FH",
+       "c": [
+        {
+         "n": "Heading",
+         "t": "TEXT",
+         "w": 358,
+         "sz": "FH",
+         "fill": "Grey/50",
+         "text": "Send Me a Message",
+         "fs": 28,
+         "font": "SemiBold",
+         "case": "UPPER"
+        },
+        {
+         "n": "Paragraph",
+         "t": "TEXT",
+         "w": 358,
+         "sz": "FH",
+         "fill": "Grey/50",
+         "text": "Have a specific inquiry or message for us? Please use the contact form below, and we'll get back to you promptly.",
+         "fs": 14,
+         "font": "Regular",
+         "lh": "150%"
+        }
+       ]
+      },
+      {
+       "n": "Contact Form",
+       "t": "FRAME",
+       "w": 358,
+       "h": 569,
+       "layout": "col",
+       "gap": 30,
+       "align": "CENTER/MIN",
+       "sz": "FH",
+       "c": [
+        {
+         "n": "Sub Container",
+         "t": "FRAME",
+         "w": 358,
+         "h": 73,
+         "layout": "col",
+         "gap": 6,
+         "align": "CENTER/MIN",
+         "sz": "FH",
+         "c": [
+          {
+           "n": "Heading",
+           "t": "TEXT",
+           "w": 358,
+           "sz": "FH",
+           "fill": "Grey/90",
+           "text": "First Name",
+           "fs": 16,
+           "font": "Regular"
+          },
+          {
+           "n": "Input Feild",
+           "t": "FRAME",
+           "w": 358,
+           "h": 45,
+           "layout": "row",
+           "gap": 10,
+           "pad": "10 0 10 0",
+           "align": "MIN/MIN",
+           "sz": "FH",
+           "stroke": "mixedpx Dark/20",
+           "c": [
+            {
+             "n": "Text",
+             "t": "TEXT",
+             "w": 358,
+             "sz": "FH",
+             "fill": "Grey/40",
+             "text": "First Name",
+             "fs": 18,
+             "font": "Regular",
+             "case": "UPPER"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "n": "Sub Container",
+         "t": "FRAME",
+         "w": 358,
+         "h": 73,
+         "layout": "col",
+         "gap": 6,
+         "align": "CENTER/MIN",
+         "sz": "FH",
+         "c": [
+          {
+           "n": "Heading",
+           "t": "TEXT",
+           "w": 358,
+           "sz": "FH",
+           "fill": "Grey/90",
+           "text": "Last Name",
+           "fs": 16,
+           "font": "Regular"
+          },
+          {
+           "n": "Input Feild",
+           "t": "FRAME",
+           "w": 358,
+           "h": 45,
+           "layout": "row",
+           "gap": 10,
+           "pad": "10 0 10 0",
+           "align": "MIN/MIN",
+           "sz": "FH",
+           "stroke": "mixedpx Dark/20",
+           "c": [
+            {
+             "n": "Text",
+             "t": "TEXT",
+             "w": 358,
+             "sz": "FH",
+             "fill": "Grey/40",
+             "text": "Last Name",
+             "fs": 18,
+             "font": "Regular",
+             "case": "UPPER"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "n": "Sub Container",
+         "t": "FRAME",
+         "w": 358,
+         "h": 73,
+         "layout": "col",
+         "gap": 6,
+         "align": "CENTER/MIN",
+         "sz": "FH",
+         "c": [
+          {
+           "n": "Heading",
+           "t": "TEXT",
+           "w": 358,
+           "sz": "FH",
+           "fill": "Grey/90",
+           "text": "Email",
+           "fs": 16,
+           "font": "Regular"
+          },
+          {
+           "n": "Input Feild",
+           "t": "FRAME",
+           "w": 358,
+           "h": 45,
+           "layout": "row",
+           "gap": 10,
+           "pad": "10 0 10 0",
+           "align": "MIN/MIN",
+           "sz": "FH",
+           "stroke": "mixedpx Dark/20",
+           "c": [
+            {
+             "n": "Text",
+             "t": "TEXT",
+             "w": 358,
+             "sz": "FH",
+             "fill": "Grey/40",
+             "text": "Email Address",
+             "fs": 18,
+             "font": "Regular",
+             "case": "UPPER"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "n": "Sub Container",
+         "t": "FRAME",
+         "w": 358,
+         "h": 73,
+         "layout": "col",
+         "gap": 6,
+         "align": "CENTER/MIN",
+         "sz": "FH",
+         "c": [
+          {
+           "n": "Heading",
+           "t": "TEXT",
+           "w": 358,
+           "sz": "FH",
+           "fill": "Grey/90",
+           "text": "Phone Number",
+           "fs": 16,
+           "font": "Regular"
+          },
+          {
+           "n": "Input Feild",
+           "t": "FRAME",
+           "w": 358,
+           "h": 45,
+           "layout": "row",
+           "gap": 10,
+           "pad": "10 0 10 0",
+           "align": "MIN/MIN",
+           "sz": "FH",
+           "stroke": "mixedpx Dark/20",
+           "c": [
+            {
+             "n": "Text",
+             "t": "TEXT",
+             "w": 358,
+             "sz": "FH",
+             "fill": "Grey/40",
+             "text": "Phone Number",
+             "fs": 18,
+             "font": "Regular",
+             "case": "UPPER"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "n": "Container",
+         "t": "FRAME",
+         "w": 358,
+         "h": 73,
+         "layout": "col",
+         "gap": 6,
+         "align": "CENTER/MIN",
+         "sz": "FH",
+         "c": [
+          {
+           "n": "Heading",
+           "t": "TEXT",
+           "w": 358,
+           "sz": "FH",
+           "fill": "Grey/90",
+           "text": "Your Message",
+           "fs": 16,
+           "font": "Regular"
+          },
+          {
+           "n": "Input Feild",
+           "t": "FRAME",
+           "w": 358,
+           "h": 45,
+           "layout": "row",
+           "gap": 10,
+           "pad": "10 0 10 0",
+           "align": "MIN/MIN",
+           "sz": "FH",
+           "stroke": "mixedpx Dark/20",
+           "c": [
+            {
+             "n": "Text",
+             "t": "TEXT",
+             "w": 358,
+             "sz": "FH",
+             "fill": "Grey/40",
+             "text": "Message",
+             "fs": 18,
+             "font": "Regular",
+             "case": "UPPER"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "n": "Container",
+         "t": "FRAME",
+         "w": 296,
+         "h": 54,
+         "layout": "row",
+         "gap": 6,
+         "pad": "0 0 6 0",
+         "align": "MIN/CENTER",
+         "sz": "HH",
+         "stroke": "mixedpx Dark/12",
+         "c": [
+          {
+           "n": "Text",
+           "t": "TEXT",
+           "w": 210,
+           "sz": "HH",
+           "fill": "Absolute/White",
+           "text": "Send Message",
+           "fs": 28,
+           "font": "SemiBold",
+           "case": "UPPER"
+          },
+          {
+           "n": "Button",
+           "t": "FRAME",
+           "w": 80,
+           "h": 48,
+           "layout": "row",
+           "gap": 10,
+           "pad": "14 30 14 30",
+           "align": "MIN/CENTER",
+           "sz": "HH",
+           "fill": "Purple/55",
+           "r": 100,
+           "c": [
+            {
+             "n": "Icon",
+             "t": "FRAME",
+             "w": 20,
+             "h": 20,
+             "sz": "FF",
+             "c": [
+              {
+               "n": "Vector 431 (Stroke)",
+               "t": "VECTOR",
+               "w": 14,
+               "h": 14,
+               "sz": "FF",
+               "fill": "#ffffff"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "n": "Container",
+   "t": "FRAME",
+   "w": 358,
+   "h": 591,
+   "layout": "col",
+   "gap": 40,
+   "align": "MIN/MIN",
+   "sz": "FH",
+   "c": [
+    {
+     "n": "Sub Container",
+     "t": "FRAME",
+     "w": 358,
+     "h": 219,
+     "layout": "col",
+     "gap": 20,
+     "pad": "0 0 20 0",
+     "align": "CENTER/MIN",
+     "sz": "FH",
+     "stroke": "mixedpx Dark/12",
+     "c": [
+      {
+       "n": "Text Container",
+       "t": "FRAME",
+       "w": 358,
+       "h": 57,
+       "layout": "col",
+       "gap": 0,
+       "align": "MIN/MIN",
+       "sz": "FH",
+       "c": [
+        {
+         "n": "Text",
+         "t": "TEXT",
+         "w": 358,
+         "sz": "FH",
+         "fill": "Grey/50",
+         "text": "Testimonials",
+         "fs": 14,
+         "font": "SemiBold",
+         "case": "UPPER"
+        },
+        {
+         "n": "Heading",
+         "t": "TEXT",
+         "w": 358,
+         "sz": "FH",
+         "fill": "Absolute/White",
+         "text": "What My Clients Say",
+         "fs": 28,
+         "font": "SemiBold",
+         "case": "UPPER"
+        }
+       ]
+      },
+      {
+       "n": "Button",
+       "t": "FRAME",
+       "w": 193,
+       "h": 49,
+       "layout": "row",
+       "gap": 10,
+       "pad": "14 20 14 20",
+       "align": "MIN/CENTER",
+       "sz": "HH",
+       "fill": "Dark/12",
+       "stroke": "1px GRADIENT_LINEAR",
+       "r": 8,
+       "c": [
+        {
+         "n": "Text",
+         "t": "TEXT",
+         "w": 153,
+         "sz": "HH",
+         "fill": "Absolute/White",
+         "text": "View All Testimonials ->",
+         "fs": 14,
+         "font": "Medium",
+         "lh": "150%"
+        }
+       ]
+      },
+      {
+       "n": "Text Container",
+       "t": "FRAME",
+       "w": 358,
+       "h": 53,
+       "layout": "col",
+       "gap": 2,
+       "align": "MIN/MIN",
+       "sz": "FH",
+       "c": [
+        {
+         "n": "Text",
+         "t": "TEXT",
+         "w": 358,
+         "sz": "FH",
+         "fill": "Grey/40",
+         "text": "Total Reviews",
+         "fs": 14,
+         "font": "Regular",
+         "lh": "150%"
+        },
+        {
+         "n": "Number",
+         "t": "TEXT",
+         "w": 358,
+         "sz": "FH",
+         "fill": "Grey/80",
+         "text": "323",
+         "fs": 20,
+         "font": "Medium",
+         "lh": "150%"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "n": "Sub Container",
+     "t": "FRAME",
+     "w": 358,
+     "h": 332,
+     "layout": "col",
+     "gap": 40,
+     "align": "CENTER/CENTER",
+     "sz": "FH",
+     "c": [
+      {
+       "n": "Card",
+       "t": "FRAME",
+       "w": 358,
+       "h": 228,
+       "layout": "col",
+       "gap": 20,
+       "pad": "24 24 24 24",
+       "align": "MIN/MIN",
+       "sz": "FH",
+       "fill": "Dark/06",
+       "stroke": "1px Dark/12",
+       "r": 10,
+       "c": [
+        {
+         "n": "Abstract Design",
+         "t": "FRAME",
+         "w": 760,
+         "h": 629,
+         "sz": "FF",
+         "c": [
+          {
+           "n": "Shape",
+           "t": "RECTANGLE",
+           "w": 248,
+           "h": 248,
+           "sz": "FF",
+           "fill": "GRADIENT_LINEAR",
+           "r": 22
+          },
+          {
+           "n": "Shape",
+           "t": "RECTANGLE",
+           "w": 326,
+           "h": 326,
+           "sz": "FF",
+           "fill": "GRADIENT_LINEAR",
+           "r": 22
+          }
+         ]
+        },
+        {
+         "n": "Container",
+         "t": "FRAME",
+         "w": 310,
+         "h": 48,
+         "layout": "row",
+         "gap": 10,
+         "align": "MIN/CENTER",
+         "sz": "FH",
+         "c": [
+          {
+           "n": "Text Container",
+           "t": "FRAME",
+           "w": 172,
+           "h": 45,
+           "layout": "col",
+           "gap": 0,
+           "align": "MIN/MIN",
+           "sz": "FH",
+           "c": [
+            {
+             "n": "Name",
+             "t": "TEXT",
+             "w": 172,
+             "sz": "FH",
+             "fill": "Grey/90",
+             "text": "Emily Johnson",
+             "fs": 16,
+             "font": "Medium",
+             "lh": "150%"
+            },
+            {
+             "n": "Text",
+             "t": "TEXT",
+             "w": 172,
+             "sz": "FH",
+             "fill": "Grey/40",
+             "text": "USA, California",
+             "fs": 14,
+             "font": "Regular",
+             "lh": "150%"
+            }
+           ]
+          },
+          {
+           "n": "Buttons Container",
+           "t": "FRAME",
+           "w": 128,
+           "h": 48,
+           "layout": "row",
+           "gap": 8,
+           "pad": "8 8 8 8",
+           "align": "MAX/CENTER",
+           "sz": "HH",
+           "fill": "Dark/03",
+           "stroke": "1px Dark/12",
+           "r": 100,
+           "c": [
+            {
+             "n": "Button",
+             "t": "FRAME",
+             "w": 32,
+             "h": 32,
+             "layout": "row",
+             "gap": 10,
+             "pad": "8 8 8 8",
+             "align": "MIN/CENTER",
+             "sz": "HH",
+             "fill": "Dark/12",
+             "stroke": "1px GRADIENT_LINEAR",
+             "r": 100,
+             "c": [
+              {
+               "n": "Icon",
+               "t": "FRAME",
+               "w": 16,
+               "h": 16,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 16,
+                 "h": 16,
+                 "sz": "FF",
+                 "fill": "Absolute/White"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "n": "Button",
+             "t": "FRAME",
+             "w": 32,
+             "h": 32,
+             "layout": "row",
+             "gap": 10,
+             "pad": "8 8 8 8",
+             "align": "MIN/CENTER",
+             "sz": "HH",
+             "fill": "Dark/12",
+             "stroke": "1px GRADIENT_LINEAR",
+             "r": 100,
+             "c": [
+              {
+               "n": "Icon",
+               "t": "FRAME",
+               "w": 16,
+               "h": 16,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 16,
+                 "h": 13,
+                 "sz": "FF",
+                 "fill": "Absolute/White"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "n": "Button",
+             "t": "FRAME",
+             "w": 32,
+             "h": 32,
+             "layout": "row",
+             "gap": 10,
+             "pad": "8 8 8 8",
+             "align": "MIN/CENTER",
+             "sz": "HH",
+             "fill": "Dark/12",
+             "stroke": "1px GRADIENT_LINEAR",
+             "r": 100,
+             "c": [
+              {
+               "n": "Icon",
+               "t": "FRAME",
+               "w": 16,
+               "h": 16,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 16,
+                 "h": 16,
+                 "sz": "FF",
+                 "fill": "Absolute/White"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "n": "Container",
+         "t": "FRAME",
+         "w": 116,
+         "h": 20,
+         "layout": "row",
+         "gap": 4,
+         "align": "MIN/MIN",
+         "sz": "HH",
+         "c": [
+          {
+           "n": "Shape",
+           "t": "STAR",
+           "w": 20,
+           "h": 20,
+           "sz": "FF",
+           "fill": "#ffce22",
+           "r": 1.5
+          },
+          {
+           "n": "Shape",
+           "t": "STAR",
+           "w": 20,
+           "h": 20,
+           "sz": "FF",
+           "fill": "#ffce22",
+           "r": 1.5
+          },
+          {
+           "n": "Shape",
+           "t": "STAR",
+           "w": 20,
+           "h": 20,
+           "sz": "FF",
+           "fill": "#ffce22",
+           "r": 1.5
+          },
+          {
+           "n": "Shape",
+           "t": "STAR",
+           "w": 20,
+           "h": 20,
+           "sz": "FF",
+           "fill": "#ffce22",
+           "r": 1.5
+          },
+          {
+           "n": "Shape",
+           "t": "STAR",
+           "w": 20,
+           "h": 20,
+           "sz": "FF",
+           "fill": "#ffce22",
+           "r": 1.5
+          }
+         ]
+        },
+        {
+         "n": "Paragraph",
+         "t": "TEXT",
+         "w": 310,
+         "sz": "FH",
+         "fill": "Grey/90",
+         "text": "Damien's photography doesn't just capture moments; it captures emotions. Hes work is simply mesmerizing.",
+         "fs": 16,
+         "font": "Medium",
+         "lh": "150%"
+        }
+       ]
+      },
+      {
+       "n": "Buttons Container",
+       "t": "FRAME",
+       "w": 124,
+       "h": 64,
+       "layout": "row",
+       "gap": 12,
+       "pad": "8 8 8 8",
+       "align": "MAX/CENTER",
+       "sz": "HH",
+       "fill": "Dark/03",
+       "stroke": "1px Dark/12",
+       "r": 100,
+       "c": [
+        {
+         "n": "Button",
+         "t": "FRAME",
+         "w": 48,
+         "h": 48,
+         "layout": "row",
+         "gap": 10,
+         "pad": "10 10 10 10",
+         "align": "MIN/CENTER",
+         "sz": "HH",
+         "fill": "Dark/12",
+         "stroke": "1px GRADIENT_LINEAR",
+         "r": 100,
+         "c": [
+          {
+           "n": "Icon",
+           "t": "FRAME",
+           "w": 28,
+           "h": 28,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Vector",
+             "t": "VECTOR",
+             "w": 7,
+             "h": 14,
+             "sz": "FF",
+             "stroke": "2px Absolute/White"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "n": "Button",
+         "t": "FRAME",
+         "w": 48,
+         "h": 48,
+         "layout": "row",
+         "gap": 10,
+         "pad": "10 10 10 10",
+         "align": "MIN/CENTER",
+         "sz": "HH",
+         "fill": "Dark/12",
+         "stroke": "1px GRADIENT_LINEAR",
+         "r": 100,
+         "c": [
+          {
+           "n": "Icon",
+           "t": "FRAME",
+           "w": 28,
+           "h": 28,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Vector",
+             "t": "VECTOR",
+             "w": 7,
+             "h": 14,
+             "sz": "FF",
+             "stroke": "2px Absolute/White"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "n": "Container",
+   "t": "FRAME",
+   "w": 390,
+   "h": 1015,
+   "layout": "col",
+   "gap": 0,
+   "align": "MIN/MIN",
+   "sz": "FH",
+   "c": [
+    {
+     "n": "Sub Container",
+     "t": "FRAME",
+     "w": 390,
+     "h": 145,
+     "layout": "col",
+     "gap": 20,
+     "align": "CENTER/MAX",
+     "sz": "FH",
+     "c": [
+      {
+       "n": "Container",
+       "t": "FRAME",
+       "w": 331,
+       "h": 63,
+       "layout": "col",
+       "gap": 10,
+       "pad": "0 16 0 0",
+       "align": "MIN/MIN",
+       "sz": "HH",
+       "c": [
+        {
+         "n": "Logo",
+         "t": "FRAME",
+         "w": 315,
+         "h": 63,
+         "sz": "FF",
+         "c": [
+          {
+           "n": "Damien",
+           "t": "GROUP",
+           "w": 316,
+           "h": 63,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Vector",
+             "t": "VECTOR",
+             "w": 50,
+             "h": 63,
+             "sz": "FF",
+             "fill": "Dark/15"
+            },
+            {
+             "n": "Vector",
+             "t": "VECTOR",
+             "w": 41,
+             "h": 63,
+             "sz": "FF",
+             "fill": "Dark/15"
+            },
+            {
+             "n": "Vector",
+             "t": "VECTOR",
+             "w": 9,
+             "h": 63,
+             "sz": "FF",
+             "fill": "Dark/15"
+            },
+            {
+             "n": "Vector",
+             "t": "VECTOR",
+             "w": 63,
+             "h": 63,
+             "sz": "FF",
+             "fill": "Dark/15"
+            },
+            {
+             "n": "Vector",
+             "t": "VECTOR",
+             "w": 54,
+             "h": 63,
+             "sz": "FF",
+             "fill": "Dark/15"
+            },
+            {
+             "n": "Vector",
+             "t": "VECTOR",
+             "w": 51,
+             "h": 63,
+             "sz": "FF",
+             "fill": "Dark/15"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "n": "Container",
+       "t": "FRAME",
+       "w": 390,
+       "h": 62,
+       "layout": "row",
+       "gap": 16,
+       "pad": "16 16 16 16",
+       "align": "CENTER/CENTER",
+       "sz": "FH",
+       "fill": "Dark/06",
+       "stroke": "mixedpx Dark/12",
+       "c": [
+        {
+         "n": "Sub Container",
+         "t": "FRAME",
+         "w": 181,
+         "h": 30,
+         "layout": "row",
+         "gap": 6,
+         "align": "MIN/CENTER",
+         "sz": "HH",
+         "c": [
+          {
+           "n": "Icon",
+           "t": "FRAME",
+           "w": 30,
+           "h": 30,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Clip path group",
+             "t": "GROUP",
+             "w": 30,
+             "h": 30,
+             "sz": "FF",
+             "c": [
+              {
+               "n": "clip0_105_300",
+               "t": "GROUP",
+               "w": 30,
+               "h": 30,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 30,
+                 "h": 30,
+                 "sz": "FF",
+                 "fill": "#000000"
+                }
+               ]
+              },
+              {
+               "n": "Group",
+               "t": "GROUP",
+               "w": 30,
+               "h": 30,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 30,
+                 "h": 30,
+                 "sz": "FF",
+                 "fill": "Purple/80"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "n": "Text",
+           "t": "TEXT",
+           "w": 145,
+           "sz": "HH",
+           "fill": "Purple/90",
+           "text": "Event Photography",
+           "fs": 14,
+           "font": "Regular",
+           "lh": "150%",
+           "case": "UPPER"
+          }
+         ]
+        },
+        {
+         "n": "Sub Container",
+         "t": "FRAME",
+         "w": 216,
+         "h": 30,
+         "layout": "row",
+         "gap": 6,
+         "align": "MIN/CENTER",
+         "sz": "HH",
+         "c": [
+          {
+           "n": "Icon",
+           "t": "FRAME",
+           "w": 30,
+           "h": 30,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Clip path group",
+             "t": "GROUP",
+             "w": 30,
+             "h": 30,
+             "sz": "FF",
+             "c": [
+              {
+               "n": "clip0_105_300",
+               "t": "GROUP",
+               "w": 30,
+               "h": 30,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 30,
+                 "h": 30,
+                 "sz": "FF",
+                 "fill": "#000000"
+                }
+               ]
+              },
+              {
+               "n": "Group",
+               "t": "GROUP",
+               "w": 30,
+               "h": 30,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 30,
+                 "h": 30,
+                 "sz": "FF",
+                 "fill": "Purple/80"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "n": "Text",
+           "t": "TEXT",
+           "w": 180,
+           "sz": "HH",
+           "fill": "Purple/90",
+           "text": "Comercial Photography",
+           "fs": 14,
+           "font": "Regular",
+           "lh": "150%",
+           "case": "UPPER"
+          }
+         ]
+        },
+        {
+         "n": "Sub Container",
+         "t": "FRAME",
+         "w": 204,
+         "h": 30,
+         "layout": "row",
+         "gap": 6,
+         "align": "MIN/CENTER",
+         "sz": "HH",
+         "c": [
+          {
+           "n": "Icon",
+           "t": "FRAME",
+           "w": 30,
+           "h": 30,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Clip path group",
+             "t": "GROUP",
+             "w": 30,
+             "h": 30,
+             "sz": "FF",
+             "c": [
+              {
+               "n": "clip0_105_300",
+               "t": "GROUP",
+               "w": 30,
+               "h": 30,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 30,
+                 "h": 30,
+                 "sz": "FF",
+                 "fill": "#000000"
+                }
+               ]
+              },
+              {
+               "n": "Group",
+               "t": "GROUP",
+               "w": 30,
+               "h": 30,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 30,
+                 "h": 30,
+                 "sz": "FF",
+                 "fill": "Purple/80"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "n": "Text",
+           "t": "TEXT",
+           "w": 168,
+           "sz": "HH",
+           "fill": "Purple/90",
+           "text": "Product Photography",
+           "fs": 14,
+           "font": "Regular",
+           "lh": "150%",
+           "case": "UPPER"
+          }
+         ]
+        },
+        {
+         "n": "Sub Container",
+         "t": "FRAME",
+         "w": 202,
+         "h": 30,
+         "layout": "row",
+         "gap": 6,
+         "align": "MIN/CENTER",
+         "sz": "HH",
+         "c": [
+          {
+           "n": "Icon",
+           "t": "FRAME",
+           "w": 30,
+           "h": 30,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Clip path group",
+             "t": "GROUP",
+             "w": 30,
+             "h": 30,
+             "sz": "FF",
+             "c": [
+              {
+               "n": "clip0_105_300",
+               "t": "GROUP",
+               "w": 30,
+               "h": 30,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 30,
+                 "h": 30,
+                 "sz": "FF",
+                 "fill": "#000000"
+                }
+               ]
+              },
+              {
+               "n": "Group",
+               "t": "GROUP",
+               "w": 30,
+               "h": 30,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 30,
+                 "h": 30,
+                 "sz": "FF",
+                 "fill": "Purple/80"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "n": "Text",
+           "t": "TEXT",
+           "w": 166,
+           "sz": "HH",
+           "fill": "Purple/90",
+           "text": "Wedding Photography",
+           "fs": 14,
+           "font": "Regular",
+           "lh": "150%",
+           "case": "UPPER"
+          }
+         ]
+        },
+        {
+         "n": "Sub Container",
+         "t": "FRAME",
+         "w": 218,
+         "h": 30,
+         "layout": "row",
+         "gap": 6,
+         "align": "MIN/CENTER",
+         "sz": "HH",
+         "c": [
+          {
+           "n": "Icon",
+           "t": "FRAME",
+           "w": 30,
+           "h": 30,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Clip path group",
+             "t": "GROUP",
+             "w": 30,
+             "h": 30,
+             "sz": "FF",
+             "c": [
+              {
+               "n": "clip0_105_300",
+               "t": "GROUP",
+               "w": 30,
+               "h": 30,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 30,
+                 "h": 30,
+                 "sz": "FF",
+                 "fill": "#000000"
+                }
+               ]
+              },
+              {
+               "n": "Group",
+               "t": "GROUP",
+               "w": 30,
+               "h": 30,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 30,
+                 "h": 30,
+                 "sz": "FF",
+                 "fill": "Purple/80"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "n": "Text",
+           "t": "TEXT",
+           "w": 182,
+           "sz": "HH",
+           "fill": "Purple/90",
+           "text": "Landscape Photography",
+           "fs": 14,
+           "font": "Regular",
+           "lh": "150%",
+           "case": "UPPER"
+          }
+         ]
+        },
+        {
+         "n": "Sub Container",
+         "t": "FRAME",
+         "w": 207,
+         "h": 30,
+         "layout": "row",
+         "gap": 6,
+         "align": "MIN/CENTER",
+         "sz": "HH",
+         "c": [
+          {
+           "n": "Icon",
+           "t": "FRAME",
+           "w": 30,
+           "h": 30,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Clip path group",
+             "t": "GROUP",
+             "w": 30,
+             "h": 30,
+             "sz": "FF",
+             "c": [
+              {
+               "n": "clip0_105_300",
+               "t": "GROUP",
+               "w": 30,
+               "h": 30,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 30,
+                 "h": 30,
+                 "sz": "FF",
+                 "fill": "#000000"
+                }
+               ]
+              },
+              {
+               "n": "Group",
+               "t": "GROUP",
+               "w": 30,
+               "h": 30,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 30,
+                 "h": 30,
+                 "sz": "FF",
+                 "fill": "Purple/80"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "n": "Text",
+           "t": "TEXT",
+           "w": 171,
+           "sz": "HH",
+           "fill": "Purple/90",
+           "text": "Branding Photography",
+           "fs": 14,
+           "font": "Regular",
+           "lh": "150%",
+           "case": "UPPER"
+          }
+         ]
+        },
+        {
+         "n": "Sub Container",
+         "t": "FRAME",
+         "w": 207,
+         "h": 30,
+         "layout": "row",
+         "gap": 6,
+         "align": "MIN/CENTER",
+         "sz": "HH",
+         "c": [
+          {
+           "n": "Icon",
+           "t": "FRAME",
+           "w": 30,
+           "h": 30,
+           "sz": "FF",
+           "c": [
+            {
+             "n": "Clip path group",
+             "t": "GROUP",
+             "w": 30,
+             "h": 30,
+             "sz": "FF",
+             "c": [
+              {
+               "n": "clip0_105_300",
+               "t": "GROUP",
+               "w": 30,
+               "h": 30,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 30,
+                 "h": 30,
+                 "sz": "FF",
+                 "fill": "#000000"
+                }
+               ]
+              },
+              {
+               "n": "Group",
+               "t": "GROUP",
+               "w": 30,
+               "h": 30,
+               "sz": "FF",
+               "c": [
+                {
+                 "n": "Vector",
+                 "t": "VECTOR",
+                 "w": 30,
+                 "h": 30,
+                 "sz": "FF",
+                 "fill": "Purple/80"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "n": "Text",
+           "t": "TEXT",
+           "w": 171,
+           "sz": "HH",
+           "fill": "Purple/90",
+           "text": "Portrait  Photography",
+           "fs": 14,
+           "font": "Regular",
+           "lh": "150%",
+           "case": "UPPER"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "n": "Footer",
+     "t": "FRAME",
+     "w": 390,
+     "h": 870,
+     "layout": "col",
+     "gap": 0,
+     "align": "MIN/CENTER",
+     "sz": "FH",
+     "c": [
+      {
+       "n": "Container",
+       "t": "FRAME",
+       "w": 390,
+       "h": 702,
+       "layout": "col",
+       "gap": 0,
+       "pad": "0 16 0 16",
+       "align": "MIN/MIN",
+       "sz": "FH",
+       "c": [
+        {
+         "n": "Sub Container",
+         "t": "FRAME",
+         "w": 358,
+         "h": 209,
+         "layout": "col",
+         "gap": 20,
+         "pad": "40 20 40 20",
+         "align": "MIN/MIN",
+         "sz": "FH",
+         "stroke": "mixedpx Dark/12",
+         "c": [
+          {
+           "n": "Text",
+           "t": "TEXT",
+           "w": 320,
+           "sz": "HH",
+           "fill": "Grey/50",
+           "text": "A more meaningful home for photography",
+           "fs": 14,
+           "font": "SemiBold",
+           "case": "UPPER"
+          },
+          {
+           "n": "Container",
+           "t": "FRAME",
+           "w": 318,
+           "h": 90,
+           "layout": "col",
+           "gap": 4,
+           "align": "MIN/MIN",
+           "sz": "FH",
+           "c": [
+            {
+             "n": "Sub Container",
+             "t": "FRAME",
+             "w": 163,
+             "h": 48,
+             "layout": "row",
+             "gap": 10,
+             "align": "MIN/CENTER",
+             "sz": "HH",
+             "c": [
+              {
+               "n": "Heading",
+               "t": "TEXT",
+               "w": 73,
+               "sz": "HH",
+               "fill": "Absolute/White",
+               "text": "Let’s",
+               "fs": 28,
+               "font": "SemiBold",
+               "case": "UPPER"
+              },
+              {
+               "n": "Button",
+               "t": "FRAME",
+               "w": 80,
+               "h": 48,
+               "layout": "row",
+               "gap": 10,
+               "pad": "14 30 14 30",
+               "align": "MIN/CENTER",
+               "sz": "HH",
+               "fill": "Purple/55",
+               "r": 100,
+               "c": [
+                {
+                 "n": "Icon",
+                 "t": "FRAME",
+                 "w": 20,
+                 "h": 20,
+                 "sz": "FF",
+                 "c": [
+                  {
+                   "n": "Vector 431 (Stroke)",
+                   "t": "VECTOR",
+                   "w": 14,
+                   "h": 14,
+                   "sz": "FF",
+                   "fill": "#ffffff"
+                  }
+                 ]
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "n": "Text",
+             "t": "TEXT",
+             "w": 318,
+             "sz": "FH",
+             "fill": "Absolute/White",
+             "text": "Work Together",
+             "fs": 28,
+             "font": "SemiBold",
+             "case": "UPPER"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "n": "Sub Container",
+         "t": "FRAME",
+         "w": 358,
+         "h": 493,
+         "layout": "col",
+         "gap": 40,
+         "pad": "40 20 40 20",
+         "align": "MIN/MIN",
+         "sz": "FH",
+         "stroke": "mixedpx Dark/12",
+         "c": [
+          {
+           "n": "Container",
+           "t": "FRAME",
+           "w": 318,
+           "h": 169,
+           "layout": "row",
+           "gap": 50,
+           "pad": "0 20 0 20",
+           "align": "MIN/MIN",
+           "sz": "FH",
+           "c": [
+            {
+             "n": "Links Container",
+             "t": "FRAME",
+             "w": 98,
+             "h": 134,
+             "layout": "col",
+             "gap": 14,
+             "align": "MIN/MIN",
+             "sz": "HH",
+             "c": [
+              {
+               "n": "Text",
+               "t": "TEXT",
+               "w": 41,
+               "sz": "HH",
+               "fill": "Grey/50",
+               "text": "Home",
+               "fs": 14,
+               "font": "SemiBold",
+               "case": "UPPER"
+              },
+              {
+               "n": "Container",
+               "t": "FRAME",
+               "w": 98,
+               "h": 101,
+               "layout": "col",
+               "gap": 4,
+               "align": "MIN/MIN",
+               "sz": "HH",
+               "c": [
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 69,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 69,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "About Me",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                },
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 72,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 72,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "My Works",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                },
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 98,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 98,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "Testimonials",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "n": "Links Container",
+             "t": "FRAME",
+             "w": 70,
+             "h": 169,
+             "layout": "col",
+             "gap": 14,
+             "align": "MIN/MIN",
+             "sz": "HH",
+             "c": [
+              {
+               "n": "Heading",
+               "t": "TEXT",
+               "w": 57,
+               "sz": "HH",
+               "fill": "Grey/50",
+               "text": "Clients",
+               "fs": 14,
+               "font": "SemiBold",
+               "case": "UPPER"
+              },
+              {
+               "n": "Container",
+               "t": "FRAME",
+               "w": 70,
+               "h": 136,
+               "layout": "col",
+               "gap": 4,
+               "align": "MIN/MIN",
+               "sz": "HH",
+               "c": [
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 70,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 70,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "Klovesto",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                },
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 65,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 65,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "Nukeway",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                },
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 66,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 66,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "Cloven’s",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                },
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 56,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 56,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "MenVol",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "n": "Container",
+           "t": "FRAME",
+           "w": 318,
+           "h": 204,
+           "layout": "row",
+           "gap": 50,
+           "pad": "0 20 0 20",
+           "align": "MIN/MIN",
+           "sz": "FH",
+           "c": [
+            {
+             "n": "Links Container",
+             "t": "FRAME",
+             "w": 99,
+             "h": 204,
+             "layout": "col",
+             "gap": 14,
+             "align": "MIN/MIN",
+             "sz": "HH",
+             "c": [
+              {
+               "n": "Heading",
+               "t": "TEXT",
+               "w": 76,
+               "sz": "HH",
+               "fill": "Grey/50",
+               "text": "Portfolio",
+               "fs": 14,
+               "font": "SemiBold",
+               "case": "UPPER"
+              },
+              {
+               "n": "Container",
+               "t": "FRAME",
+               "w": 99,
+               "h": 171,
+               "layout": "col",
+               "gap": 4,
+               "align": "MIN/MIN",
+               "sz": "HH",
+               "c": [
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 52,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 52,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "Events",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                },
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 67,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 67,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "Portrait",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                },
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 70,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 70,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "Branding",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                },
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 99,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 99,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "Commerciale",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                },
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 64,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 64,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "Wedding",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "n": "Links Container",
+             "t": "FRAME",
+             "w": 91,
+             "h": 134,
+             "layout": "col",
+             "gap": 14,
+             "align": "MIN/MIN",
+             "sz": "HH",
+             "c": [
+              {
+               "n": "Heading",
+               "t": "TEXT",
+               "w": 66,
+               "sz": "HH",
+               "fill": "Grey/50",
+               "text": "Services",
+               "fs": 14,
+               "font": "SemiBold",
+               "case": "UPPER"
+              },
+              {
+               "n": "Container",
+               "t": "FRAME",
+               "w": 91,
+               "h": 101,
+               "layout": "col",
+               "gap": 4,
+               "align": "MIN/MIN",
+               "sz": "HH",
+               "c": [
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 75,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 75,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "Portraits",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                },
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 52,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 52,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "Events",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                },
+                {
+                 "n": "Button",
+                 "t": "FRAME",
+                 "w": 91,
+                 "h": 31,
+                 "layout": "row",
+                 "gap": 10,
+                 "pad": "6 0 6 0",
+                 "align": "MIN/MIN",
+                 "sz": "HH",
+                 "stroke": "mixedpx Dark/20",
+                 "c": [
+                  {
+                   "n": "Text",
+                   "t": "TEXT",
+                   "w": 91,
+                   "sz": "HH",
+                   "fill": "Grey/95",
+                   "text": "Commercial ",
+                   "fs": 14,
+                   "font": "Medium",
+                   "case": "UPPER"
+                  }
+                 ]
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "n": "Container",
+       "t": "FRAME",
+       "w": 390,
+       "h": 168,
+       "layout": "col",
+       "gap": 16,
+       "pad": "20 16 20 16",
+       "align": "CENTER/CENTER",
+       "sz": "FH",
+       "stroke": "mixedpx Dark/12",
+       "c": [
+        {
+         "n": "Sub Container",
+         "t": "FRAME",
+         "w": 229,
+         "h": 21,
+         "layout": "row",
+         "gap": 8,
+         "align": "MIN/CENTER",
+         "sz": "HH",
+         "c": [
+          {
+           "n": "Text Button",
+           "t": "TEXT",
+           "w": 126,
+           "sz": "HH",
+           "fill": "Grey/50",
+           "text": "Terms & Conditions",
+           "fs": 14,
+           "font": "Regular",
+           "lh": "150%"
+          },
+          {
+           "n": "Line",
+           "t": "LINE",
+           "w": 21,
+           "h": 0,
+           "sz": "FF",
+           "stroke": "1px Dark/12"
+          },
+          {
+           "n": "Text Button",
+           "t": "TEXT",
+           "w": 87,
+           "sz": "HH",
+           "fill": "Grey/50",
+           "text": "Privacy Policy",
+           "fs": 14,
+           "font": "Regular",
+           "lh": "150%"
+          }
+         ]
+        },
+        {
+         "n": "Text",
+         "t": "TEXT",
+         "w": 350,
+         "sz": "HH",
+         "fill": "Grey/50",
+         "text": "© 2024 Damien Braun Photography. All rights reserved.",
+         "fs": 14,
+         "font": "Regular",
+         "lh": "150%"
+        },
+        {
+         "n": "Buttons Container",
+         "t": "FRAME",
+         "w": 146,
+         "h": 54,
+         "layout": "row",
+         "gap": 8,
+         "pad": "8 8 8 8",
+         "align": "MAX/CENTER",
+         "sz": "HH",
+         "fill": "Dark/03",
+         "stroke": "1px Dark/12",
+         "r": 100,
+         "c": [
+          {
+           "n": "Button",
+           "t": "FRAME",
+           "w": 38,
+           "h": 38,
+           "layout": "row",
+           "gap": 10,
+           "pad": "10 10 10 10",
+           "align": "MIN/CENTER",
+           "sz": "HH",
+           "fill": "Dark/12",
+           "stroke": "1px GRADIENT_LINEAR",
+           "r": 100,
+           "c": [
+            {
+             "n": "Icon",
+             "t": "FRAME",
+             "w": 18,
+             "h": 18,
+             "sz": "FF",
+             "c": [
+              {
+               "n": "Vector",
+               "t": "VECTOR",
+               "w": 18,
+               "h": 18,
+               "sz": "FF",
+               "fill": "Absolute/White"
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "n": "Button",
+           "t": "FRAME",
+           "w": 38,
+           "h": 38,
+           "layout": "row",
+           "gap": 10,
+           "pad": "10 10 10 10",
+           "align": "MIN/CENTER",
+           "sz": "HH",
+           "fill": "Dark/12",
+           "stroke": "1px GRADIENT_LINEAR",
+           "r": 100,
+           "c": [
+            {
+             "n": "Icon",
+             "t": "FRAME",
+             "w": 18,
+             "h": 18,
+             "sz": "FF",
+             "c": [
+              {
+               "n": "Vector",
+               "t": "VECTOR",
+               "w": 18,
+               "h": 15,
+               "sz": "FF",
+               "fill": "Absolute/White"
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "n": "Button",
+           "t": "FRAME",
+           "w": 38,
+           "h": 38,
+           "layout": "row",
+           "gap": 10,
+           "pad": "10 10 10 10",
+           "align": "MIN/CENTER",
+           "sz": "HH",
+           "fill": "Dark/12",
+           "stroke": "1px GRADIENT_LINEAR",
+           "r": 100,
+           "c": [
+            {
+             "n": "Icon",
+             "t": "FRAME",
+             "w": 18,
+             "h": 18,
+             "sz": "FF",
+             "c": [
+              {
+               "n": "Vector",
+               "t": "VECTOR",
+               "w": 18,
+               "h": 18,
+               "sz": "FF",
+               "fill": "Absolute/White"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

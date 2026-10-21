@@ -1,0 +1,8 @@
+docs/
+pnpm-lock.yaml
+.next/
+storybook-static/
+playwright-report/
+test-results/
+# 사람이 쓰는 문서(CLAUDE.md, CREDITS.md 등)는 포맷하지 않는다
+*.md

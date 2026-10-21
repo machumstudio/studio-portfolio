@@ -1,0 +1,13 @@
+{
+  "Metadata": {
+    "title": "Machum Studio",
+    "description": "Machum Studio portfolio"
+  },
+  "Tokens": {
+    "title": "Design tokens",
+    "intro": "Color and text styles from the Figma design. Temporary page for checking tokens before building sections.",
+    "colors": "Colors ({count})",
+    "typography": "Typography",
+    "sample": "Photography by Machum Studio"
+  }
+}

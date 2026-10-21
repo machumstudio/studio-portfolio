@@ -1,0 +1,13 @@
+{
+  "Metadata": {
+    "title": "Machum Studio",
+    "description": "Machum Studio 포트폴리오"
+  },
+  "Tokens": {
+    "title": "디자인 토큰",
+    "intro": "Figma 시안의 색 스타일과 글자 스타일입니다. 섹션 구현 전 확인용 임시 페이지입니다.",
+    "colors": "색 ({count}개)",
+    "typography": "글자",
+    "sample": "Machum Studio 사진 작업"
+  }
+}

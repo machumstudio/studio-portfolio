@@ -1,0 +1,64 @@
+/* Figma "Photographer Portfolio - Dark Theme (Produce UI)" 색 스타일 26개 + 그리드 + 타이포.
+   src/app/globals.css 에서 @import "tailwindcss"; 다음에 이 내용을 붙여 넣는다. */
+@theme {
+  /* 색: Figma 스타일 이름 그대로 (Absolute / Purple / Dark / Grey) */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-purple-55: #4a2ced; /* primary */
+  --color-purple-60: #5e43ef;
+  --color-purple-70: #8672f3;
+  --color-purple-80: #aea1f7;
+  --color-purple-90: #d6d0fb;
+  --color-purple-95: #eae7fd;
+  --color-purple-97: #f3f1fe;
+  --color-purple-99: #fbfaff;
+  --color-dark-03: #070708; /* 페이지 배경 계열 */
+  --color-dark-06: #0e0e10;
+  --color-dark-08: #131316;
+  --color-dark-12: #1c1c21;
+  --color-dark-15: #232329;
+  --color-dark-20: #2f2f37;
+  --color-dark-25: #3b3b45;
+  --color-dark-30: #474752;
+  --color-grey-40: #62646c; /* 텍스트 계열 */
+  --color-grey-50: #797c86;
+  --color-grey-70: #afb0b6;
+  --color-grey-80: #cacace;
+  --color-grey-90: #e4e4e6;
+  --color-grey-95: #f2f2f3;
+  --color-grey-97: #f7f7f8;
+  --color-grey-99: #fcfcfd;
+
+  /* 폰트: Manrope (Regular 400 / Medium 500 / SemiBold 600 / Bold 700), next/font 로 --font-manrope 주입 */
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  /* 브레이크포인트: 시안은 390(모바일) / 1440(노트북) / 1920(데스크톱). 태블릿 시안은 없음 */
+  --breakpoint-md: 768px;   /* 태블릿: 직접 정의 */
+  --breakpoint-lg: 1024px;  /* 노트북 레이아웃 시작 */
+  --breakpoint-3xl: 1920px; /* 데스크톱 수치 */
+}
+
+/* 페이지 좌우 여백 (Figma 레이아웃 그리드 기준)
+   모바일 6col gutter 20 offset 16 / 노트북 12col gutter 20 offset 80 / 데스크톱 12col gutter 20 offset 162 */
+@utility page-x {
+  padding-inline: 16px;
+  @media (width >= 1024px) { padding-inline: 80px; }
+  @media (width >= 1920px) { padding-inline: 162px; }
+}
+
+/* 타이포: 시안 실측(글자 크기별 최빈 굵기/행간). 모바일 → 노트북(1024~) → 데스크톱(1920~) */
+@utility text-display { font-size: 40px; font-weight: 600; line-height: 1.2;
+  @media (width >= 1024px) { font-size: 60px; } @media (width >= 1920px) { font-size: 80px; font-weight: 500; } }
+@utility text-price { font-size: 34px; font-weight: 500; line-height: 1.5;
+  @media (width >= 1024px) { font-size: 50px; } @media (width >= 1920px) { font-size: 80px; } }
+@utility text-h1 { font-size: 28px; font-weight: 600; line-height: 1.3;
+  @media (width >= 1024px) { font-size: 48px; } @media (width >= 1920px) { font-size: 58px; } }
+@utility text-h2 { font-size: 24px; font-weight: 600; line-height: 1.3;
+  @media (width >= 1024px) { font-size: 34px; } @media (width >= 1920px) { font-size: 44px; } }
+@utility text-h3 { font-size: 20px; font-weight: 500; line-height: 1.5;
+  @media (width >= 1024px) { font-size: 24px; } @media (width >= 1920px) { font-size: 28px; } }
+@utility text-lead { font-size: 16px; font-weight: 500; line-height: 1.5;
+  @media (width >= 1024px) { font-size: 18px; } @media (width >= 1920px) { font-size: 20px; } }
+@utility text-body { font-size: 14px; font-weight: 400; line-height: 1.5;
+  @media (width >= 1024px) { font-size: 16px; } @media (width >= 1920px) { font-size: 18px; } }
+/* 위 매핑은 출발점이다. 섹션 구현 때 docs/design/nodes/*.json 의 fs/font/lh 와 다르면 노드 값을 따르고 이 표를 고친다. */
