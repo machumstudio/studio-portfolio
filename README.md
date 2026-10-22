@@ -18,7 +18,7 @@ Next.js 16 (App Router) · TypeScript strict · Tailwind CSS v4 · next-intl (ko
 ```
 src/
   app/                    라우팅과 조립
-  components/ui/          디자인 시스템 (Button, Field, Tag ...)
+  components/ui/          디자인 시스템 (Button, Field, HighlightItem ...)
   components/sections/    마케팅 섹션 (데이터는 props로만)
   features/<context>/     기능 UI + 서버 진입점 (actions.ts, queries.ts, schema.ts)
   application/<context>/  유스케이스와 포트

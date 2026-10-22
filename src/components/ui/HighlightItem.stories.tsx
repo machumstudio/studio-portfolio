@@ -1,11 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { Tag } from "./Tag";
+import { HighlightItem } from "./HighlightItem";
 
 const meta = {
-  title: "UI/Tag",
-  component: Tag,
+  title: "UI/HighlightItem",
+  component: HighlightItem,
   args: { children: "Includes a 2-hour photoshoot session" },
-} satisfies Meta<typeof Tag>;
+  decorators: [
+    (Story) => (
+      <ul>
+        <Story />
+      </ul>
+    ),
+  ],
+} satisfies Meta<typeof HighlightItem>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -20,17 +27,22 @@ export const LongText: Story = {
 };
 
 export const List: Story = {
+  decorators: [
+    (Story) => (
+      <div className="max-w-5xl page-x py-10">
+        <Story />
+      </div>
+    ),
+  ],
   render: () => (
-    <ul className="flex max-w-5xl flex-col gap-2.5 page-x py-10">
+    <ul className="flex flex-col gap-2.5">
       {[
         "Ideal for capturing your unique personality",
         "Includes a 2-hour photoshoot session",
         "Additional images can be purchased separately",
         "Quick turnaround to relive the day's highlights",
       ].map((text) => (
-        <li key={text}>
-          <Tag>{text}</Tag>
-        </li>
+        <HighlightItem key={text}>{text}</HighlightItem>
       ))}
     </ul>
   ),
