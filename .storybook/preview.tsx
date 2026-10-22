@@ -4,6 +4,10 @@ import { manrope } from "../src/lib/fonts";
 import messages from "../messages/ko.json";
 import "../src/app/globals.css";
 
+// Tailwind 는 --font-sans 를 :root 에서 var(--font-manrope) 로 계산하므로,
+// 폰트 변수 클래스도 앱(layout.tsx 의 <html>)처럼 루트에 붙여야 한다
+document.documentElement.classList.add(manrope.variable);
+
 const preview: Preview = {
   parameters: {
     controls: {
@@ -42,7 +46,7 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <NextIntlClientProvider locale="ko" messages={messages}>
-        <div className={`${manrope.variable} bg-dark-03 font-sans text-white`}>
+        <div className="bg-dark-03 font-sans text-white">
           <Story />
         </div>
       </NextIntlClientProvider>
