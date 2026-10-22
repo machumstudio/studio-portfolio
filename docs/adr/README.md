@@ -6,5 +6,6 @@
 | [0003](0003-layered-architecture-ports-and-adapters.md) | 기능 영역만 레이어 분리 + 포트/어댑터 | 채택 |
 | [0004](0004-visual-regression-against-figma.md) | Figma 시안과 픽셀 비교로 재현도 측정 | 채택 |
 | [0005](0005-issue-pr-ci-workflow.md) | 칸 단위 이슈 → PR → CI, Rebase and merge | 채택 |
+| [0006](0006-site-route-group.md) | 공개 사이트 공통 틀(Header/Footer/CTA)은 `(site)` 라우트 그룹 레이아웃 | 채택 |
 
 형식: 배경 / 결정 / 대안 / 결과(트레이드오프). 바꾸면 새 ADR을 쓰고 이전 것을 "대체됨"으로 표시한다.
