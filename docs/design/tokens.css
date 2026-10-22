@@ -55,8 +55,9 @@
 }
 
 /* 타이포: 시안 실측(글자 크기별 최빈 굵기/행간). 모바일 → 노트북(1024~) → 데스크톱(1920~) */
-@utility text-display { font-size: 40px; font-weight: 600; line-height: 1.2;
-  @media (width >= 1024px) { font-size: 60px; } @media (width >= 1920px) { font-size: 80px; font-weight: 500; } }
+/* display: 히어로 이름. 노드는 세 크기 모두 SemiBold, 행간 auto (Text Container h 78/111/149 = 라벨 + 간격 + 이름 normal 행간) */
+@utility text-display { font-size: 40px; font-weight: 600; line-height: normal;
+  @media (width >= 1024px) { font-size: 60px; } @media (width >= 1920px) { font-size: 80px; } }
 @utility text-price { font-size: 34px; font-weight: 500; line-height: 1.5;
   @media (width >= 1024px) { font-size: 50px; } @media (width >= 1920px) { font-size: 80px; } }
 @utility text-h1 { font-size: 28px; font-weight: 600; line-height: normal;
