@@ -1,16 +1,12 @@
 import { use } from "react";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { SiteCta } from "@/components/sections/SiteCta";
 import { SiteFaq } from "@/components/sections/SiteFaq";
-import { SiteFooter } from "@/components/sections/SiteFooter";
-import { SiteHeader } from "@/components/sections/SiteHeader";
 import {
   SiteTestimonials,
   type Testimonial,
 } from "@/components/sections/SiteTestimonials";
-import { getCopyrightYear } from "@/lib/copyright-year";
-import { TokenSheet } from "./token-sheet";
+import { TokenSheet } from "../token-sheet";
 
 // FAQ 와 후기는 당분간 메시지로 만든 고정값을 섹션 props 로 넘긴다
 const faqIds = [
@@ -47,31 +43,27 @@ export default function Page({ params }: PageProps<"/[locale]">) {
   const testimonials = useTranslations("Testimonials.items");
 
   return (
-    <>
-      <SiteHeader />
-      <main className="flex flex-col gap-20 pb-20 lg:gap-37.5 lg:pb-37.5 3xl:gap-50 3xl:pb-50">
-        <TokenSheet />
-        <SiteFaq
-          items={faqIds.map((id) => ({
-            id,
-            question: faq(`${id}.question`),
-            answer: faq(`${id}.answer`),
-          }))}
-          defaultOpen={["specialty", "prints"]}
-        />
-        <SiteTestimonials
-          total={323}
-          items={testimonialIds.map((id) => ({
-            id,
-            name: testimonials(`${id}.name`),
-            location: testimonials(`${id}.location`),
-            rating: 5,
-            quote: testimonials(`${id}.quote`),
-            socials,
-          }))}
-        />
-      </main>
-      <SiteFooter cta={<SiteCta />} year={use(getCopyrightYear())} />
-    </>
+    <main className="flex flex-col gap-20 pb-20 lg:gap-37.5 lg:pb-37.5 3xl:gap-50 3xl:pb-50">
+      <TokenSheet />
+      <SiteFaq
+        items={faqIds.map((id) => ({
+          id,
+          question: faq(`${id}.question`),
+          answer: faq(`${id}.answer`),
+        }))}
+        defaultOpen={["specialty", "prints"]}
+      />
+      <SiteTestimonials
+        total={323}
+        items={testimonialIds.map((id) => ({
+          id,
+          name: testimonials(`${id}.name`),
+          location: testimonials(`${id}.location`),
+          rating: 5,
+          quote: testimonials(`${id}.quote`),
+          socials,
+        }))}
+      />
+    </main>
   );
 }
