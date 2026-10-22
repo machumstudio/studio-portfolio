@@ -1,5 +1,5 @@
 // docs/commit-convention.md 의 type/scope 목록. 문서를 바꾸면 여기도 바꾼다.
-export default {
+const config = {
   extends: ["@commitlint/config-conventional"],
   rules: {
     "type-enum": [
@@ -45,3 +45,5 @@ export default {
     "subject-case": [0],
   },
 };
+
+export default config;
