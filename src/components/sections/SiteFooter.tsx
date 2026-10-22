@@ -44,7 +44,7 @@ const columns = [
   },
 ] as const;
 
-const categories = [
+export const categories = [
   "event",
   "commercial",
   "product",
