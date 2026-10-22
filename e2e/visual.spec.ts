@@ -33,6 +33,8 @@ for (const { name, path } of pages) {
     const refPath = `docs/design/reference/${name}-${testInfo.project.name}.png`;
     test.skip(!existsSync(refPath), `${refPath} 없음`);
 
+    // 시안은 정지 화면이라 마키 같은 애니메이션을 처음 위치에 세운다
+    await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto(path);
     await page.evaluate(() => document.fonts.ready);
     const rects = await page.locator("[data-visual-mask]").evaluateAll((els) =>
