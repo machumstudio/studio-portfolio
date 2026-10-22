@@ -9,10 +9,10 @@ vi.mock("@/i18n/navigation", () => ({
   Link: ({ href, ...props }: { href: string }) => <a href={href} {...props} />,
 }));
 
-const renderCta = () =>
+const renderCta = (props?: { eyebrow?: boolean }) =>
   render(
     <NextIntlClientProvider locale="en" messages={messages}>
-      <SiteCta />
+      <SiteCta {...props} />
     </NextIntlClientProvider>,
   );
 
@@ -32,5 +32,15 @@ describe("SiteCta", () => {
     expect(link).toHaveFocus();
     expect(link).toHaveAttribute("href", "/contact");
     expect(link.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
+  });
+
+  it("eyebrow={false} 이면 라벨 없이 제목과 버튼만 그린다", () => {
+    renderCta({ eyebrow: false });
+    expect(
+      screen.queryByText(messages.Layout.cta.eyebrow),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Contact Me" }),
+    ).toBeInTheDocument();
   });
 });
