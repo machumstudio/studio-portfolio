@@ -39,6 +39,10 @@
 
   /* radius: Tailwind 기본(lg 8 / xl 12)에 없는 시안 값. 버튼(데스크톱), 하이라이트 칩(모바일/노트북) */
   --radius-10: 10px;
+
+  /* 카테고리 마키: 같은 목록을 두 번 이어 붙이고 절반(-50%)만큼 흘린 뒤 처음으로 돌아간다. 시안은 정지 화면이라 속도는 직접 정함 */
+  --animate-marquee: marquee 40s linear infinite;
+  @keyframes marquee { to { transform: translateX(-50%); } }
 }
 
 /* 페이지 좌우 여백 (Figma 레이아웃 그리드 기준)
@@ -72,7 +76,18 @@
   @media (width >= 1920px) { font-size: 22px; } }
 @utility text-label { font-size: 16px; font-weight: 400; line-height: normal;
   @media (width >= 1920px) { font-size: 18px; } }
+@utility text-caption { font-size: 14px; font-weight: 400; line-height: normal;
+  @media (width >= 1920px) { font-size: 18px; } }
+/* 로고와 푸터 워드마크: 시안은 글자를 벡터로 깎은 로고라 노드 h 가 대문자 높이다.
+   Manrope 대문자 높이 0.72em 으로 환산(18/22/27 → 25/31/37.5, 63/169/213 → 88/235/296)하고,
+   모바일 워드마크는 "MACHUM" 이 "DAMIEN" 보다 1.24배 넓어 390 화면에 들어가도록 80 으로 줄인다.
+   text-box 로 글자 상자를 대문자 높이에 맞춘다 (지원하지 않는 브라우저는 행간 1 그대로) */
+@utility text-logo { font-size: 25px; font-weight: 500; line-height: 1; text-box: trim-both cap alphabetic;
+  @media (width >= 1024px) { font-size: 31px; } @media (width >= 1920px) { font-size: 37.5px; } }
+@utility text-wordmark { font-size: 80px; font-weight: 500; line-height: 1; text-box: trim-both cap alphabetic;
+  @media (width >= 1024px) { font-size: 235px; } @media (width >= 1920px) { font-size: 296px; } }
 /* eyebrow: 섹션 제목 위 라벨 (SemiBold). button: 버튼/링크 글자 (노트북도 14). field: 입력값/placeholder. label: 폼 라벨.
+   caption: 푸터 링크/열 제목 (노트북도 14, 굵기는 사용처에서 font-medium/semibold).
    line-height: normal 은 Figma 의 auto 와 같다 (폰트 메트릭 기준) */
 
 /* 표면: Figma 의 "Dark/12 채우기 + 1px GRADIENT_LINEAR 테두리". 시안 픽셀 실측: 왼쪽 위 Dark/20 → 오른쪽 아래 Dark/03 */
