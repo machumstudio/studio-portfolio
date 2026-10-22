@@ -14,7 +14,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "check:registry": "node scripts/check-registry.mjs"
   },
   "dependencies": {
     "next": "16.4.2",
@@ -64,6 +65,7 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "*.{json,css,yml,yaml}": "prettier --write"
+    "*.{json,css,yml,yaml}": "prettier --write",
+    "{pnpm-lock.yaml,.npmrc}": "node scripts/check-registry.mjs"
   }
 }
