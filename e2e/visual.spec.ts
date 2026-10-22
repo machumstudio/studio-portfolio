@@ -15,6 +15,18 @@ const sections: Record<
   string,
   { selector: string; ref: Record<string, Record<string, Band>> }
 > = {
+  hero: {
+    selector: 'section[aria-labelledby="hero-title"]',
+    ref: {
+      home: { mobile: [108, 553], laptop: [89, 742], desktop: [119, 920] },
+    },
+  },
+  about: {
+    selector: 'section[aria-labelledby="about-title"]',
+    ref: {
+      home: { mobile: [741, 1268], laptop: [981, 775], desktop: [1239, 950] },
+    },
+  },
   faq: {
     selector: 'section[aria-labelledby="faq-title"]',
     ref: {
