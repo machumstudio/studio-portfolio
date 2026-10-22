@@ -12,6 +12,26 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    // 시안 프레임 크기. 스토리에서 globals: { viewport: { value: "mobile" } } 로 고른다
+    viewport: {
+      options: {
+        mobile: {
+          name: "Mobile 390",
+          styles: { width: "390px", height: "844px" },
+          type: "mobile",
+        },
+        laptop: {
+          name: "Laptop 1440",
+          styles: { width: "1440px", height: "900px" },
+          type: "desktop",
+        },
+        desktop: {
+          name: "Desktop 1920",
+          styles: { width: "1920px", height: "1080px" },
+          type: "desktop",
+        },
+      },
+    },
     a11y: {
       // 'todo' - show a11y violations in the test UI only
       // 'error' - fail CI on a11y violations
