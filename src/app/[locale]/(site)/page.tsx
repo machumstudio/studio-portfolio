@@ -6,7 +6,6 @@ import {
   SiteTestimonials,
   type Testimonial,
 } from "@/components/sections/SiteTestimonials";
-import { TokenSheet } from "../token-sheet";
 
 // FAQ 와 후기는 당분간 메시지로 만든 고정값을 섹션 props 로 넘긴다
 const faqIds = [
@@ -35,7 +34,6 @@ const socials: Testimonial["socials"] = [
 ];
 
 // 시안 섹션 간격: 80 / 150 / 200 (노드 h 합과 프레임 높이 차이를 간격 수로 나눈 값, 시안 픽셀로 확인)
-// 본문 앞부분은 아직 임시 토큰 확인 페이지. 06~07칸에서 Hero, About, Services, Portfolio 로 교체한다.
 export default function Page({ params }: PageProps<"/[locale]">) {
   const { locale } = use(params);
   setRequestLocale(locale);
@@ -44,7 +42,6 @@ export default function Page({ params }: PageProps<"/[locale]">) {
 
   return (
     <main className="flex flex-col gap-20 pb-20 lg:gap-37.5 lg:pb-37.5 3xl:gap-50 3xl:pb-50">
-      <TokenSheet />
       <SiteFaq
         items={faqIds.map((id) => ({
           id,
