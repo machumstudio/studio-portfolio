@@ -104,6 +104,16 @@ const eslintConfig = defineConfig([
           checkAllOrigins: true,
         },
       ],
+      // Tailwind 임의값 금지 (ADR 0001). bg-[#...], text-[17px], w-[calc(...)] 등.
+      // data-[state=open]: 같은 임의 variant(뒤에 ':' 가 붙는 것)는 허용
+      "no-restricted-syntax": [
+        "error",
+        ...["Literal", "TemplateElement"].map((node) => ({
+          selector: `${node}[${node === "Literal" ? "value" : "value.raw"}=/(^|[\\s:'"])!?-?[a-z][\\w-]*-\\[[^\\]]+\\](?!:)/]`,
+          message:
+            "Tailwind 임의값 금지. docs/design/tokens.css 의 토큰을 쓴다 (ADR 0001)",
+        })),
+      ],
     },
   },
   {
