@@ -1,4 +1,4 @@
-# install → commitlint(PR 커밋) → lint → typecheck → test → build (ADR 0005)
+# install → 레지스트리 검사 → commitlint(PR 커밋) → lint → typecheck → test → build (ADR 0005)
 # Playwright 시각 비교는 시안 PNG 가 레포에 없어서 로컬에서만 돌린다 (ADR 0004)
 name: CI
 
@@ -29,6 +29,9 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+
+      - name: 레지스트리 허용 목록 검사
+        run: pnpm check:registry
 
       - name: commitlint (PR 커밋)
         if: github.event_name == 'pull_request'
