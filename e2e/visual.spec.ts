@@ -8,6 +8,27 @@ import { PNG } from "pngjs";
 // 사진 영역은 data-visual-mask 를 붙이면 양쪽 모두 같은 색으로 덮고 비교한다.
 const pages = [{ name: "home", path: "/" }];
 
+// 섹션별 차이율: 구현 페이지의 섹션 상자와 시안의 같은 섹션 띠(y, h)를 잘라 비교한다.
+// 시안 y 는 노드 JSON 의 섹션 h 합 + 섹션 간격(80/150/200), 헤더와 히어로 사이는 간격 없음.
+type Band = readonly [y: number, h: number];
+const sections: Record<
+  string,
+  { selector: string; ref: Record<string, Record<string, Band>> }
+> = {
+  faq: {
+    selector: 'section[aria-labelledby="faq-title"]',
+    ref: {
+      home: { mobile: [4218, 632], laptop: [3644, 663], desktop: [4488, 791] },
+    },
+  },
+  testimonials: {
+    selector: "#testimonials",
+    ref: {
+      home: { mobile: [4930, 591], laptop: [4457, 529], desktop: [5479, 657] },
+    },
+  },
+};
+
 type Rect = { x: number; y: number; width: number; height: number };
 
 function fillRects(png: PNG, rects: Rect[]) {
@@ -26,6 +47,38 @@ function fillRects(png: PNG, rects: Rect[]) {
       }
     }
   }
+}
+
+// 가로 전체, 세로 [y, y + h) 띠를 잘라 낸다
+function crop(src: PNG, y: number, h: number) {
+  const height = Math.min(h, src.height - y);
+  const out = new PNG({ width: src.width, height });
+  PNG.bitblt(src, out, 0, y, src.width, height, 0, 0);
+  return out;
+}
+
+// 겹치는 영역은 픽셀 비교, 높이/너비가 다른 부분은 전부 차이로 센다
+function compare(actual: PNG, expected: PNG) {
+  const width = Math.min(actual.width, expected.width);
+  const height = Math.min(actual.height, expected.height);
+  const fit = (src: PNG) => {
+    const out = new PNG({ width, height });
+    PNG.bitblt(src, out, 0, 0, width, height, 0, 0);
+    return out;
+  };
+  const diff = new PNG({ width, height });
+  const diffPixels = pixelmatch(
+    fit(actual).data,
+    fit(expected).data,
+    diff.data,
+    width,
+    height,
+    { threshold: 0.1 },
+  );
+  const total =
+    Math.max(actual.width, expected.width) *
+    Math.max(actual.height, expected.height);
+  return { ratio: (diffPixels + (total - width * height)) / total, diff };
 }
 
 for (const { name, path } of pages) {
@@ -54,38 +107,29 @@ for (const { name, path } of pages) {
     fillRects(actual, rects);
     fillRects(expected, rects);
 
-    // 겹치는 영역은 픽셀 비교, 높이/너비가 다른 부분은 전부 차이로 센다
-    const width = Math.min(actual.width, expected.width);
-    const height = Math.min(actual.height, expected.height);
-    const crop = (src: PNG) => {
-      const out = new PNG({ width, height });
-      PNG.bitblt(src, out, 0, 0, width, height, 0, 0);
-      return out;
-    };
-    const diff = new PNG({ width, height });
-    const diffPixels = pixelmatch(
-      crop(actual).data,
-      crop(expected).data,
-      diff.data,
-      width,
-      height,
-      {
-        threshold: 0.1,
-      },
-    );
-    const total =
-      Math.max(actual.width, expected.width) *
-      Math.max(actual.height, expected.height);
-    const ratio = (diffPixels + (total - width * height)) / total;
-
     const outDir = testInfo.outputPath();
     mkdirSync(outDir, { recursive: true });
-    writeFileSync(`${outDir}/diff.png`, PNG.sync.write(diff));
+    const report = (label: string, a: PNG, b: PNG) => {
+      const { ratio, diff } = compare(a, b);
+      writeFileSync(`${outDir}/${label}-diff.png`, PNG.sync.write(diff));
+      const summary = `${label}-${testInfo.project.name}: ${(ratio * 100).toFixed(2)}% (${a.width}x${a.height} vs ${b.width}x${b.height})`;
+      testInfo.annotations.push({ type: "diff", description: summary });
+      console.log(`[visual] ${summary}`);
+    };
     writeFileSync(`${outDir}/actual.png`, PNG.sync.write(actual));
+    report(name, actual, expected);
 
-    const summary = `${name}-${testInfo.project.name}: ${(ratio * 100).toFixed(2)}% (${actual.width}x${actual.height} vs ${expected.width}x${expected.height})`;
-    testInfo.annotations.push({ type: "diff", description: summary });
-    console.log(`[visual] ${summary}`);
+    for (const [section, { selector, ref }] of Object.entries(sections)) {
+      const band = ref[name]?.[testInfo.project.name];
+      const box = await page.locator(selector).boundingBox();
+      if (!band || !box) continue;
+      const y = Math.round(box.y + (await page.evaluate(() => scrollY)));
+      report(
+        `${name}-${section}`,
+        crop(actual, y, Math.round(box.height)),
+        crop(expected, band[0], band[1]),
+      );
+    }
     // 합격 기준(차이율 상한)은 섹션 구현이 시작되면 정한다. 지금은 측정만 한다.
   });
 }
