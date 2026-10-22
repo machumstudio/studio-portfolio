@@ -7,6 +7,10 @@ on:
   push:
     branches: [main]
 
+# 체크아웃과 읽기만 한다. 기본 토큰 권한을 최소로 줄인다
+permissions:
+  contents: read
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
