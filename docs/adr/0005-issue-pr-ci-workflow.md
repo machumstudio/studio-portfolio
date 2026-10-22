@@ -5,6 +5,7 @@
 - 작업표의 칸마다 이슈 1개, 브랜치 `slot/NN-name`, PR 1개
 - 커밋은 논리 단위로 쪼개고(docs/commit-convention.md) **Rebase and merge**로 main에 그대로 남긴다. 리뷰 수정은 fixup + autosquash로 정리
 - CI(GitHub Actions): install → commitlint(PR 커밋) → lint(의존 규칙 포함) → typecheck → test → build
+- main 보호 규칙: PR 필수(승인 0), CI check 통과 필수, 최신 main 기준 필수, 선형 히스토리, 관리자 포함 우회 금지, force push/삭제 금지. 그래서 PR 은 올리기 직전 main 에 rebase 한다
 
 - 이슈/PR은 Claude Code가 `scripts/gh.sh`(machumstudio 토큰 전용, 계정 확인 후 실행)로 만든다. 머지는 사람이 한다
 
