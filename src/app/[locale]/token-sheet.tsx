@@ -53,7 +53,7 @@ export function TokenSheet() {
   const t = useTranslations("Tokens");
 
   return (
-    <main className="flex flex-col gap-16 page-x py-16">
+    <div className="flex flex-col gap-16 page-x py-16">
       <header className="flex flex-col gap-4">
         <h1 className="text-h1">{t("title")}</h1>
         <p className="text-body text-grey-70">{t("intro")}</p>
@@ -92,6 +92,6 @@ export function TokenSheet() {
           ))}
         </ul>
       </section>
-    </main>
+    </div>
   );
 }
