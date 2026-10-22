@@ -1,11 +1,17 @@
 import { use } from "react";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import { HomeAbout } from "@/components/sections/HomeAbout";
+import { HomeHero, heroPhotoCount } from "@/components/sections/HomeHero";
 import { SiteFaq } from "@/components/sections/SiteFaq";
 import {
   SiteTestimonials,
   type Testimonial,
 } from "@/components/sections/SiteTestimonials";
+
+// 사진은 16칸에서 Unsplash 로 교체할 때까지 임시 이미지. 꾸밈용 자리라 alt 는 비운다
+const placeholder = { src: "/images/placeholder.svg", alt: "" };
+const heroPhotos = Array.from({ length: heroPhotoCount }, () => placeholder);
 
 // FAQ 와 후기는 당분간 메시지로 만든 고정값을 섹션 props 로 넘긴다
 const faqIds = [
@@ -42,6 +48,13 @@ export default function Page({ params }: PageProps<"/[locale]">) {
 
   return (
     <main className="flex flex-col gap-20 pb-20 lg:gap-37.5 lg:pb-37.5 3xl:gap-50 3xl:pb-50">
+      <HomeHero photos={heroPhotos} />
+      {/* 연락처는 가짜 예시값 (가상 스튜디오) */}
+      <HomeAbout
+        photo={placeholder}
+        email="hello@example.com"
+        phone="+00 000000000"
+      />
       <SiteFaq
         items={faqIds.map((id) => ({
           id,
