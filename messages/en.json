@@ -9,5 +9,79 @@
     "colors": "Colors ({count})",
     "typography": "Typography",
     "sample": "Photography by Machum Studio"
+  },
+  "Layout": {
+    "brand": "Machum Studio",
+    "wordmark": "Machum",
+    "nav": {
+      "label": "Main",
+      "home": "Home",
+      "about": "About Me",
+      "portfolio": "Portfolio",
+      "services": "Services",
+      "contact": "Contact Me"
+    },
+    "menu": {
+      "open": "Open menu",
+      "close": "Close menu"
+    },
+    "categories": {
+      "label": "Photography categories",
+      "event": "Event Photography",
+      "commercial": "Commercial Photography",
+      "product": "Product Photography",
+      "wedding": "Wedding Photography",
+      "landscape": "Landscape Photography",
+      "branding": "Branding Photography",
+      "portrait": "Portrait Photography"
+    },
+    "cta": {
+      "eyebrow": "A more meaningful home for photography",
+      "title": "Let’s Work Together",
+      "lead": "Let’s",
+      "rest": "Work Together",
+      "action": "Contact Me"
+    },
+    "footer": {
+      "label": "Site links",
+      "home": {
+        "title": "Home",
+        "about": "About Me",
+        "works": "My Works",
+        "testimonials": "Testimonials"
+      },
+      "clients": {
+        "title": "Clients",
+        "klovesto": "Klovesto",
+        "nukeway": "Nukeway",
+        "clovens": "Cloven’s",
+        "menvol": "MenVol"
+      },
+      "portfolio": {
+        "title": "Portfolio",
+        "events": "Events",
+        "portrait": "Portrait",
+        "branding": "Branding",
+        "commercial": "Commercial",
+        "wedding": "Wedding"
+      },
+      "services": {
+        "title": "Services",
+        "portraits": "Portraits",
+        "events": "Events",
+        "commercial": "Commercial"
+      },
+      "terms": "Terms & Conditions",
+      "privacy": "Privacy Policy",
+      "copyright": "© {year} Machum Studio. All rights reserved.",
+      "credit": "Design by Produce UI (CC BY 4.0)",
+      "social": {
+        "label": "Social media",
+        "instagram": "Instagram",
+        "facebook": "Facebook",
+        "x": "X"
+      },
+      "newTab": "opens in a new tab"
+    }
   }
 }
