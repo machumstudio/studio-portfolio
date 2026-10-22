@@ -28,7 +28,7 @@ Next.js (App Router) · TypeScript strict · Tailwind CSS v4 · TanStack Query(�
 5. 섹션 하나 = 컴포넌트 하나 (`src/components/sections/<Page><Section>.tsx`) + Storybook 스토리. 공통 UI는 `src/components/ui/`. 섹션은 데이터를 직접 가져오지 않고 props로 받는다
 6. 이미지는 `next/image`. 시안 사진은 쓰지 않고 Unsplash 사진으로 교체, 출처는 `CREDITS.md`
 7. 이름/문구는 가상 스튜디오 "Machum Studio"로 바꾼다. 시안의 "Damien Braun" 사용 금지
-8. 아이콘은 `lucide-react`로 시안과 가장 가까운 것을 쓴다
+8. 아이콘은 `lucide-react`로 시안과 가장 가까운 것을 쓴다. 예외: 브랜드 아이콘(Instagram, Facebook, X 등)은 lucide 에 없어 `simple-icons`(CC0)의 path 를 쓴다
 9. 접근성: 시맨틱 태그, 키보드로 모든 인터랙션 가능, 아코디언/메뉴/라이트박스는 ARIA 패턴, 명도 대비 확인
 10. 텍스트는 처음부터 next-intl 메시지 키로 (`messages/ko.json`, `messages/en.json`)
 11. 시안에 없는 화면(태블릿, 작업 상세, 관리자, 404)은 기존 카드/버튼/색 토큰만 조합해서 만든다
