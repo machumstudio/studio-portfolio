@@ -38,6 +38,8 @@ export const typeTokens = [
   { name: "h2", className: "text-h2" },
   { name: "h3", className: "text-h3" },
   { name: "h4", className: "text-h4" },
+  { name: "title", className: "text-title" },
+  { name: "tagline", className: "text-tagline" },
   { name: "lead", className: "text-lead" },
   { name: "body", className: "text-body" },
   { name: "eyebrow", className: "text-eyebrow" },
