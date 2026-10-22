@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { render, screen } from "@testing-library/react";
 import { NextIntlClientProvider } from "next-intl";
 import { describe, expect, it } from "vitest";
-import messages from "../../../messages/ko.json";
+import messages from "../../../../../messages/ko.json";
 import { colorTokens, TokenSheet, typeTokens } from "./token-sheet";
 
 const tokensCss = readFileSync("docs/design/tokens.css", "utf8");
