@@ -83,5 +83,86 @@
       },
       "newTab": "opens in a new tab"
     }
+  },
+  "Faq": {
+    "eyebrow": "FAQ’s",
+    "title": "Frequently Asked Questions",
+    "items": {
+      "specialty": {
+        "question": "What type of photography do you specialize in?",
+        "answer": "We specialize in portrait, event, commercial and wedding photography, capturing moments that tell unique stories."
+      },
+      "booking": {
+        "question": "How can I book a photography session with you?",
+        "answer": "Leave your preferred date and type of shoot on the Contact page, and we will send you a schedule and quote within a day."
+      },
+      "equipment": {
+        "question": "What equipment do you use for your photography?",
+        "answer": "We shoot with two full-frame mirrorless bodies and a mix of prime and zoom lenses, and bring portable lighting for indoor sessions."
+      },
+      "location": {
+        "question": "Can I request a specific location for a photoshoot?",
+        "answer": "Yes. If you have a place in mind we scout it before the shoot; if not, we suggest locations that fit the mood."
+      },
+      "editing": {
+        "question": "What is your editing process like?",
+        "answer": "We pick the best shots, balance color and exposure, and retouch skin and backgrounds naturally for portraits."
+      },
+      "files": {
+        "question": "Are digital files included in your photography packages?",
+        "answer": "Every package includes high-resolution edited files, and original files are available on request."
+      },
+      "prints": {
+        "question": "Do you offer prints of your photographs?",
+        "answer": "Yes, prints are available for purchase. See the prints section on the Services page for sizes and pricing."
+      },
+      "delivery": {
+        "question": "How long does it take to receive the edited photos after a session?",
+        "answer": "Usually within two weeks through an online gallery. Weddings take three to four weeks."
+      }
+    }
+  },
+  "Testimonials": {
+    "eyebrow": "Testimonials",
+    "title": "What Our Clients Say",
+    "total": "Total Reviews",
+    "label": "Client testimonials",
+    "previous": "Previous testimonial",
+    "next": "Next testimonial",
+    "slide": "{index} of {total}",
+    "rating": "{rating} out of 5 stars",
+    "social": "{name} on {network}",
+    "items": {
+      "emily": {
+        "name": "Emily Johnson",
+        "location": "USA, California",
+        "quote": "Machum Studio's photography doesn't just capture moments; it captures emotions. Their work is simply mesmerizing."
+      },
+      "john": {
+        "name": "John Smith",
+        "location": "USA, California",
+        "quote": "Machum Studio has an incredible talent for making every event feel effortless, and the results speak for themselves."
+      },
+      "samantha": {
+        "name": "Samantha Davis",
+        "location": "USA, California",
+        "quote": "I was blown away by Machum Studio's ability to capture the essence of our wedding day. Their photographs are our memories."
+      },
+      "olivia": {
+        "name": "Olivia Park",
+        "location": "South Korea, Seoul",
+        "quote": "Our brand shoot kept every texture of the product, and our product pages have never looked better."
+      },
+      "lucas": {
+        "name": "Lucas Martin",
+        "location": "France, Paris",
+        "quote": "I was nervous about my first profile shoot, but they made it easy and my expressions came out natural."
+      },
+      "sofia": {
+        "name": "Sofia Rossi",
+        "location": "Italy, Milan",
+        "quote": "Even on a tight schedule, the edited photos arrived on the promised date. We will book them for our next event."
+      }
+    }
   }
 }
