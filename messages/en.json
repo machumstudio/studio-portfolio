@@ -84,6 +84,28 @@
       "newTab": "opens in a new tab"
     }
   },
+  "Hero": {
+    "label": "About Machum Studio",
+    "tagline": "Stunning photography by",
+    "name": "Machum Studio"
+  },
+  "About": {
+    "eyebrow": "About",
+    "title": "We are Machum",
+    "more": "Know More",
+    "intro": {
+      "title": "Introduction",
+      "body": "Machum Studio is a lifelong quest to capture the extraordinary in the ordinary. We freeze fleeting moments in time and turn them into stories you can return to again and again. Based in Seoul, we photograph people, events, brands and products, and try to hold the mood of the day and the feeling of the people in every frame. Let's make something worth remembering together."
+    },
+    "contact": {
+      "title": "Contact Information",
+      "email": "Email",
+      "phone": "Phone Number"
+    },
+    "work": "Let’s Work",
+    "cv": "Download CV",
+    "cvPending": "Coming soon"
+  },
   "Faq": {
     "eyebrow": "FAQ’s",
     "title": "Frequently Asked Questions",
