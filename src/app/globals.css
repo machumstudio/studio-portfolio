@@ -28,6 +28,7 @@
   --color-grey-95: #f2f2f3;
   --color-grey-97: #f7f7f8;
   --color-grey-99: #fcfcfd;
+  --color-star: #ffce22; /* 후기 별점. Figma 색 스타일이 없고 노드 fill 에 hex 로만 있다 */
 
   /* 폰트: Manrope (Regular 400 / Medium 500 / SemiBold 600 / Bold 700), next/font 로 --font-manrope 주입 */
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
@@ -116,6 +117,17 @@
   }
   @media (width >= 1920px) {
     font-size: 28px;
+  }
+}
+@utility text-h4 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  @media (width >= 1024px) {
+    font-size: 18px;
+  }
+  @media (width >= 1920px) {
+    font-size: 20px;
   }
 }
 @utility text-lead {
@@ -211,7 +223,8 @@
     font-size: 296px;
   }
 }
-/* eyebrow: 섹션 제목 위 라벨 (SemiBold). button: 버튼/링크 글자 (노트북도 14). field: 입력값/placeholder. label: 폼 라벨.
+/* h4: FAQ 질문 (SemiBold, 행간 auto). lead 와 크기는 같지만 굵기/행간이 달라 따로 둔다.
+   eyebrow: 섹션 제목 위 라벨 (SemiBold). button: 버튼/링크 글자 (노트북도 14). field: 입력값/placeholder. label: 폼 라벨.
    caption: 푸터 링크/열 제목 (노트북도 14, 굵기는 사용처에서 font-medium/semibold).
    line-height: normal 은 Figma 의 auto 와 같다 (폰트 메트릭 기준) */
 
@@ -222,6 +235,28 @@
     linear-gradient(var(--color-dark-12) 0 0) padding-box,
     linear-gradient(to bottom right, var(--color-dark-20), var(--color-dark-03))
       border-box;
+}
+/* 접고 펴는 패널 (FAQ 아코디언): 행 높이 0fr ↔ 1fr 로 내용 높이만큼 전환한다. 안쪽 한 겹에 min-h-0 overflow-hidden.
+   닫힘 상태는 inert 속성 하나로 판단한다 (포커스/보조기기 제외와 접힘을 같은 상태에 묶는다).
+   prefers-reduced-motion: reduce 이면 전환 없이 바로 바뀐다 */
+@utility collapsible {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 250ms ease-out;
+  &[inert] {
+    grid-template-rows: 0fr;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+/* 가로 슬라이더: 스크롤은 되고 스크롤바는 숨긴다 (좌우 화살표와 스와이프로 움직인다) */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 /* 위 매핑은 출발점이다. 섹션 구현 때 docs/design/nodes/*.json 의 fs/font/lh 와 다르면 노드 값을 따르고 이 표를 고친다. */
 
