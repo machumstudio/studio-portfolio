@@ -23,7 +23,7 @@ describe("TokenSheet", () => {
     expect(typeTokens.map((t) => t.className)).toEqual(cssTypes);
   });
 
-  it("색 견본 26개와 글자 견본 7개를 렌더링한다", () => {
+  it("색 견본 26개와 글자 견본을 토큰 수만큼 렌더링한다", () => {
     render(
       <NextIntlClientProvider locale="ko" messages={messages}>
         <TokenSheet />
@@ -34,6 +34,6 @@ describe("TokenSheet", () => {
     ).toBeInTheDocument();
     const [colors, types] = screen.getAllByRole("list");
     expect(colors.children).toHaveLength(26);
-    expect(types.children).toHaveLength(7);
+    expect(types.children).toHaveLength(typeTokens.length);
   });
 });

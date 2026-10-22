@@ -38,6 +38,10 @@ export const typeTokens = [
   { name: "h3", className: "text-h3" },
   { name: "lead", className: "text-lead" },
   { name: "body", className: "text-body" },
+  { name: "eyebrow", className: "text-eyebrow" },
+  { name: "button", className: "text-button" },
+  { name: "field", className: "text-field" },
+  { name: "label", className: "text-label" },
 ] as const;
 
 export function TokenSheet() {
