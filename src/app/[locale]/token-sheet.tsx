@@ -42,6 +42,9 @@ export const typeTokens = [
   { name: "button", className: "text-button" },
   { name: "field", className: "text-field" },
   { name: "label", className: "text-label" },
+  { name: "caption", className: "text-caption" },
+  { name: "logo", className: "text-logo" },
+  { name: "wordmark", className: "text-wordmark" },
 ] as const;
 
 export function TokenSheet() {
