@@ -9,7 +9,7 @@
 src/
   app/                    라우팅과 조립. 로직 없음
   components/
-    ui/                   디자인 시스템 (Button, Field, Tag ...). props만 받는다
+    ui/                   디자인 시스템 (Button, Field, HighlightItem ...). props만 받는다
     sections/             마케팅 섹션 (Hero, Faq ...). 데이터는 props로만
   features/<context>/     인터랙티브 기능의 UI + 서버 진입점
     ui/                   폼, 관리자 화면 컴포넌트

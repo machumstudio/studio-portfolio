@@ -40,7 +40,7 @@ Manrope (Regular/Medium/SemiBold/Bold). 시안 실측 최빈값:
 | Contact | Header · 연락처 정보 + 문의 폼(이름/이메일/전화/메시지 등) · Testimonials · CTA + Footer |
 
 ## 공통 컴포넌트 (Figma 컴포넌트는 0개라 패턴 기준으로 나눔)
-Header(데스크톱 nav + 모바일 햄버거) · Footer · CTA "Let's Work Together" · CategoryMarquee · SectionHeading(라벨 + 제목 + 우측 버튼) · Button(primary purple / outline dark / icon arrow) · Tag · FaqAccordion · TestimonialCard + 슬라이더 · ServiceCard · PortfolioCard · PriceCard · Stat · TimelineItem · Field(Input/Textarea/Select) · Gallery + Lightbox
+Header(데스크톱 nav + 모바일 햄버거) · Footer · CTA "Let's Work Together" · CategoryMarquee · SectionHeading(라벨 + 제목 + 우측 버튼) · Button(primary purple / outline dark / icon arrow) · HighlightItem(하이라이트 목록 항목) · FaqAccordion · TestimonialCard + 슬라이더 · ServiceCard · PortfolioCard · PriceCard · Stat · TimelineItem · Field(Input/Textarea/Select) · Gallery + Lightbox
 
 ## 시안에 없는 화면 (직접 설계)
 - 태블릿 768: 노트북 레이아웃을 2열 위주로 축소
