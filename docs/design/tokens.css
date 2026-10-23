@@ -83,6 +83,12 @@
 /* category: 서비스 이름 (홈 Services "EVENTS", SemiBold 행간 auto). 노트북/데스크톱은 h2 와 같고 모바일만 28 (h2 는 24, 모바일 메뉴가 쓴다) */
 @utility text-category { font-size: 28px; font-weight: 600; line-height: normal;
   @media (width >= 1024px) { font-size: 34px; } @media (width >= 1920px) { font-size: 44px; } }
+/* stat: About 통계 숫자 (SemiBold 행간 auto, 28/34/48). category 와 데스크톱만 다르다 (44 vs 48)
+   prose: About 소개글 (Regular 150%, 14/16/20). body 와 데스크톱만 다르다 (18 vs 20) */
+@utility text-stat { font-size: 28px; font-weight: 600; line-height: normal;
+  @media (width >= 1024px) { font-size: 34px; } @media (width >= 1920px) { font-size: 48px; } }
+@utility text-prose { font-size: 14px; font-weight: 400; line-height: 1.5;
+  @media (width >= 1024px) { font-size: 16px; } @media (width >= 1920px) { font-size: 20px; } }
 @utility text-tagline { font-size: 14px; font-weight: 500; line-height: normal;
   @media (width >= 1024px) { font-size: 18px; } @media (width >= 1920px) { font-size: 22px; } }
 @utility text-lead { font-size: 16px; font-weight: 500; line-height: 1.5;
@@ -126,9 +132,10 @@
   &[inert] { grid-template-rows: 0fr; } @media (prefers-reduced-motion: reduce) { transition: none; } }
 /* 가로 슬라이더: 스크롤바 숨김 */
 @utility scrollbar-none { scrollbar-width: none; &::-webkit-scrollbar { display: none; } }
-/* 사진을 깎아 낸 자리(Portfolio 히어로)의 바깥 모서리: 34x34 조각을 사진 모서리에 겹쳐 원 바깥을 배경색으로 칠한다.
-   tl/bl/br 은 둥글게 보일 사진 모서리 (radius 34) */
+/* 사진을 깎아 낸 자리(Portfolio, About 히어로)의 바깥 모서리: 34x34 조각을 사진 모서리에 겹쳐 원 바깥을 배경색으로 칠한다.
+   tl/tr/bl/br 은 둥글게 보일 사진 모서리 (radius 34) */
 @utility photo-corner-tl { width: 34px; height: 34px; background: radial-gradient(circle at 100% 100%, transparent 33.5px, var(--color-dark-03) 34px); }
+@utility photo-corner-tr { width: 34px; height: 34px; background: radial-gradient(circle at 0 100%, transparent 33.5px, var(--color-dark-03) 34px); }
 @utility photo-corner-bl { width: 34px; height: 34px; background: radial-gradient(circle at 100% 0, transparent 33.5px, var(--color-dark-03) 34px); }
 @utility photo-corner-br { width: 34px; height: 34px; background: radial-gradient(circle at 0 0, transparent 33.5px, var(--color-dark-03) 34px); }
 /* 위 매핑은 출발점이다. 섹션 구현 때 docs/design/nodes/*.json 의 fs/font/lh 와 다르면 노드 값을 따르고 이 표를 고친다. */

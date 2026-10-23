@@ -165,6 +165,30 @@
     font-size: 44px;
   }
 }
+/* stat: About 통계 숫자 (SemiBold 행간 auto, 28/34/48). category 와 데스크톱만 다르다 (44 vs 48)
+   prose: About 소개글 (Regular 150%, 14/16/20). body 와 데스크톱만 다르다 (18 vs 20) */
+@utility text-stat {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: normal;
+  @media (width >= 1024px) {
+    font-size: 34px;
+  }
+  @media (width >= 1920px) {
+    font-size: 48px;
+  }
+}
+@utility text-prose {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  @media (width >= 1024px) {
+    font-size: 16px;
+  }
+  @media (width >= 1920px) {
+    font-size: 20px;
+  }
+}
 @utility text-tagline {
   font-size: 14px;
   font-weight: 500;
@@ -314,13 +338,22 @@
     display: none;
   }
 }
-/* 사진을 깎아 낸 자리(Portfolio 히어로)의 바깥 모서리: 34x34 조각을 사진 모서리에 겹쳐 원 바깥을 배경색으로 칠한다.
-   tl/bl/br 은 둥글게 보일 사진 모서리 (radius 34). 경계는 0.5px 을 섞어 계단을 줄인다 */
+/* 사진을 깎아 낸 자리(Portfolio, About 히어로)의 바깥 모서리: 34x34 조각을 사진 모서리에 겹쳐 원 바깥을 배경색으로 칠한다.
+   tl/tr/bl/br 은 둥글게 보일 사진 모서리 (radius 34). 경계는 0.5px 을 섞어 계단을 줄인다 */
 @utility photo-corner-tl {
   width: 34px;
   height: 34px;
   background: radial-gradient(
     circle at 100% 100%,
+    transparent 33.5px,
+    var(--color-dark-03) 34px
+  );
+}
+@utility photo-corner-tr {
+  width: 34px;
+  height: 34px;
+  background: radial-gradient(
+    circle at 0 100%,
     transparent 33.5px,
     var(--color-dark-03) 34px
   );
