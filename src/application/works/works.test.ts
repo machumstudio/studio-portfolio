@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { createWork, type Work, type WorkInput } from "@/domain/works/work";
 import { err, ok } from "@/shared/result";
+import { getAdjacentWorks } from "./get-adjacent-works";
 import { getPublishedWorks } from "./get-published-works";
 import { getWorkGalleries } from "./get-work-galleries";
 import { getWorkBySlug } from "./get-work-by-slug";
@@ -161,5 +162,29 @@ describe("getWorkGalleries", () => {
       { category: "events", works: [] },
       { category: "commercial", works: [] },
     ]);
+  });
+});
+
+describe("getAdjacentWorks", () => {
+  const adjacent = async (slug: string) => {
+    const { previous, next } = await getAdjacentWorks({ repo })(slug);
+    return [previous?.slug ?? null, next?.slug ?? null];
+  };
+
+  // Portfolio 순서: faces, innocence, monochrome | wedding | brand
+  it.each([
+    ["faces", null, "innocence"],
+    ["monochrome", "innocence", "wedding"],
+    ["wedding", "monochrome", "brand"],
+    ["brand", "wedding", null],
+  ])(
+    "%s 의 이전은 %s, 다음은 %s (카테고리를 넘어 이어진다)",
+    async (slug, previous, next) => {
+      expect(await adjacent(slug)).toEqual([previous, next]);
+    },
+  );
+
+  it.each(["secret", "nope"])("목록에 없는 %s 는 둘 다 null", async (slug) => {
+    expect(await adjacent(slug)).toEqual([null, null]);
   });
 });
