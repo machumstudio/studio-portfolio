@@ -12,6 +12,7 @@ const textSizes = [
   "h3",
   "h4",
   "title",
+  "category",
   "tagline",
   "lead",
   "body",
@@ -26,7 +27,7 @@ const textSizes = [
 
 const merge = extendTailwindMerge<"page-x" | "surface">({
   extend: {
-    theme: { radius: ["10", "20"] },
+    theme: { radius: ["10", "20", "30", "100"] },
     classGroups: {
       "font-size": [{ text: textSizes }],
       // page-x: 좌우 padding-inline. px/ps/pe/pl/pr 와 같은 속성이다
