@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, userEvent, waitFor, within } from "storybook/test";
+import { Button } from "./Button";
 import { Carousel } from "./Carousel";
 
 const slides = Array.from({ length: 6 }, (_, i) => i + 1);
@@ -48,5 +49,15 @@ export const Laptop: Story = {
     await waitFor(() =>
       expect(previous).toHaveAttribute("aria-disabled", "false"),
     );
+  },
+};
+
+// Home Services 처럼 한 장씩 + 화살표 오른쪽 "모두 보기" 버튼
+export const SingleWithActions: Story = {
+  globals: { viewport: { value: "laptop", isRotated: false } },
+  args: {
+    alignControls: "center",
+    slideClassName: "md:w-full lg:w-full",
+    actions: <Button variant="outline">View All</Button>,
   },
 };
