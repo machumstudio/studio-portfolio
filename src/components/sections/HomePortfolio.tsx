@@ -22,7 +22,7 @@ type HomePortfolioProps = {
 // 수치: docs/design/nodes/home-*.json 의 Services 다음 "Container" (mobile → lg → 3xl).
 // 제목 줄: 05칸 Carousel (화살표 아래 정렬) + 오른쪽 "모두 보기" outline 버튼.
 // 카드: PortfolioCard. 한 화면 mobile 1 / md 2 / lg 3 장, 카드 간격 20 / 30 / 50 (406 / 499 폭).
-// 링크는 /work/[slug] (작업 상세는 09칸, 그 전에는 404).
+// 링크는 /work/[slug] (작업 상세).
 export function HomePortfolio({ items }: HomePortfolioProps) {
   const t = useTranslations("Portfolio");
   const formatYearMonth = useYearMonthFormat();
