@@ -12,7 +12,9 @@ const renderNav = () =>
   render(
     <nav>
       <NavLink href="/">홈</NavLink>
-      <NavLink href="/portfolio">포트폴리오</NavLink>
+      <NavLink href="/portfolio" match={["/portfolio", "/work"]}>
+        포트폴리오
+      </NavLink>
       <NavLink href="/services">서비스</NavLink>
     </nav>,
   );
@@ -53,6 +55,33 @@ describe("NavLink", () => {
     renderNav();
     expect(screen.getByRole("link", { name: "서비스" })).not.toHaveAttribute(
       "aria-current",
+    );
+  });
+
+  it("match 로 준 다른 접두사(/work/...)에서도 그 메뉴를 현재로 본다", () => {
+    pathname.current = "/work/a-wedding-tale";
+    renderNav();
+    expect(screen.getByRole("link", { name: "포트폴리오" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+    for (const name of ["홈", "서비스"]) {
+      expect(screen.getByRole("link", { name })).not.toHaveAttribute(
+        "aria-current",
+      );
+    }
+  });
+
+  it("match 를 주면 href 는 따로 보지 않는다 (접두사 목록에 넣어야 한다)", () => {
+    pathname.current = "/work";
+    render(
+      <NavLink href="/portfolio" match={["/work"]}>
+        포트폴리오
+      </NavLink>,
+    );
+    expect(screen.getByRole("link", { name: "포트폴리오" })).toHaveAttribute(
+      "aria-current",
+      "page",
     );
   });
 });

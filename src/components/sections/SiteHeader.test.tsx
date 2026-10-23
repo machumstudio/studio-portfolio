@@ -51,6 +51,17 @@ describe("SiteHeader", () => {
     );
   });
 
+  it("작업 상세(/work/...)에서는 포트폴리오가 현재 페이지다", () => {
+    pathname.current = "/work/a-wedding-tale";
+    renderHeader();
+    const nav = screen.getByRole("navigation", { name: "주요 메뉴" });
+    expect(
+      within(nav)
+        .getAllByRole("link")
+        .filter((a) => a.getAttribute("aria-current") === "page"),
+    ).toEqual([within(nav).getByRole("link", { name: "포트폴리오" })]);
+  });
+
   it("모바일 메뉴를 열면 같은 메뉴와 현재 표시가 보이고 Esc 로 닫힌다", async () => {
     const user = userEvent.setup();
     pathname.current = "/services";
