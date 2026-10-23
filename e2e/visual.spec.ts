@@ -9,12 +9,14 @@ import { PNG } from "pngjs";
 const pages = [
   { name: "home", path: "/" },
   { name: "portfolio", path: "/portfolio" },
+  { name: "about", path: "/about" },
 ];
 
 // 섹션별 차이율: 구현 페이지의 섹션 상자와 시안의 같은 섹션 띠(y, h)를 잘라 비교한다.
 // 시안 y 는 노드 JSON 의 섹션 h 합 + 섹션 간격(80/150/200), 헤더와 히어로 사이는 간격 없음.
 // portfolio: 헤더-히어로 40/80/100, 히어로-브랜드 띠(구현은 카테고리 필터) 40/60/80, 띠-갤러리 80/100/150,
 // 이후 80/150/200. 히어로 띠는 사진+글 부분만 (브랜드 띠 자리는 필터라 시안과 다르다).
+// about: 헤더-소개 40/80/100, 소개-이야기 60/80/100, 이후 80/150/200.
 type Band = readonly [y: number, h: number];
 const sections: Record<
   string,
@@ -33,6 +35,28 @@ const sections: Record<
         mobile: [148, 449],
         laptop: [169, 716],
         desktop: [219, 784],
+      },
+    },
+  },
+  aboutHero: {
+    selector: 'section[aria-labelledby="about-hero-title"]',
+    ref: {
+      about: { mobile: [148, 664], laptop: [169, 784], desktop: [219, 784] },
+    },
+  },
+  biography: {
+    selector: 'section[aria-labelledby="about-biography-title"]',
+    ref: {
+      about: { mobile: [872, 490], laptop: [1033, 340], desktop: [1103, 440] },
+    },
+  },
+  timeline: {
+    selector: 'section[aria-labelledby="about-timeline-title"]',
+    ref: {
+      about: {
+        mobile: [1442, 1263],
+        laptop: [1523, 818],
+        desktop: [1743, 1029],
       },
     },
   },
@@ -83,6 +107,11 @@ const sections: Record<
         mobile: [3613, 591],
         laptop: [4200, 529],
         desktop: [5232, 657],
+      },
+      about: {
+        mobile: [2785, 591],
+        laptop: [2491, 529],
+        desktop: [2972, 657],
       },
     },
   },
