@@ -6,10 +6,15 @@ import { PNG } from "pngjs";
 // 시안 원본(docs/design/reference)과 전체 페이지 스크린샷을 픽셀 비교해 차이율을 남긴다.
 // reference 는 .gitignore 대상이라 없는 환경에서는 건너뛴다.
 // 사진 영역은 data-visual-mask 를 붙이면 양쪽 모두 같은 색으로 덮고 비교한다.
-const pages = [{ name: "home", path: "/" }];
+const pages = [
+  { name: "home", path: "/" },
+  { name: "portfolio", path: "/portfolio" },
+];
 
 // 섹션별 차이율: 구현 페이지의 섹션 상자와 시안의 같은 섹션 띠(y, h)를 잘라 비교한다.
 // 시안 y 는 노드 JSON 의 섹션 h 합 + 섹션 간격(80/150/200), 헤더와 히어로 사이는 간격 없음.
+// portfolio: 헤더-히어로 40/80/100, 히어로-브랜드 띠(구현은 카테고리 필터) 40/60/80, 띠-갤러리 80/100/150,
+// 이후 80/150/200. 히어로 띠는 사진+글 부분만 (브랜드 띠 자리는 필터라 시안과 다르다).
 type Band = readonly [y: number, h: number];
 const sections: Record<
   string,
@@ -19,6 +24,26 @@ const sections: Record<
     selector: 'section[aria-labelledby="hero-title"]',
     ref: {
       home: { mobile: [108, 553], laptop: [89, 742], desktop: [119, 920] },
+    },
+  },
+  portfolioHero: {
+    selector: 'section[aria-labelledby="portfolio-hero-title"]',
+    ref: {
+      portfolio: {
+        mobile: [148, 449],
+        laptop: [169, 716],
+        desktop: [219, 784],
+      },
+    },
+  },
+  gallery: {
+    selector: "#works",
+    ref: {
+      portfolio: {
+        mobile: [812, 2009],
+        laptop: [1166, 2071],
+        desktop: [1383, 2658],
+      },
     },
   },
   about: {
@@ -43,12 +68,22 @@ const sections: Record<
     selector: 'section[aria-labelledby="faq-title"]',
     ref: {
       home: { mobile: [4218, 632], laptop: [3644, 663], desktop: [4488, 791] },
+      portfolio: {
+        mobile: [2901, 632],
+        laptop: [3387, 663],
+        desktop: [4241, 791],
+      },
     },
   },
   testimonials: {
     selector: "#testimonials",
     ref: {
       home: { mobile: [4930, 591], laptop: [4457, 529], desktop: [5479, 657] },
+      portfolio: {
+        mobile: [3613, 591],
+        laptop: [4200, 529],
+        desktop: [5232, 657],
+      },
     },
   },
 };
@@ -144,9 +179,11 @@ for (const { name, path } of pages) {
     report(name, actual, expected);
 
     for (const [section, { selector, ref }] of Object.entries(sections)) {
+      // 이 페이지에 없는 섹션은 건너뛴다 (boundingBox 는 요소가 생길 때까지 기다린다)
       const band = ref[name]?.[testInfo.project.name];
+      if (!band) continue;
       const box = await page.locator(selector).boundingBox();
-      if (!band || !box) continue;
+      if (!box) continue;
       const y = Math.round(box.y + (await page.evaluate(() => scrollY)));
       report(
         `${name}-${section}`,
