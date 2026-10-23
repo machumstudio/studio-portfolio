@@ -110,6 +110,51 @@ describe("Carousel", () => {
     expect(next).toHaveAttribute("aria-disabled", "true");
   });
 
+  it("actions 는 화살표 다음 Tab 순서이고 슬라이드보다 앞이다", async () => {
+    const user = userEvent.setup();
+    render(
+      <Carousel
+        labelledBy="t"
+        previousLabel="이전"
+        nextLabel="다음"
+        slideLabels={["1 / 1"]}
+        header={<h2 id="t">서비스</h2>}
+        actions={<button type="button">모두 보기</button>}
+      >
+        <button type="button">첫째</button>
+      </Carousel>,
+    );
+    await user.tab();
+    await user.tab();
+    expect(screen.getByRole("button", { name: "다음" })).toHaveFocus();
+    await user.tab();
+    expect(screen.getByRole("button", { name: "모두 보기" })).toHaveFocus();
+    await user.tab();
+    expect(screen.getByRole("button", { name: "첫째" })).toHaveFocus();
+  });
+
+  it("slideClassName/trackClassName 은 기본 폭/간격을 덮어쓴다", () => {
+    render(
+      <Carousel
+        labelledBy="t"
+        previousLabel="이전"
+        nextLabel="다음"
+        slideLabels={["1 / 1"]}
+        header={<h2 id="t">서비스</h2>}
+        trackClassName="3xl:-mx-6.25"
+        slideClassName="lg:w-full 3xl:px-6.25"
+      >
+        <p>첫째</p>
+      </Carousel>,
+    );
+    const slide = screen.getByRole("group");
+    expect(slide.className).toContain("lg:w-full");
+    expect(slide.className).not.toContain("lg:w-1/3");
+    expect(slide.className).not.toContain("3xl:px-3.75");
+    expect(slide.parentElement!.className).toContain("3xl:-mx-6.25");
+    expect(slide.parentElement!.className).not.toContain("3xl:-mx-3.75");
+  });
+
   it("자동으로 넘어가지 않는다 (타이머를 쓰지 않음)", () => {
     vi.useFakeTimers();
     const scrollBy = vi.fn();
