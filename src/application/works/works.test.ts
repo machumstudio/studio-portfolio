@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { createWork, type Work, type WorkInput } from "@/domain/works/work";
 import { err, ok } from "@/shared/result";
 import { getPublishedWorks } from "./get-published-works";
+import { getWorkGalleries } from "./get-work-galleries";
 import { getWorkBySlug } from "./get-work-by-slug";
 import type { WorkRepository } from "./work-repository";
 
@@ -111,5 +112,54 @@ describe("getWorkBySlug", () => {
       await getWorkBySlug({ repo: { ...repo, findBySlug } })("Not A Slug"),
     ).toEqual(err({ type: "NotFound", slug: "Not A Slug" }));
     expect(findBySlug).not.toHaveBeenCalled();
+  });
+});
+
+describe("getWorkGalleries", () => {
+  const galleries = async (category?: string) => {
+    const result = await getWorkGalleries({ repo })(category);
+    return {
+      ...result,
+      galleries: result.galleries.map((g) => [g.category, slugs(g.works)]),
+    };
+  };
+
+  it("카테고리가 없으면 인물, 이벤트, 광고 순서로 공개 작업을 최신순으로 묶는다", async () => {
+    expect(await galleries()).toEqual({
+      categories: ["portrait", "events", "commercial"],
+      selected: null,
+      galleries: [
+        ["portrait", ["faces", "innocence", "monochrome"]],
+        ["events", ["wedding"]],
+        ["commercial", ["brand"]],
+      ],
+    });
+  });
+
+  it("아는 카테고리면 그 묶음 하나만", async () => {
+    expect(await galleries("events")).toEqual({
+      categories: ["portrait", "events", "commercial"],
+      selected: "events",
+      galleries: [["events", ["wedding"]]],
+    });
+  });
+
+  it.each(["", "wedding", "Portrait"])(
+    "모르는 카테고리 %j 는 전체로 본다",
+    async (category) => {
+      const result = await galleries(category);
+      expect(result.selected).toBeNull();
+      expect(result.galleries).toHaveLength(3);
+    },
+  );
+
+  it("공개 작업이 없는 카테고리도 빈 묶음으로 남는다", async () => {
+    expect(
+      (await getWorkGalleries({ repo: inMemory([]) })()).galleries,
+    ).toEqual([
+      { category: "portrait", works: [] },
+      { category: "events", works: [] },
+      { category: "commercial", works: [] },
+    ]);
   });
 });
