@@ -38,9 +38,12 @@
   --breakpoint-lg: 1024px;  /* 노트북 레이아웃 시작 */
   --breakpoint-3xl: 1920px; /* 데스크톱 수치 */
 
-  /* radius: Tailwind 기본(lg 8 / xl 12 / 2xl 16)에 없는 시안 값. 10: 버튼(데스크톱), 하이라이트 칩(모바일/노트북). 20: 홈 About 카드(노트북/데스크톱) */
+  /* radius: Tailwind 기본(lg 8 / xl 12 / 2xl 16)에 없는 시안 값. 10: 버튼(데스크톱), 하이라이트 칩(모바일/노트북). 20: 홈 About 카드, Services 사진, Portfolio 카드 사진(노트북/데스크톱) */
   --radius-10: 10px;
   --radius-20: 20px;
+  /* 30, 100: 홈 Services 사진의 왼쪽 아래만 크게 깎인 모서리 (모바일 30 / 노트북·데스크톱 100). 노드에 r 이 없어 시안 픽셀에서 잼 */
+  --radius-30: 30px;
+  --radius-100: 100px;
 
   /* 카테고리 마키: 같은 목록을 두 번 이어 붙이고 절반(-50%)만큼 흘린 뒤 처음으로 돌아간다. 시안은 정지 화면이라 속도는 직접 정함 */
   --animate-marquee: marquee 40s linear infinite;
@@ -73,6 +76,9 @@
    tagline: 히어로 이름 위 한 줄 (Medium 행간 auto, 22 는 다른 글자 토큰에 없는 크기) */
 @utility text-title { font-size: 20px; font-weight: 500; line-height: normal;
   @media (width >= 1024px) { font-size: 24px; } @media (width >= 1920px) { font-size: 30px; } }
+/* category: 서비스 이름 (홈 Services "EVENTS", SemiBold 행간 auto). 노트북/데스크톱은 h2 와 같고 모바일만 28 (h2 는 24, 모바일 메뉴가 쓴다) */
+@utility text-category { font-size: 28px; font-weight: 600; line-height: normal;
+  @media (width >= 1024px) { font-size: 34px; } @media (width >= 1920px) { font-size: 44px; } }
 @utility text-tagline { font-size: 14px; font-weight: 500; line-height: normal;
   @media (width >= 1024px) { font-size: 18px; } @media (width >= 1920px) { font-size: 22px; } }
 @utility text-lead { font-size: 16px; font-weight: 500; line-height: 1.5;

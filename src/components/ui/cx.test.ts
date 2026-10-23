@@ -29,6 +29,7 @@ describe("cx", () => {
       "text-h3",
       "text-h4",
       "text-title",
+      "text-category",
       "text-tagline",
       "text-lead",
       "text-body",
@@ -73,8 +74,9 @@ describe("cx", () => {
     expect(cx("surface-raised", "surface-raised")).toBe("surface-raised");
   });
 
-  it("시안 radius 토큰(10, 20)도 radius 로 병합된다", () => {
+  it("시안 radius 토큰(10, 20, 30, 100)도 radius 로 병합된다", () => {
     expect(cx("rounded-lg", "rounded-10")).toBe("rounded-10");
+    expect(cx("rounded-bl-30", "rounded-bl-100")).toBe("rounded-bl-100");
     expect(cx("rounded-20", "lg:rounded-2xl", "rounded-xl")).toBe(
       "lg:rounded-2xl rounded-xl",
     );
