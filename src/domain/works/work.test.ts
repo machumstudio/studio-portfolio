@@ -89,16 +89,9 @@ describe("createWork", () => {
     },
   );
 
-  it.each([
-    "2022-3",
-    "2022-00",
-    "2022-13",
-    "22-03",
-    "2022-03-01",
-    "March 2022",
-  ])("날짜 %j 는 InvalidDate", (value) => {
-    expect(createWork({ ...valid, date: value })).toEqual(
-      err({ type: "InvalidDate", value }),
+  it("날짜 규칙은 YearMonth 값 객체를 따른다", () => {
+    expect(createWork({ ...valid, date: "March 2022" })).toEqual(
+      err({ type: "InvalidYearMonth", value: "March 2022" }),
     );
   });
 
