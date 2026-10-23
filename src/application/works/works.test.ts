@@ -62,6 +62,21 @@ describe("getPublishedWorks", () => {
     ).toEqual(["wedding"]);
   });
 
+  it("limit 을 주면 최신순으로 그 개수까지만 (카테고리와 같이 쓸 수 있다)", async () => {
+    expect(slugs(await getPublishedWorks({ repo })({ limit: 2 }))).toEqual([
+      "faces",
+      "wedding",
+    ]);
+    expect(
+      slugs(
+        await getPublishedWorks({ repo })({ category: "portrait", limit: 2 }),
+      ),
+    ).toEqual(["faces", "innocence"]);
+    expect(
+      await getPublishedWorks({ repo })({ category: "events", limit: 10 }),
+    ).toHaveLength(1);
+  });
+
   it("작업이 없으면 빈 목록", async () => {
     expect(await getPublishedWorks({ repo: inMemory([]) })()).toEqual([]);
   });
