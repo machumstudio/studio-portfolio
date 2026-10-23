@@ -155,18 +155,7 @@
     "previous": "Previous work",
     "next": "Next work",
     "slide": "{index} of {total}",
-    "view": "View Project",
-    "items": {
-      "resilience": {
-        "title": "Faces of Resilience"
-      },
-      "wedding": {
-        "title": "A Wedding Tale"
-      },
-      "product": {
-        "title": "Product Elegance"
-      }
-    }
+    "view": "View Project"
   },
   "Faq": {
     "eyebrow": "FAQ’s",

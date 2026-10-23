@@ -177,47 +177,76 @@ test.describe("Services 슬라이더", () => {
 test.describe("Portfolio 미리보기", () => {
   const portfolio = (page: Page) =>
     page.getByRole("region", { name: "작업을 둘러보세요" });
+  // 인메모리 시드의 공개 작업 9개 (비공개 1개 제외), 최신순
+  const total = 9;
+  const labels = (from: number, count: number) =>
+    Array.from({ length: count }, (_, i) => `${from + i} / ${total}`);
 
-  test("카드 3장, 링크는 /work/[slug] 이고 한 화면에 mobile 1 / lg 3 장", async ({
+  test("공개 작업이 최신순 카드로 나오고, 링크는 /work/[slug], 한 화면에 mobile 1 / lg 3 장", async ({
     page,
   }, testInfo) => {
     await page.goto("/");
     const links = portfolio(page).getByRole("link", { name: /^프로젝트 보기/ });
-    await expect(links).toHaveCount(3);
+    await expect(links).toHaveCount(total);
     expect(
-      await links.evaluateAll((els) => els.map((a) => a.getAttribute("href"))),
+      (
+        await links.evaluateAll((els) => els.map((a) => a.getAttribute("href")))
+      ).slice(0, 3),
     ).toEqual([
       "/work/faces-of-resilience",
       "/work/a-wedding-tale",
       "/work/product-elegance",
     ]);
+    await expect(
+      portfolio(page).getByRole("link", { name: /촬영 현장 기록/ }),
+    ).toHaveCount(0);
     await track(page, "portfolio").scrollIntoViewIfNeeded();
-    const mobile = testInfo.project.name === "mobile";
-    expect(await visibleSlides(page, "portfolio")).toEqual(
-      mobile ? ["1 / 3"] : ["1 / 3", "2 / 3", "3 / 3"],
-    );
-    // lg 는 3장이 다 보여 양쪽 화살표가 꺼진다
+    const perView = testInfo.project.name === "mobile" ? 1 : 3;
+    expect(await visibleSlides(page, "portfolio")).toEqual(labels(1, perView));
+    await expect(
+      portfolio(page).getByRole("button", { name: "이전 작업" }),
+    ).toHaveAttribute("aria-disabled", "true");
     await expect(
       portfolio(page).getByRole("button", { name: "다음 작업" }),
-    ).toHaveAttribute("aria-disabled", mobile ? "false" : "true");
+    ).toHaveAttribute("aria-disabled", "false");
   });
 
-  test("mobile: 다음 화살표와 스와이프로 카드를 한 장씩 넘긴다", async ({
+  test("다음 화살표로 한 장씩 넘기고, 끝에 닿으면 다음 화살표가 꺼진다", async ({
     page,
   }, testInfo) => {
-    test.skip(testInfo.project.name !== "mobile", "lg 는 3장이 한 화면");
     await page.goto("/");
     const next = portfolio(page).getByRole("button", { name: "다음 작업" });
+    const previous = portfolio(page).getByRole("button", { name: "이전 작업" });
     await next.scrollIntoViewIfNeeded();
     const width = await slideWidth(page, "portfolio");
+    const perView = testInfo.project.name === "mobile" ? 1 : 3;
+
     await next.click();
     await expectScrolledTo(page, "portfolio", width);
-    expect(await visibleSlides(page, "portfolio")).toEqual(["2 / 3"]);
+    expect(await visibleSlides(page, "portfolio")).toEqual(labels(2, perView));
+    await expect(previous).toHaveAttribute("aria-disabled", "false");
 
+    for (let step = 2; step <= total - perView; step++) {
+      await next.click();
+      await expectScrolledTo(page, "portfolio", width * step);
+    }
+    expect(await visibleSlides(page, "portfolio")).toEqual(
+      labels(total - perView + 1, perView),
+    );
+    await expect(next).toHaveAttribute("aria-disabled", "true");
+  });
+
+  test("mobile: 스와이프로 카드를 한 장씩 넘긴다", async ({
+    page,
+  }, testInfo) => {
+    test.skip(testInfo.project.name !== "mobile", "lg 는 화살표 테스트로 충분");
+    await page.goto("/");
+    await track(page, "portfolio").scrollIntoViewIfNeeded();
+    const width = await slideWidth(page, "portfolio");
     const box = (await track(page, "portfolio").boundingBox())!;
     await page.mouse.move(box.x + box.width / 2, box.y + 100);
     await page.mouse.wheel(Math.round(width * 0.7), 0);
-    await expectScrolledTo(page, "portfolio", width * 2);
-    await expect(next).toHaveAttribute("aria-disabled", "true");
+    await expectScrolledTo(page, "portfolio", width);
+    expect(await visibleSlides(page, "portfolio")).toEqual(labels(2, 1));
   });
 });
