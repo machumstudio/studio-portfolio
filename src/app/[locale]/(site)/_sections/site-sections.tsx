@@ -5,7 +5,7 @@ import {
   type Testimonial,
 } from "@/components/sections/SiteTestimonials";
 
-// 여러 페이지(Home, Portfolio, 이후 Services/About/Contact)가 같은 내용으로 쓰는 섹션 조립.
+// 여러 페이지(Home, Portfolio, About, 이후 Services/Contact)가 같은 내용으로 쓰는 섹션 조립.
 // FAQ 와 후기는 당분간 메시지로 만든 고정값을 섹션 props 로 넘긴다
 const faqIds = [
   "specialty",
