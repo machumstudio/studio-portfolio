@@ -106,6 +106,68 @@
     "cv": "Download CV",
     "cvPending": "Coming soon"
   },
+  "Services": {
+    "eyebrow": "Services",
+    "title": "Our Photography Services",
+    "all": "View All Services",
+    "previous": "Previous service",
+    "next": "Next service",
+    "slide": "{index} of {total}",
+    "highlights": "Service Highlights",
+    "more": "More about {name} photography",
+    "items": {
+      "events": {
+        "name": "Events",
+        "body": "Our event photography service is dedicated to capturing the magic of your special occasions. Whether it's a wedding, corporate event, or milestone celebration, we're there to document every heartfelt moment. We blend into the background, ensuring natural and candid shots that reflect the emotions of the day.",
+        "highlights": {
+          "coverage": "Coverage for weddings, parties, corporate functions, and more.",
+          "moment": "Skilled photographers who know how to seize the moment.",
+          "story": "A mix of candid and posed shots for a comprehensive story.",
+          "delivery": "Quick turnaround for you to relive the day's highlights."
+        }
+      },
+      "portrait": {
+        "name": "Portrait",
+        "body": "Our portrait photography service is all about showcasing your unique personality. Whether you need a professional headshot, a family portrait, or a couple's session, we start from a relaxed atmosphere and guide natural expressions. Light and location are chosen around you, for a picture you'll want to keep.",
+        "highlights": {
+          "style": "Headshots, family and couple portraits that show who you are.",
+          "direction": "Gentle posing guidance, even if it's your first shoot.",
+          "location": "Studio or outdoor sessions, wherever you feel at home.",
+          "retouch": "Natural retouching for skin tones and color."
+        }
+      },
+      "commercial": {
+        "name": "Commercial",
+        "body": "In the world of business, a compelling image can make all the difference. Our commercial photography service is designed to show your products, spaces and brand at their best. We listen to the message you want to send first, then shoot with the framing and color that fit where the images will live.",
+        "highlights": {
+          "product": "Detail and lifestyle shots that bring out texture and color.",
+          "space": "Bright, spacious shots of shops, offices and stays.",
+          "brand": "A shooting direction aligned with your brand identity.",
+          "files": "High-resolution files ready for web and print."
+        }
+      }
+    }
+  },
+  "Portfolio": {
+    "eyebrow": "Portfolio",
+    "title": "Explore our photography work.",
+    "all": "View All Works",
+    "previous": "Previous work",
+    "next": "Next work",
+    "slide": "{index} of {total}",
+    "view": "View Project",
+    "items": {
+      "resilience": {
+        "title": "Faces of Resilience"
+      },
+      "wedding": {
+        "title": "A Wedding Tale"
+      },
+      "product": {
+        "title": "Product Elegance"
+      }
+    }
+  },
   "Faq": {
     "eyebrow": "FAQ’s",
     "title": "Frequently Asked Questions",
