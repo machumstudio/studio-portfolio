@@ -1,10 +1,11 @@
 import { ArrowRight } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { buttonStyles } from "@/components/ui/Button";
 import { Carousel } from "@/components/ui/Carousel";
 import { PortfolioCard } from "@/components/ui/PortfolioCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Link } from "@/i18n/navigation";
+import { useYearMonthFormat } from "@/i18n/use-year-month-format";
 
 export type PortfolioPreviewItem = {
   slug: string;
@@ -24,7 +25,7 @@ type HomePortfolioProps = {
 // 링크는 /work/[slug] (작업 상세는 09칸, 그 전에는 404).
 export function HomePortfolio({ items }: HomePortfolioProps) {
   const t = useTranslations("Portfolio");
-  const format = useFormatter();
+  const formatYearMonth = useYearMonthFormat();
 
   return (
     <Carousel
@@ -61,12 +62,7 @@ export function HomePortfolio({ items }: HomePortfolioProps) {
           href={`/work/${item.slug}`}
           title={item.title}
           date={item.date}
-          // 연월만 있는 값이라 시간대와 무관하게 UTC 1일로 읽는다
-          dateLabel={format.dateTime(new Date(`${item.date}-01T00:00:00Z`), {
-            year: "numeric",
-            month: "long",
-            timeZone: "UTC",
-          })}
+          dateLabel={formatYearMonth(item.date)}
           image={item.image}
           viewLabel={t("view")}
         />
