@@ -1,0 +1,76 @@
+import { ArrowRight } from "lucide-react";
+import { useFormatter, useTranslations } from "next-intl";
+import { buttonStyles } from "@/components/ui/Button";
+import { Carousel } from "@/components/ui/Carousel";
+import { PortfolioCard } from "@/components/ui/PortfolioCard";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Link } from "@/i18n/navigation";
+
+export type PortfolioPreviewItem = {
+  slug: string;
+  title: string;
+  /** 촬영 연월 "YYYY-MM" */
+  date: string;
+  image: { src: string; alt: string };
+};
+
+type HomePortfolioProps = {
+  items: PortfolioPreviewItem[];
+};
+
+// 수치: docs/design/nodes/home-*.json 의 Services 다음 "Container" (mobile → lg → 3xl).
+// 제목 줄: 05칸 Carousel (화살표 아래 정렬) + 오른쪽 "모두 보기" outline 버튼.
+// 카드: PortfolioCard. 한 화면 mobile 1 / md 2 / lg 3 장, 카드 간격 20 / 30 / 50 (406 / 499 폭).
+// 링크는 /work/[slug] (작업 상세는 09칸, 그 전에는 404).
+export function HomePortfolio({ items }: HomePortfolioProps) {
+  const t = useTranslations("Portfolio");
+  const format = useFormatter();
+
+  return (
+    <Carousel
+      labelledBy="portfolio-title"
+      className="page-x"
+      trackClassName="lg:-mx-3.75 3xl:-mx-6.25"
+      slideClassName="lg:px-3.75 3xl:px-6.25"
+      previousLabel={t("previous")}
+      nextLabel={t("next")}
+      slideLabels={items.map((_, i) =>
+        t("slide", { index: i + 1, total: items.length }),
+      )}
+      header={
+        <SectionHeading
+          id="portfolio-title"
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          divider={false}
+        />
+      }
+      actions={
+        <Link
+          href="/portfolio"
+          className={buttonStyles({ variant: "outline" })}
+        >
+          {t("all")}
+          <ArrowRight aria-hidden />
+        </Link>
+      }
+    >
+      {items.map((item) => (
+        <PortfolioCard
+          key={item.slug}
+          href={`/work/${item.slug}`}
+          title={item.title}
+          date={item.date}
+          // 연월만 있는 값이라 시간대와 무관하게 UTC 1일로 읽는다
+          dateLabel={format.dateTime(new Date(`${item.date}-01T00:00:00Z`), {
+            year: "numeric",
+            month: "long",
+            timeZone: "UTC",
+          })}
+          image={item.image}
+          viewLabel={t("view")}
+        />
+      ))}
+    </Carousel>
+  );
+}
