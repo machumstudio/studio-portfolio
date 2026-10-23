@@ -27,6 +27,18 @@ const sections: Record<
       home: { mobile: [741, 1268], laptop: [981, 775], desktop: [1239, 950] },
     },
   },
+  services: {
+    selector: 'section[aria-labelledby="services-title"]',
+    ref: {
+      home: { mobile: [2089, 1231], laptop: [1906, 752], desktop: [2389, 865] },
+    },
+  },
+  portfolio: {
+    selector: 'section[aria-labelledby="portfolio-title"]',
+    ref: {
+      home: { mobile: [3400, 738], laptop: [2808, 686], desktop: [3454, 834] },
+    },
+  },
   faq: {
     selector: 'section[aria-labelledby="faq-title"]',
     ref: {
