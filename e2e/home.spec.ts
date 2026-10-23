@@ -56,3 +56,18 @@ test("About: 소개서 내려받기는 준비 중이라 Tab 으로 건너뛴다"
     ),
   ).toBe(true);
 });
+
+test("About: 소셜 버튼과 아래 버튼 높이는 시안과 같다 (40/40/48, 49/49/63)", async ({
+  page,
+}, testInfo) => {
+  const desktop = testInfo.project.name === "desktop";
+  await page.goto("/");
+  const about = page.getByRole("region", { name: "마춤 스튜디오입니다" });
+  const height = (role: "link" | "button", name: RegExp) =>
+    about
+      .getByRole(role, { name })
+      .evaluate((el) => el.getBoundingClientRect().height);
+  expect(await height("link", /^Instagram/)).toBe(desktop ? 48 : 40);
+  expect(await height("link", /함께 작업하기/)).toBe(desktop ? 63 : 49);
+  expect(await height("button", /소개서 내려받기/)).toBe(desktop ? 63 : 49);
+});

@@ -32,6 +32,9 @@ function CardTitle({ id, children }: { id: string; children: ReactNode }) {
   );
 }
 
+// 아래 줄 버튼 두 개: 남는 폭 반반 + 시안 패딩
+const ctaClass = "px-5.75 lg:flex-1 3xl:px-8.25 3xl:py-4.25";
+
 type HomeAboutProps = {
   photo: { src: string; alt: string };
   email: string;
@@ -48,8 +51,8 @@ type HomeAboutProps = {
 //     항목 라벨 14/16/18 Medium Grey/90 → 간격 2/6/10 → 값 16/18/20 Regular Grey/70.
 //   아래 줄: mobile 세로 왼쪽 정렬(간격 20, 버튼 2개 세로 간격 16, 가득), lg 가로(간격 50/60, 버튼 간격 16/20, 남는 폭 반반).
 //     소셜 묶음 Dark/03 + 테두리 Dark/12 알약 pad 8/10 간격 10/16, 버튼 40/40/48 (아이콘 16/16/20).
-//     버튼 outline 49/49/63.
-//   소셜 버튼(38/38/48)과 데스크톱 outline 버튼(59)은 Button 그대로 써서 2~4px 작다. 푸터/후기 소셜과 크기를 맞춘다.
+//     소셜 버튼 40/40/48 (아이콘 16/16/20). Button icon md(38/38/48) 위에 크기만 덮어쓴다.
+//     버튼 outline 49/49/63 (pad 14 24 / 14 24 / 18 34, 테두리 inside 라 1px 뺌). Button outline 위에 패딩만 덮어쓴다.
 export function HomeAbout({ photo, email, phone }: HomeAboutProps) {
   const t = useTranslations("About");
   const social = useTranslations("Layout.footer");
@@ -135,7 +138,11 @@ export function HomeAbout({ photo, email, phone }: HomeAboutProps) {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${social(`social.${key}`)} (${social("newTab")})`}
-                      className={buttonStyles({ variant: "icon", size: "md" })}
+                      className={buttonStyles({
+                        variant: "icon",
+                        size: "md",
+                        className: "size-10 [&_svg]:size-4",
+                      })}
                     >
                       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                         <path d={icon.path} />
@@ -149,7 +156,7 @@ export function HomeAbout({ photo, email, phone }: HomeAboutProps) {
                   href="/contact"
                   className={buttonStyles({
                     variant: "outline",
-                    className: "lg:flex-1",
+                    className: ctaClass,
                   })}
                 >
                   {t("work")}
@@ -157,7 +164,7 @@ export function HomeAbout({ photo, email, phone }: HomeAboutProps) {
                 {/* TODO(소개서 PDF): 내려받을 파일이 아직 없어 비활성으로 둔다.
                     href="#" 링크는 눌러도 맨 위로 튀기만 하고 키보드/보조기기에는 동작하는 링크로 보여 혼란을 준다.
                     파일이 생기면 <a href download> 로 바꾸고 "준비 중" 표시를 뺀다 */}
-                <Button variant="outline" disabled className="lg:flex-1">
+                <Button variant="outline" disabled className={ctaClass}>
                   {t("cv")}
                   <span className="sr-only"> ({t("cvPending")})</span>
                 </Button>
