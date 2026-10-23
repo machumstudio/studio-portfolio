@@ -121,3 +121,12 @@ test("라이트박스: 닫기 버튼, 스와이프", async ({ page }) => {
   await expect(dialog(page)).toBeHidden();
   await expect(thumb).toBeFocused();
 });
+
+test("작업 상세에서는 헤더의 포트폴리오가 현재 페이지다", async ({
+  page,
+}, info) => {
+  test.skip(info.project.name === "mobile", "데스크톱 메뉴는 lg 부터");
+  await page.goto("/work/a-wedding-tale");
+  const nav = page.getByRole("banner").getByRole("navigation");
+  await expect(nav.locator("[aria-current]")).toHaveText(["포트폴리오"]);
+});

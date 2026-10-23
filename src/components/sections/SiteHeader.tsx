@@ -4,12 +4,17 @@ import { MobileMenu } from "@/components/ui/MobileMenu";
 import { NavLink } from "@/components/ui/NavLink";
 import { Link } from "@/i18n/navigation";
 
-const links = [
+// match: 그 메뉴를 현재로 보는 경로 접두사. 작업 상세(/work/...)는 포트폴리오 아래로 본다
+const links: {
+  href: string;
+  key: "home" | "about" | "portfolio" | "services";
+  match?: readonly string[];
+}[] = [
   { href: "/", key: "home" },
   { href: "/about", key: "about" },
-  { href: "/portfolio", key: "portfolio" },
+  { href: "/portfolio", key: "portfolio", match: ["/portfolio", "/work"] },
   { href: "/services", key: "services" },
-] as const;
+];
 
 const focusRing =
   "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-purple-70";
@@ -38,10 +43,11 @@ export function SiteHeader() {
           className="absolute bottom-0 left-1/2 hidden -translate-x-1/2 overflow-hidden rounded-t-xl border-t border-l border-dark-12 lg:block 3xl:rounded-t-2xl"
         >
           <ul className="flex">
-            {links.map(({ href, key }) => (
+            {links.map(({ href, key, match }) => (
               <li key={key}>
                 <NavLink
                   href={href}
+                  match={match}
                   className={`block border-r border-dark-12 px-7.5 py-6 text-button whitespace-nowrap text-grey-70 transition-colors hover:text-white aria-[current=page]:bg-dark-08 aria-[current=page]:text-white 3xl:px-10 3xl:py-7.5 ${focusRing}`}
                 >
                   {t(`nav.${key}`)}
@@ -64,10 +70,11 @@ export function SiteHeader() {
         <MobileMenu openLabel={t("menu.open")} closeLabel={t("menu.close")}>
           <nav aria-label={t("nav.label")}>
             <ul className="flex flex-col border-x border-dark-12 px-4">
-              {links.map(({ href, key }) => (
+              {links.map(({ href, key, match }) => (
                 <li key={key} className="border-b border-dark-12">
                   <NavLink
                     href={href}
+                    match={match}
                     className={`flex items-center justify-between py-5 text-h2 text-grey-70 aria-[current=page]:text-white ${focusRing}`}
                   >
                     {t(`nav.${key}`)}
