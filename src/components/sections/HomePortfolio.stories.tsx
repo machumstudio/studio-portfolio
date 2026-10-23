@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import messages from "../../../messages/ko.json";
 import { HomePortfolio } from "./HomePortfolio";
 
-const { items } = messages.Portfolio;
 const image = { src: "/images/placeholder.svg", alt: "" };
 
 const meta = {
@@ -12,19 +10,19 @@ const meta = {
     items: [
       {
         slug: "faces-of-resilience",
-        title: items.resilience.title,
+        title: "단단한 얼굴들",
         date: "2022-03",
         image,
       },
       {
         slug: "a-wedding-tale",
-        title: items.wedding.title,
+        title: "어느 결혼식 이야기",
         date: "2020-01",
         image,
       },
       {
         slug: "product-elegance",
-        title: items.product.title,
+        title: "제품의 품격",
         date: "2020-01",
         image,
       },
