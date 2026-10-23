@@ -47,6 +47,9 @@
   /* 30, 100: 홈 Services 사진의 왼쪽 아래만 크게 깎인 모서리 (모바일 30 / 노트북·데스크톱 100). 노드에 r 이 없어 시안 픽셀에서 잼 */
   --radius-30: 30px;
   --radius-100: 100px;
+  /* 14, 34: Portfolio 히어로 사진 (모바일 14 / 노트북·데스크톱 34). 작업 상세 대표 사진도 같은 값 */
+  --radius-14: 14px;
+  --radius-34: 34px;
 
   /* 카테고리 마키: 같은 목록을 두 번 이어 붙이고 절반(-50%)만큼 흘린 뒤 처음으로 돌아간다. 시안은 정지 화면이라 속도는 직접 정함 */
   --animate-marquee: marquee 40s linear infinite;
@@ -222,6 +225,16 @@
     font-size: 22px;
   }
 }
+/* card: Portfolio 갤러리 카드 제목 (Medium 행간 auto, 16/16/20). 홈 미리보기 카드(text-h4 + font-medium)는
+   노트북이 18 이라 따로 둔다 (portfolio-laptop.json Card Heading fs 16, home-laptop.json 18) */
+@utility text-card {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: normal;
+  @media (width >= 1920px) {
+    font-size: 20px;
+  }
+}
 @utility text-label {
   font-size: 16px;
   font-weight: 400;
@@ -300,6 +313,35 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
+/* 사진을 깎아 낸 자리(Portfolio 히어로)의 바깥 모서리: 34x34 조각을 사진 모서리에 겹쳐 원 바깥을 배경색으로 칠한다.
+   tl/bl/br 은 둥글게 보일 사진 모서리 (radius 34). 경계는 0.5px 을 섞어 계단을 줄인다 */
+@utility photo-corner-tl {
+  width: 34px;
+  height: 34px;
+  background: radial-gradient(
+    circle at 100% 100%,
+    transparent 33.5px,
+    var(--color-dark-03) 34px
+  );
+}
+@utility photo-corner-bl {
+  width: 34px;
+  height: 34px;
+  background: radial-gradient(
+    circle at 100% 0,
+    transparent 33.5px,
+    var(--color-dark-03) 34px
+  );
+}
+@utility photo-corner-br {
+  width: 34px;
+  height: 34px;
+  background: radial-gradient(
+    circle at 0 0,
+    transparent 33.5px,
+    var(--color-dark-03) 34px
+  );
 }
 /* 위 매핑은 출발점이다. 섹션 구현 때 docs/design/nodes/*.json 의 fs/font/lh 와 다르면 노드 값을 따르고 이 표를 고친다. */
 

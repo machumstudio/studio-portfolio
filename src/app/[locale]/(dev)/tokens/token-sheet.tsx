@@ -46,6 +46,7 @@ export const typeTokens = [
   { name: "eyebrow", className: "text-eyebrow" },
   { name: "button", className: "text-button" },
   { name: "field", className: "text-field" },
+  { name: "card", className: "text-card" },
   { name: "label", className: "text-label" },
   { name: "caption", className: "text-caption" },
   { name: "logo", className: "text-logo" },
