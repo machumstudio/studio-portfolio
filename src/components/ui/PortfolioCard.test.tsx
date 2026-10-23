@@ -6,9 +6,10 @@ vi.mock("@/i18n/navigation", () => ({
   Link: ({ href, ...props }: { href: string }) => <a href={href} {...props} />,
 }));
 
-const renderCard = () =>
+const renderCard = (variant?: "preview" | "gallery") =>
   render(
     <PortfolioCard
+      variant={variant}
       href="/work/faces-of-resilience"
       title="단단한 얼굴들"
       date="2022-03"
@@ -44,4 +45,18 @@ describe("PortfolioCard", () => {
       screen.getByRole("img").closest("[data-visual-mask]"),
     ).not.toBeNull();
   });
+
+  it.each([
+    ["preview", "text-h4"],
+    ["gallery", "text-card"],
+  ] as const)(
+    "%s 변형은 제목 글자 토큰 %s 를 쓰고 색은 그대로다",
+    (variant, token) => {
+      renderCard(variant);
+      expect(screen.getByRole("heading", { level: 3 })).toHaveClass(
+        token,
+        "text-grey-80",
+      );
+    },
+  );
 });

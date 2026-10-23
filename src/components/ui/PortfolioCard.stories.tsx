@@ -38,3 +38,9 @@ export const Desktop: Story = {
 export const LongTitle: Story = {
   args: { title: "A Very Long Project Title That Wraps Onto Two Lines" },
 };
+
+// Portfolio 페이지 갤러리 크기 (노트북 사진 409, 제목 16)
+export const GalleryLaptop: Story = {
+  args: { variant: "gallery" },
+  globals: { viewport: { value: "laptop", isRotated: false } },
+};
