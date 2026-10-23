@@ -13,8 +13,8 @@
 | 05 | 인터랙션 | FaqAccordion(키보드/ARIA), Testimonials 슬라이더 |
 | 06 | Home 1 | Hero + About 요약 섹션 |
 | 07 | Home 2 | Services 슬라이더, Portfolio 미리보기 (데이터는 08 전까지 props 고정값) |
-| 08 | works 도메인 + 읽기 | domain/works(Work, Slug, 이미지 순서 규칙), application(getPublishedWorks, getWorkBySlug, WorkRepository 포트), 인메모리 리포지토리 + 시드, features/works/queries |
-| 09 | Portfolio / 작업 상세 | 카테고리 필터 + 그리드, `/work/[slug]` + Lightbox, 07의 고정값을 queries로 교체 |
+| 08 | works 도메인 + 읽기 | domain/works(Work, Slug, 이미지 순서 규칙), application(getPublishedWorks, getWorkBySlug, WorkRepository 포트), 인메모리 리포지토리 + 시드, features/works/queries, 07의 홈 Portfolio 고정값을 queries로 교체 |
+| 09 | Portfolio / 작업 상세 | 카테고리 필터 + 그리드, `/work/[slug]` + Lightbox |
 | 10 | About | 통계, 타임라인 |
 | 11 | Services | PriceCard |
 | 12 | inquiry 도메인 + 유스케이스 | Inquiry 엔티티, 상태 전이(New/Read/Done), 에러 유니온, submitInquiry/changeInquiryStatus, 포트(InquiryRepository, Notifier, Clock), 인메모리 구현, 전이표 전체 테스트 |
