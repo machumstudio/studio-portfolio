@@ -61,3 +61,14 @@ export const SingleWithActions: Story = {
     actions: <Button variant="outline">View All</Button>,
   },
 };
+
+// Portfolio 갤러리처럼 구분선 없이 제목과 화살표가 한 줄 (mobile 은 화살표를 슬라이드 아래 50)
+export const WithoutDivider: Story = {
+  globals: { viewport: { value: "mobile", isRotated: false } },
+  args: {
+    divider: false,
+    alignControls: "center",
+    className: "gap-5",
+    controlsClassName: "mt-7.5 lg:mt-0",
+  },
+};

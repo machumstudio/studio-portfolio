@@ -25,6 +25,10 @@ type CarouselProps = {
   actions?: ReactNode;
   /** lg 부터 화살표/버튼의 세로 정렬. 제목만 있으면 center, 제목 아래 내용이 더 있으면 end */
   alignControls?: "center" | "end";
+  /** 제목 줄 아래 구분선. Portfolio 갤러리처럼 섹션 위 테두리로 나누는 곳은 끈다 */
+  divider?: boolean;
+  /** 화살표 묶음 위치를 바꿀 때 (예: mobile 에서 슬라이드와의 간격) */
+  controlsClassName?: string;
   /** 슬라이드. 한 화면에 mobile 1 / md 2 / lg 3 장 */
   children: ReactNode;
   id?: string;
@@ -54,6 +58,8 @@ export function Carousel({
   header,
   actions,
   alignControls = "end",
+  divider = true,
+  controlsClassName,
   children,
   id,
   className,
@@ -93,8 +99,10 @@ export function Carousel({
 
   const arrowClass = "aria-disabled:cursor-default aria-disabled:opacity-40";
   // 제목 줄 구분선: 제목 칸과 컨트롤 칸이 각자 아래 테두리를 그려 한 줄로 잇는다
-  const rule = "border-b border-dark-12 pb-4.75 lg:pb-9.75 3xl:pb-12.25";
-  const lgRule = "lg:border-b lg:border-dark-12 lg:pb-9.75 3xl:pb-12.25";
+  const rule =
+    divider && "border-b border-dark-12 pb-4.75 lg:pb-9.75 3xl:pb-12.25";
+  const lgRule =
+    divider && "lg:border-b lg:border-dark-12 lg:pb-9.75 3xl:pb-12.25";
 
   return (
     <section
@@ -117,7 +125,12 @@ export function Carousel({
           lgRule,
         )}
       >
-        <div className="order-last flex gap-3 self-center rounded-full border border-dark-12 bg-dark-03 p-1.75 lg:order-none 3xl:gap-4 3xl:p-2.25">
+        <div
+          className={cx(
+            "order-last flex gap-3 self-center rounded-full border border-dark-12 bg-dark-03 p-1.75 lg:order-none 3xl:gap-4 3xl:p-2.25",
+            controlsClassName,
+          )}
+        >
           <Button
             variant="icon"
             size="lg"

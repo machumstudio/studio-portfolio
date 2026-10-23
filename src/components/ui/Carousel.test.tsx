@@ -3,9 +3,10 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { Carousel } from "./Carousel";
 
-const renderCarousel = () =>
+const renderCarousel = (props: { divider?: boolean } = {}) =>
   render(
     <Carousel
+      {...props}
       labelledBy="t"
       previousLabel="이전 후기"
       nextLabel="다음 후기"
@@ -45,6 +46,15 @@ const setScroll = (
 afterEach(() => vi.restoreAllMocks());
 
 describe("Carousel", () => {
+  it("제목 줄 구분선은 기본으로 있고 divider={false} 면 없다", () => {
+    const heading = () => screen.getByRole("heading").parentElement!;
+    const { unmount } = renderCarousel();
+    expect(heading()).toHaveClass("border-b");
+    unmount();
+    renderCarousel({ divider: false });
+    expect(heading()).not.toHaveClass("border-b");
+  });
+
   it("제목으로 이름 붙은 carousel 이고, 슬라이드마다 'n / 전체' 라벨이 붙는다", () => {
     renderCarousel();
     const carousel = screen.getByRole("region", { name: "고객 후기" });
