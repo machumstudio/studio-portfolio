@@ -3,6 +3,11 @@ import { err, flatMap, map, ok, type Result } from "@/shared/result";
 import { arrangeImages, type ImageError, type WorkImage } from "./images";
 import type { LocalizedText } from "./localized-text";
 import { parseSlug, type Slug, type SlugError } from "./slug";
+import {
+  parseYearMonth,
+  type YearMonth,
+  type YearMonthError,
+} from "./year-month";
 
 export type WorkId = Brand<string, "WorkId">;
 
@@ -15,8 +20,7 @@ export type Work = {
   readonly slug: Slug;
   readonly title: LocalizedText;
   readonly category: WorkCategory;
-  /** 촬영 연월 "YYYY-MM" (시안은 "March 2022" 처럼 월까지만 보인다) */
-  readonly date: string;
+  readonly date: YearMonth;
   readonly cover: WorkImage;
   /** order 오름차순 */
   readonly images: readonly WorkImage[];
@@ -40,13 +44,11 @@ export type WorkError =
   | SlugError
   | { type: "EmptyTitle"; locale: keyof LocalizedText }
   | { type: "InvalidCategory"; value: string }
-  | { type: "InvalidDate"; value: string }
+  | YearMonthError
   | ImageError;
 
 const isCategory = (value: string): value is WorkCategory =>
   (workCategories as readonly string[]).includes(value);
-
-const datePattern = /^\d{4}-(0[1-9]|1[0-2])$/;
 
 const parseTitle = (title: LocalizedText): Result<LocalizedText, WorkError> => {
   const trimmed = { ko: title.ko.trim(), en: title.en.trim() };
@@ -62,21 +64,24 @@ export function createWork(input: WorkInput): Result<Work, WorkError> {
   if (!isCategory(input.category))
     return err({ type: "InvalidCategory", value: input.category });
   const category = input.category;
-  if (!datePattern.test(input.date))
-    return err({ type: "InvalidDate", value: input.date });
 
-  return flatMap(parseSlug(input.slug), (slug) =>
-    flatMap(parseTitle(input.title), (title) =>
-      map(arrangeImages(input.images, input.coverSrc), ({ images, cover }) => ({
-        id: id as WorkId,
-        slug,
-        title,
-        category,
-        date: input.date,
-        cover,
-        images,
-        published: input.published,
-      })),
+  return flatMap(parseYearMonth(input.date), (date) =>
+    flatMap(parseSlug(input.slug), (slug) =>
+      flatMap(parseTitle(input.title), (title) =>
+        map(
+          arrangeImages(input.images, input.coverSrc),
+          ({ images, cover }) => ({
+            id: id as WorkId,
+            slug,
+            title,
+            category,
+            date,
+            cover,
+            images,
+            published: input.published,
+          }),
+        ),
+      ),
     ),
   );
 }
