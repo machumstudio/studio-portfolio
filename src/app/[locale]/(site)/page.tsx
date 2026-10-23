@@ -8,49 +8,21 @@ import {
   type PortfolioPreviewItem,
 } from "@/components/sections/HomePortfolio";
 import { HomeServices } from "@/components/sections/HomeServices";
-import { SiteFaq } from "@/components/sections/SiteFaq";
 import type { LocalizedText } from "@/domain/works/localized-text";
 import { getPublishedWorks } from "@/features/works/queries";
-import {
-  SiteTestimonials,
-  type Testimonial,
-} from "@/components/sections/SiteTestimonials";
+import { Faq, Testimonials } from "./_sections/site-sections";
 
 // 사진은 16칸에서 Unsplash 로 교체할 때까지 임시 이미지. 꾸밈용 자리라 alt 는 비운다
 const placeholder = { src: "/images/placeholder.svg", alt: "" };
 const heroPhotos = Array.from({ length: heroPhotoCount }, () => placeholder);
 
-// 서비스, FAQ, 후기는 당분간 메시지로 만든 고정값을 섹션 props 로 넘긴다.
+// 서비스는 당분간 메시지로 만든 고정값을 섹션 props 로 넘긴다.
 // 서비스 순서: 시안 홈은 Events 가 첫 장이다 (Services 페이지 순서는 Portrait, Events, Commercial)
 const services = {
   events: ["coverage", "moment", "story", "delivery"],
   portrait: ["style", "direction", "location", "retouch"],
   commercial: ["product", "space", "brand", "files"],
 } as const;
-const faqIds = [
-  "specialty",
-  "booking",
-  "equipment",
-  "location",
-  "editing",
-  "files",
-  "prints",
-  "delivery",
-] as const;
-const testimonialIds = [
-  "emily",
-  "john",
-  "samantha",
-  "olivia",
-  "lucas",
-  "sofia",
-] as const;
-// 가상 인물이라 계정이 없다. 푸터와 같이 각 서비스 첫 화면으로 둔다
-const socials: Testimonial["socials"] = [
-  { network: "instagram", href: "https://www.instagram.com/" },
-  { network: "facebook", href: "https://www.facebook.com/" },
-  { network: "x", href: "https://x.com/" },
-];
 
 const previewLimit = 6;
 
@@ -63,8 +35,6 @@ export default function Page({ params }: PageProps<"/[locale]">) {
   const works = use(getPublishedWorks({ limit: previewLimit }));
   // locale 은 layout 에서 hasLocale 로 확인한 값
   const lang = locale as keyof LocalizedText;
-  const faq = useTranslations("Faq.items");
-  const testimonials = useTranslations("Testimonials.items");
 
   return (
     <main className="flex flex-col gap-20 pb-20 lg:gap-37.5 lg:pb-37.5 3xl:gap-50 3xl:pb-50">
@@ -96,25 +66,8 @@ export default function Page({ params }: PageProps<"/[locale]">) {
           }),
         )}
       />
-      <SiteFaq
-        items={faqIds.map((id) => ({
-          id,
-          question: faq(`${id}.question`),
-          answer: faq(`${id}.answer`),
-        }))}
-        defaultOpen={["specialty", "prints"]}
-      />
-      <SiteTestimonials
-        total={323}
-        items={testimonialIds.map((id) => ({
-          id,
-          name: testimonials(`${id}.name`),
-          location: testimonials(`${id}.location`),
-          rating: 5,
-          quote: testimonials(`${id}.quote`),
-          socials,
-        }))}
-      />
+      <Faq />
+      <Testimonials />
     </main>
   );
 }
