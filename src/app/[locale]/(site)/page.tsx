@@ -52,13 +52,15 @@ const socials: Testimonial["socials"] = [
   { network: "x", href: "https://x.com/" },
 ];
 
+const previewLimit = 6;
+
 // 시안 섹션 간격: 80 / 150 / 200 (노드 h 합과 프레임 높이 차이를 간격 수로 나눈 값, 시안 픽셀로 확인)
 export default function Page({ params }: PageProps<"/[locale]">) {
   const { locale } = use(params);
   setRequestLocale(locale);
   const service = useTranslations("Services.items");
-  // 공개 작업 전체를 최신순으로. 링크(/work/[slug])는 09칸 전까지 404
-  const works = use(getPublishedWorks());
+  // 공개 작업 중 최신 6개. 나머지는 "모든 작업 보기"(/portfolio)에서
+  const works = use(getPublishedWorks({ limit: previewLimit }));
   // locale 은 layout 에서 hasLocale 로 확인한 값
   const lang = locale as keyof LocalizedText;
   const faq = useTranslations("Faq.items");

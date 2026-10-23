@@ -177,12 +177,12 @@ test.describe("Services 슬라이더", () => {
 test.describe("Portfolio 미리보기", () => {
   const portfolio = (page: Page) =>
     page.getByRole("region", { name: "작업을 둘러보세요" });
-  // 인메모리 시드의 공개 작업 9개 (비공개 1개 제외), 최신순
-  const total = 9;
+  // 인메모리 시드의 공개 작업 9개 (비공개 1개 제외) 중 최신 6개
+  const total = 6;
   const labels = (from: number, count: number) =>
     Array.from({ length: count }, (_, i) => `${from + i} / ${total}`);
 
-  test("공개 작업이 최신순 카드로 나오고, 링크는 /work/[slug], 한 화면에 mobile 1 / lg 3 장", async ({
+  test("공개 작업 최신 6개가 카드로 나오고, 링크는 /work/[slug], 한 화면에 mobile 1 / lg 3 장", async ({
     page,
   }, testInfo) => {
     await page.goto("/");
@@ -200,6 +200,9 @@ test.describe("Portfolio 미리보기", () => {
     await expect(
       portfolio(page).getByRole("link", { name: /촬영 현장 기록/ }),
     ).toHaveCount(0);
+    await expect(
+      portfolio(page).getByRole("link", { name: "모든 작업 보기" }),
+    ).toHaveAttribute("href", "/portfolio");
     await track(page, "portfolio").scrollIntoViewIfNeeded();
     const perView = testInfo.project.name === "mobile" ? 1 : 3;
     expect(await visibleSlides(page, "portfolio")).toEqual(labels(1, perView));
