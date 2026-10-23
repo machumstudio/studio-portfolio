@@ -237,5 +237,70 @@
         "quote": "Even on a tight schedule, the edited photos arrived on the promised date. We will book them for our next event."
       }
     }
+  },
+  "Works": {
+    "categories": {
+      "portrait": {
+        "name": "Portraits",
+        "title": "Portraits Photography"
+      },
+      "events": {
+        "name": "Events",
+        "title": "Events Photography"
+      },
+      "commercial": {
+        "name": "Commercial",
+        "title": "Commercial Photography"
+      }
+    }
+  },
+  "PortfolioPage": {
+    "metadata": {
+      "title": "Portfolio | Machum Studio",
+      "description": "Portrait, event, and commercial photography by Machum Studio, grouped by category."
+    },
+    "hero": {
+      "eyebrow": "Portfolio",
+      "title": "Visual Poetry in Pixels",
+      "body": "Step into a visual journey through our lens. Each photograph in this portfolio is a narrative, a frozen moment in time, and a testament to the care we pour into every frame. Explore the diverse stories we have had the privilege to capture.",
+      "scroll": "Scroll down to see the works"
+    },
+    "filter": {
+      "label": "Browse by category",
+      "all": "All"
+    },
+    "previous": "Previous {category} work",
+    "next": "Next {category} work",
+    "slide": "{index} of {total}",
+    "empty": "No published works yet."
+  },
+  "WorkPage": {
+    "metadata": {
+      "title": "{title} | Machum Studio",
+      "description": "{category} photography, {date} · \"{title}\" by Machum Studio"
+    },
+    "back": "Back to portfolio",
+    "gallery": "{count} photos",
+    "open": "View photo {index} larger",
+    "lightbox": {
+      "label": "{title} photos",
+      "close": "Close",
+      "previous": "Previous photo",
+      "next": "Next photo",
+      "position": "{index} of {total}"
+    },
+    "pager": {
+      "label": "More works",
+      "previous": "Previous work",
+      "next": "Next work"
+    }
+  },
+  "NotFound": {
+    "metadata": "Page not found | Machum Studio",
+    "eyebrow": "404",
+    "title": "Page not found",
+    "body": "The address may have changed, or the page is not published. Try the home page or the works list.",
+    "home": "Go home",
+    "portfolio": "Browse works"
   }
 }

@@ -237,5 +237,70 @@
         "quote": "일정이 빠듯했는데도 약속한 날짜에 보정본을 받았어요. 다음 행사도 부탁드릴 거예요."
       }
     }
+  },
+  "Works": {
+    "categories": {
+      "portrait": {
+        "name": "인물",
+        "title": "인물 사진"
+      },
+      "events": {
+        "name": "이벤트",
+        "title": "이벤트 사진"
+      },
+      "commercial": {
+        "name": "광고",
+        "title": "광고 사진"
+      }
+    }
+  },
+  "PortfolioPage": {
+    "metadata": {
+      "title": "포트폴리오 | Machum Studio",
+      "description": "인물, 이벤트, 광고 촬영 작업을 분야별로 모았습니다."
+    },
+    "hero": {
+      "eyebrow": "포트폴리오",
+      "title": "픽셀로 쓴 시",
+      "body": "저희 렌즈가 담아 온 시간 속으로 들어와 보세요. 이곳의 사진 한 장 한 장은 하나의 이야기이자 멈춰 둔 순간이고, 모든 프레임에 쏟은 정성의 기록입니다. 저희가 함께하고 기록할 수 있었던 여러 이야기를 둘러보세요.",
+      "scroll": "아래로 내려 작업 보기"
+    },
+    "filter": {
+      "label": "분야별로 보기",
+      "all": "전체"
+    },
+    "previous": "이전 {category} 작업",
+    "next": "다음 {category} 작업",
+    "slide": "{index} / {total}",
+    "empty": "아직 공개한 작업이 없습니다."
+  },
+  "WorkPage": {
+    "metadata": {
+      "title": "{title} | Machum Studio",
+      "description": "{date} {category} 촬영 · Machum Studio 작업 \"{title}\""
+    },
+    "back": "포트폴리오로",
+    "gallery": "사진 {count}장",
+    "open": "사진 {index} 크게 보기",
+    "lightbox": {
+      "label": "{title} 사진",
+      "close": "닫기",
+      "previous": "이전 사진",
+      "next": "다음 사진",
+      "position": "{index} / {total}"
+    },
+    "pager": {
+      "label": "다른 작업",
+      "previous": "이전 작업",
+      "next": "다음 작업"
+    }
+  },
+  "NotFound": {
+    "metadata": "페이지를 찾을 수 없음 | Machum Studio",
+    "eyebrow": "404",
+    "title": "페이지를 찾을 수 없어요",
+    "body": "주소가 바뀌었거나 공개되지 않은 페이지예요. 홈이나 작업 목록에서 다시 찾아 주세요.",
+    "home": "홈으로",
+    "portfolio": "작업 둘러보기"
   }
 }
