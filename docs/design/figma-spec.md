@@ -33,7 +33,7 @@ Manrope (Regular/Medium/SemiBold/Bold). 시안 실측 최빈값:
 ## 페이지별 섹션 (위에서부터)
 | 페이지 | 섹션 |
 |---|---|
-| Home | Header · Hero(이름 + 사진 콜라주 8장 + 카테고리 마키 + "Let's Work Together" 버튼) · About 요약(사진 + Introduction + Contact Information + 소셜/버튼) · Services 슬라이더(카테고리 탭 + 설명 + 하이라이트 목록 + 이미지) · Portfolio 미리보기 3카드(View Project) · FAQ(2열 아코디언) · Testimonials(총 리뷰 수 + 카드 3개 + 좌우 화살표) · CTA + Footer(큰 워드마크 + 마키 + 링크 4열) |
+| Home | Header · Hero(이름 + 사진 콜라주 7칸(노드 사진 6장, 겹쳐 깎인 BOOLEAN 칸을 나누면 7칸) + 카테고리 마키 + "Let's Work Together" 버튼) · About 요약(사진 + Introduction + Contact Information + 소셜/버튼) · Services 슬라이더(탭 없음. 서비스 하나씩: 카테고리 제목 + 보라 화살표 버튼 + 설명 + Service Highlights 목록 + 이미지, 제목 줄 좌우 화살표로 Portrait/Events/Commercial 전환) · Portfolio 미리보기 3카드(View Project) · FAQ(2열 아코디언) · Testimonials(총 리뷰 수 + 카드 3개 + 좌우 화살표) · CTA + Footer(큰 워드마크 + 마키 + 링크 4열) |
 | About | Header · 소개 + 통계(15+ 등) · 연도별 타임라인(Year - 2005 ...) · Testimonials · CTA + Footer |
 | Portfolio | Header · 페이지 히어로 · 카테고리별 갤러리(Portraits, Events 등) · FAQ · Testimonials · CTA + Footer |
 | Services | Header · 페이지 히어로 · 서비스별 가격 패키지($250, $400 ...) · FAQ · CTA + Footer |
