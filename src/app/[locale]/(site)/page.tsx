@@ -3,6 +3,11 @@ import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { HomeAbout } from "@/components/sections/HomeAbout";
 import { HomeHero, heroPhotoCount } from "@/components/sections/HomeHero";
+import {
+  HomePortfolio,
+  type PortfolioPreviewItem,
+} from "@/components/sections/HomePortfolio";
+import { HomeServices } from "@/components/sections/HomeServices";
 import { SiteFaq } from "@/components/sections/SiteFaq";
 import {
   SiteTestimonials,
@@ -13,7 +18,19 @@ import {
 const placeholder = { src: "/images/placeholder.svg", alt: "" };
 const heroPhotos = Array.from({ length: heroPhotoCount }, () => placeholder);
 
-// FAQ 와 후기는 당분간 메시지로 만든 고정값을 섹션 props 로 넘긴다
+// 서비스, 작업, FAQ, 후기는 당분간 메시지로 만든 고정값을 섹션 props 로 넘긴다.
+// 서비스 순서: 시안 홈은 Events 가 첫 장이다 (Services 페이지 순서는 Portrait, Events, Commercial)
+const services = {
+  events: ["coverage", "moment", "story", "delivery"],
+  portrait: ["style", "direction", "location", "retouch"],
+  commercial: ["product", "space", "brand", "files"],
+} as const;
+// 작업 3개는 08칸 works 도메인이 생기면 getPublishedWorks 로 바꾼다. 링크(/work/[slug])는 09칸 전까지 404
+const works = [
+  { id: "resilience", slug: "faces-of-resilience", date: "2022-03" },
+  { id: "wedding", slug: "a-wedding-tale", date: "2020-01" },
+  { id: "product", slug: "product-elegance", date: "2020-01" },
+] as const;
 const faqIds = [
   "specialty",
   "booking",
@@ -43,6 +60,8 @@ const socials: Testimonial["socials"] = [
 export default function Page({ params }: PageProps<"/[locale]">) {
   const { locale } = use(params);
   setRequestLocale(locale);
+  const service = useTranslations("Services.items");
+  const work = useTranslations("Portfolio.items");
   const faq = useTranslations("Faq.items");
   const testimonials = useTranslations("Testimonials.items");
 
@@ -54,6 +73,25 @@ export default function Page({ params }: PageProps<"/[locale]">) {
         photo={placeholder}
         email="hello@example.com"
         phone="+00 000000000"
+      />
+      <HomeServices
+        items={Object.entries(services).map(([id, highlights]) => ({
+          id,
+          name: service(`${id}.name`),
+          body: service(`${id}.body`),
+          highlights: highlights.map((key) =>
+            service(`${id}.highlights.${key}`),
+          ),
+          image: placeholder,
+        }))}
+      />
+      <HomePortfolio
+        items={works.map(({ id, slug, date }): PortfolioPreviewItem => ({
+          slug,
+          title: work(`${id}.title`),
+          date,
+          image: placeholder,
+        }))}
       />
       <SiteFaq
         items={faqIds.map((id) => ({
