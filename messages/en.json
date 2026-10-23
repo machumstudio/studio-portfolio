@@ -295,6 +295,66 @@
       "next": "Next work"
     }
   },
+  "AboutPage": {
+    "metadata": {
+      "title": "About | Machum Studio",
+      "description": "From a first camera in 2005 to portraits, events, and brands: the story and journey of Machum Studio."
+    },
+    "hero": {
+      "eyebrow": "About",
+      "title": "About Machum Studio",
+      "scroll": "Scroll down to see our journey"
+    },
+    "stats": {
+      "items": {
+        "years": {
+          "value": "15+",
+          "label": "Years in Business"
+        },
+        "clients": {
+          "value": "500+",
+          "label": "Happy Clients"
+        },
+        "awards": {
+          "value": "10+",
+          "label": "Photography Awards"
+        },
+        "abroad": {
+          "value": "05+",
+          "label": "International Shoots"
+        },
+        "followers": {
+          "value": "10,000+",
+          "label": "Social Media Followers"
+        },
+        "retention": {
+          "value": "90%",
+          "label": "Client Retention Rate"
+        }
+      }
+    },
+    "biography": {
+      "title": "Our Biography",
+      "paragraphs": {
+        "origin": "Machum Studio's love affair with photography began early, nurtured by seaside towns and the people of busy market streets. A passion for telling stories through images started a journey that has now spanned over 15 years.",
+        "craft": "Driven by curiosity to find beauty in everyday moments, we have honed our craft step by step. A background in digital media gives us a solid foundation, but it's a keen eye for detail and an ability to capture real emotion that sets our work apart.",
+        "promise": "For us, a shoot is more than taking pictures; it's about capturing the human spirit, the fleeting magic of nature, and the emotions that define our lives. With each click of the shutter, we weave stories that transcend time and space."
+      }
+    },
+    "timeline": {
+      "eyebrow": "Journey",
+      "title": "Machum's Journey - A Timeline",
+      "year": "Year - {year}",
+      "items": {
+        "2005": "We acquired our first camera, igniting a passion for photography, experimenting with landscapes and candid shots and beginning our visual storytelling.",
+        "2010": "We studied visual arts with a focus on photography, refining our technical skills and artistic sensibilities.",
+        "2012": "We held our first solo exhibition, showcasing a unique perspective on nature and people through our lens.",
+        "2015": "Machum Studio officially launched, offering portrait, event, and commercial photography services.",
+        "2017": "Our work took us abroad, capturing breathtaking scenes and cultures from around the world.",
+        "2020": "Our dedication and creativity earned several prestigious photography awards, establishing us as a storytelling studio."
+      }
+    }
+  },
   "NotFound": {
     "metadata": "Page not found | Machum Studio",
     "eyebrow": "404",
