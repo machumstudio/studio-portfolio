@@ -194,6 +194,21 @@ describe.skipIf(!hasSupabaseEnv)("관리자 권한: 가입과 로그인 세션",
       expect(await snapshot()).toEqual(initial);
     });
 
+    it("save_work 함수로도 작업을 넣거나 바꾸지 못한다", async () => {
+      for (const target of [
+        work(`admin-rls-rpc-${run}`, true),
+        { ...hidden, published: true },
+      ]) {
+        const rows = toWorkRows(target);
+        const { error } = await client().rpc("save_work", {
+          work: rows.work,
+          images: rows.images,
+        });
+        expect(error?.code).toBe(PERMISSION_DENIED);
+      }
+      expect(await snapshot()).toEqual(initial);
+    });
+
     it("문의 추가는 거부, 상태 변경/삭제는 아무 행도 바꾸지 못한다", async () => {
       const insert = await client()
         .from("inquiries")
@@ -240,6 +255,64 @@ describe.skipIf(!hasSupabaseEnv)("관리자 권한: 가입과 로그인 세션",
       expect(remove.data).toEqual([{ id: added.work.id }]);
       expect(await snapshot()).toEqual(initial);
     });
+
+    it("save_work 로 작업과 사진을 한 번에 넣고 바꾼다", async () => {
+      const target = work(`admin-rls-saved-${run}`, false);
+      const rows = toWorkRows(target);
+      const save = (images = rows.images) =>
+        admin.rpc("save_work", { work: rows.work, images });
+      expect((await save()).error).toBeNull();
+      const twoPhotos = [
+        { ...rows.images[0]!, is_cover: false },
+        { ...rows.images[0]!, sort_order: 1, src: "/x/1.jpg", is_cover: true },
+      ];
+      expect((await save(twoPhotos)).error).toBeNull();
+      const images = await admin
+        .from("work_images")
+        .select("sort_order, is_cover")
+        .eq("work_id", target.id)
+        .order("sort_order");
+      expect(images.data).toEqual([
+        { sort_order: 0, is_cover: false },
+        { sort_order: 1, is_cover: true },
+      ]);
+      await admin.from("works").delete().eq("id", target.id);
+      expect(await snapshot()).toEqual(initial);
+    });
+
+    it.each([
+      ["사진 없음", []],
+      ["대표 없음", [{ sort_order: 0, is_cover: false }]],
+      [
+        "대표 2개",
+        [
+          { sort_order: 0, is_cover: true },
+          { sort_order: 1, is_cover: true },
+        ],
+      ],
+      [
+        "순서 빈칸",
+        [
+          { sort_order: 0, is_cover: true },
+          { sort_order: 2, is_cover: false },
+        ],
+      ],
+    ])(
+      "save_work 는 사진 규칙을 어기면(%s) 거부하고 아무것도 바꾸지 않는다",
+      async (_, photos) => {
+        const rows = toWorkRows({ ...visible, published: false });
+        const { error } = await admin.rpc("save_work", {
+          work: rows.work,
+          images: photos.map((photo) => ({
+            ...rows.images[0]!,
+            ...photo,
+            src: `/${photo.sort_order}.jpg`,
+          })),
+        });
+        expect(error?.code).toBe("23514");
+        expect(await snapshot()).toEqual(initial);
+      },
+    );
 
     it("문의 상태를 바꾼다. 새 문의 저장은 거부 (secret 키만)", async () => {
       const update = await admin

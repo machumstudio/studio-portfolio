@@ -70,6 +70,11 @@ export type Database = {
     Functions: {
       // 20261024000003_admin_access.sql. RLS 정책 안에서 쓴다 (앱은 부르지 않는다)
       is_admin: { Args: Record<never, never>; Returns: boolean };
+      // 20261025000001_save_work.sql. 작업과 사진 행을 한 트랜잭션으로 바꾼다
+      save_work: {
+        Args: { work: Omit<WorkRow, "created_at">; images: WorkImageRow[] };
+        Returns: undefined;
+      };
     };
     Enums: Record<never, never>;
     CompositeTypes: Record<never, never>;

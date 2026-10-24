@@ -1,14 +1,21 @@
 import { describe, expect, it } from "vitest";
-import type { WorkRepository } from "@/application/works/work-repository";
+import type { AdminWorkRepository } from "@/application/works/admin-work-repository";
 import type { Slug } from "@/domain/works/slug";
-import { createWork, type Work, type WorkInput } from "@/domain/works/work";
+import {
+  createWork,
+  type Work,
+  type WorkId,
+  type WorkInput,
+} from "@/domain/works/work";
 
-// WorkRepository 계약 테스트. 구현마다 *.test.ts 에서 불러 같은 시나리오를 돌린다:
+// AdminWorkRepository(공개 읽기 + 관리자 쓰기) 계약 테스트. 구현마다 *.test.ts 에서 불러 같은 시나리오를 돌린다:
 //   describeWorkRepositoryContract("인메모리", (works) => createInMemoryWorkRepository(works));
 // setup 은 테스트마다 works 만 들어 있는 새 저장소를 돌려준다 (Supabase 는 테이블을 비우고 넣는다)
 export function describeWorkRepositoryContract(
   name: string,
-  setup: (works: readonly Work[]) => WorkRepository | Promise<WorkRepository>,
+  setup: (
+    works: readonly Work[],
+  ) => AdminWorkRepository | Promise<AdminWorkRepository>,
 ) {
   describe(`WorkRepository 계약: ${name}`, () => {
     it("findAll 은 비공개를 포함한 전체를 돌려준다 (순서 무관)", async () => {
@@ -34,6 +41,48 @@ export function describeWorkRepositoryContract(
     it("없는 slug 는 null", async () => {
       const repo = await setup(works);
       expect(await repo.findBySlug("nope" as Slug)).toBeNull();
+    });
+
+    it("findById 는 비공개도 찾고, 없으면 null", async () => {
+      const repo = await setup(works);
+      expect(await repo.findById(secret.id)).toEqual(secret);
+      expect(await repo.findById("nope" as WorkId)).toBeNull();
+    });
+
+    it("save 는 새 작업을 넣는다", async () => {
+      const repo = await setup(works);
+      expect(await repo.save(added)).toBe("saved");
+      expect(await repo.findById(added.id)).toEqual(added);
+      expect(await repo.findAll()).toHaveLength(works.length + 1);
+    });
+
+    it("save 는 같은 id 의 작업을 사진까지 통째로 바꾼다 (사진 수가 줄어도)", async () => {
+      const repo = await setup(works);
+      expect(await repo.save(weddingEdited)).toBe("saved");
+      expect(await repo.findById(wedding.id)).toEqual(weddingEdited);
+      expect(await repo.findBySlug(wedding.slug)).toBeNull();
+      // 다른 작업은 그대로
+      expect(await repo.findById(product.id)).toEqual(product);
+    });
+
+    it("save 는 다른 작업의 slug 면 저장하지 않고 slug-taken", async () => {
+      const repo = await setup(works);
+      expect(await repo.save({ ...added, slug: product.slug })).toBe(
+        "slug-taken",
+      );
+      expect(await repo.findById(added.id)).toBeNull();
+      expect(await repo.save({ ...weddingEdited, slug: product.slug })).toBe(
+        "slug-taken",
+      );
+      expect(await repo.findById(wedding.id)).toEqual(wedding);
+    });
+
+    it("remove 는 작업과 사진을 지운다. 없는 id 는 아무 일도 없다", async () => {
+      const repo = await setup(works);
+      await repo.remove(wedding.id);
+      await repo.remove("nope" as WorkId);
+      expect(await repo.findById(wedding.id)).toBeNull();
+      expect(byId(await repo.findAll())).toEqual(byId([secret, product]));
     });
   });
 }
@@ -81,5 +130,27 @@ const product = work({
   published: true,
 });
 const works = [wedding, secret, product];
+
+const added = work({
+  id: "contract-added",
+  slug: "fresh-work",
+  title: { ko: "새 작업", en: "Fresh Work" },
+  category: "portrait",
+  date: "2024-02",
+  coverSrc: "/n/2.jpg",
+  images: [image("/n/1.jpg", 0), image("/n/2.jpg", 1)],
+  published: false,
+});
+// 제목, slug, 공개 여부, 사진(3장 → 2장, 순서와 대표)을 모두 바꾼 결혼식 작업
+const weddingEdited = work({
+  id: wedding.id,
+  slug: "a-wedding-tale-2",
+  title: { ko: "어느 결혼식 이야기 2", en: "A Wedding Tale 2" },
+  category: "events",
+  date: "2021-10",
+  coverSrc: "/w/3.jpg",
+  images: [image("/w/3.jpg", 0), image("/w/1.jpg", 1)],
+  published: false,
+});
 const byId = (list: readonly Work[]) =>
   [...list].sort((a, b) => a.id.localeCompare(b.id));
