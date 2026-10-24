@@ -48,6 +48,10 @@
   /* 14, 34: Portfolio 히어로 사진 (모바일 14 / 노트북·데스크톱 34). 작업 상세 대표 사진도 같은 값 */
   --radius-14: 14px;
   --radius-34: 34px;
+  /* 24: Services 히어로 사진 (노트북). 데스크톱은 34 */
+  --radius-24: 24px;
+  /* 깎인 사진(PhotoCut)의 모서리: 칸 모서리(rounded-*-photo-cut)와 photo-corner-* 조각이 같이 쓴다. photo-cut-24 처럼 바꾼다 */
+  --radius-photo-cut: 34px;
 
   /* 카테고리 마키: 같은 목록을 두 번 이어 붙이고 절반(-50%)만큼 흘린 뒤 처음으로 돌아간다. 시안은 정지 화면이라 속도는 직접 정함 */
   --animate-marquee: marquee 40s linear infinite;
@@ -89,6 +93,9 @@
   @media (width >= 1024px) { font-size: 34px; } @media (width >= 1920px) { font-size: 48px; } }
 @utility text-prose { font-size: 14px; font-weight: 400; line-height: 1.5;
   @media (width >= 1024px) { font-size: 16px; } @media (width >= 1920px) { font-size: 20px; } }
+/* package: Services 패키지 이름 (Medium 150%, 16/16/22). quote: Services 맞춤 견적 (Medium 120%, 34/34/55) */
+@utility text-package { font-size: 16px; font-weight: 500; line-height: 1.5; @media (width >= 1920px) { font-size: 22px; } }
+@utility text-quote { font-size: 34px; font-weight: 500; line-height: 1.2; @media (width >= 1920px) { font-size: 55px; } }
 @utility text-tagline { font-size: 14px; font-weight: 500; line-height: normal;
   @media (width >= 1024px) { font-size: 18px; } @media (width >= 1920px) { font-size: 22px; } }
 @utility text-lead { font-size: 16px; font-weight: 500; line-height: 1.5;
@@ -132,10 +139,11 @@
   &[inert] { grid-template-rows: 0fr; } @media (prefers-reduced-motion: reduce) { transition: none; } }
 /* 가로 슬라이더: 스크롤바 숨김 */
 @utility scrollbar-none { scrollbar-width: none; &::-webkit-scrollbar { display: none; } }
-/* 사진을 깎아 낸 자리(Portfolio, About 히어로)의 바깥 모서리: 34x34 조각을 사진 모서리에 겹쳐 원 바깥을 배경색으로 칠한다.
-   tl/tr/bl/br 은 둥글게 보일 사진 모서리 (radius 34) */
-@utility photo-corner-tl { width: 34px; height: 34px; background: radial-gradient(circle at 100% 100%, transparent 33.5px, var(--color-dark-03) 34px); }
-@utility photo-corner-tr { width: 34px; height: 34px; background: radial-gradient(circle at 0 100%, transparent 33.5px, var(--color-dark-03) 34px); }
-@utility photo-corner-bl { width: 34px; height: 34px; background: radial-gradient(circle at 100% 0, transparent 33.5px, var(--color-dark-03) 34px); }
-@utility photo-corner-br { width: 34px; height: 34px; background: radial-gradient(circle at 0 0, transparent 33.5px, var(--color-dark-03) 34px); }
+/* 사진을 깎아 낸 자리(Portfolio, About, Services 히어로)의 바깥 모서리: radius 크기 조각을 사진 모서리에 겹쳐 원 바깥을 배경색으로 칠한다.
+   tl/tr/bl/br 은 둥글게 보일 사진 모서리. 크기는 --radius-photo-cut (기본 34, photo-cut-* 로 바꾼다) */
+@utility photo-cut-* { --radius-photo-cut: --value(--radius-*); }
+@utility photo-corner-tl { width: var(--radius-photo-cut); height: var(--radius-photo-cut); background: radial-gradient(circle at 100% 100%, transparent calc(var(--radius-photo-cut) - 0.5px), var(--color-dark-03) var(--radius-photo-cut)); }
+@utility photo-corner-tr { width: var(--radius-photo-cut); height: var(--radius-photo-cut); background: radial-gradient(circle at 0 100%, transparent calc(var(--radius-photo-cut) - 0.5px), var(--color-dark-03) var(--radius-photo-cut)); }
+@utility photo-corner-bl { width: var(--radius-photo-cut); height: var(--radius-photo-cut); background: radial-gradient(circle at 100% 0, transparent calc(var(--radius-photo-cut) - 0.5px), var(--color-dark-03) var(--radius-photo-cut)); }
+@utility photo-corner-br { width: var(--radius-photo-cut); height: var(--radius-photo-cut); background: radial-gradient(circle at 0 0, transparent calc(var(--radius-photo-cut) - 0.5px), var(--color-dark-03) var(--radius-photo-cut)); }
 /* 위 매핑은 출발점이다. 섹션 구현 때 docs/design/nodes/*.json 의 fs/font/lh 와 다르면 노드 값을 따르고 이 표를 고친다. */

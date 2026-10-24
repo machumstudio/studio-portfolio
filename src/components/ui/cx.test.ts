@@ -30,6 +30,8 @@ describe("cx", () => {
       "text-h4",
       "text-title",
       "text-category",
+      "text-package",
+      "text-quote",
       "text-tagline",
       "text-lead",
       "text-body",
@@ -80,5 +82,7 @@ describe("cx", () => {
     expect(cx("rounded-20", "lg:rounded-2xl", "rounded-xl")).toBe(
       "lg:rounded-2xl rounded-xl",
     );
+    expect(cx("rounded-34", "rounded-photo-cut")).toBe("rounded-photo-cut");
+    expect(cx("rounded-tr-photo-cut", "rounded-tr-24")).toBe("rounded-tr-24");
   });
 });
