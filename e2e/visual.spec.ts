@@ -10,6 +10,7 @@ const pages = [
   { name: "home", path: "/" },
   { name: "portfolio", path: "/portfolio" },
   { name: "about", path: "/about" },
+  { name: "services", path: "/services" },
 ];
 
 // 섹션별 차이율: 구현 페이지의 섹션 상자와 시안의 같은 섹션 띠(y, h)를 잘라 비교한다.
@@ -17,6 +18,7 @@ const pages = [
 // portfolio: 헤더-히어로 40/80/100, 히어로-브랜드 띠(구현은 카테고리 필터) 40/60/80, 띠-갤러리 80/100/150,
 // 이후 80/150/200. 히어로 띠는 사진+글 부분만 (브랜드 띠 자리는 필터라 시안과 다르다).
 // about: 헤더-소개 40/80/100, 소개-이야기 60/80/100, 이후 80/150/200.
+// services: 헤더-히어로 40/80/100, 히어로-서비스 50/100/150, 이후 80/150/200. 서비스 셋은 패키지 띠를 노드 h 로 나눈 것.
 type Band = readonly [y: number, h: number];
 const sections: Record<
   string,
@@ -42,6 +44,56 @@ const sections: Record<
     selector: 'section[aria-labelledby="about-hero-title"]',
     ref: {
       about: { mobile: [148, 664], laptop: [169, 784], desktop: [219, 784] },
+    },
+  },
+  servicesHero: {
+    selector: 'section[aria-labelledby="services-hero-title"]',
+    ref: {
+      services: {
+        mobile: [148, 454],
+        laptop: [169, 712],
+        desktop: [219, 784],
+      },
+    },
+  },
+  packages: {
+    selector: "#packages",
+    ref: {
+      services: {
+        mobile: [652, 5535],
+        laptop: [981, 4171],
+        desktop: [1153, 5198],
+      },
+    },
+  },
+  servicePortrait: {
+    selector: "#portrait",
+    ref: {
+      services: {
+        mobile: [652, 1853],
+        laptop: [981, 1431],
+        desktop: [1153, 1788],
+      },
+    },
+  },
+  serviceEvents: {
+    selector: "#events",
+    ref: {
+      services: {
+        mobile: [2505, 1836],
+        laptop: [2412, 1361],
+        desktop: [2941, 1705],
+      },
+    },
+  },
+  serviceCommercial: {
+    selector: "#commercial",
+    ref: {
+      services: {
+        mobile: [4341, 1846],
+        laptop: [3773, 1379],
+        desktop: [4646, 1705],
+      },
     },
   },
   biography: {
@@ -96,6 +148,11 @@ const sections: Record<
         mobile: [2901, 632],
         laptop: [3387, 663],
         desktop: [4241, 791],
+      },
+      services: {
+        mobile: [6267, 632],
+        laptop: [5302, 663],
+        desktop: [6551, 791],
       },
     },
   },
