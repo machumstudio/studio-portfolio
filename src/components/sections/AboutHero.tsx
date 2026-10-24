@@ -27,7 +27,7 @@ type AboutHeroProps = {
 //   띠 아래 계단(29/36)은 글 칸의 오른쪽 아래 radius 34 하나로 잇는다 (계단이 34 보다 낮아 사진 쪽 모서리 조각을 두면 뾰족해진다).
 //   통계는 제목 아래 24/31 (띠 위에서 16/24), 6칸 한 줄 간격 10/20.
 //   아래 줄(별 원, 아래로 내려 보라는 안내)은 PhotoCutFooter (Portfolio 히어로와 같다).
-// 통계 카드: Dark/06 + 테두리 Dark/12, radius 12, pad 20 14 / 20 24 / 24 30 (테두리 inside 라 1px 뺌).
+// 통계 카드: Dark/06 + 테두리 Dark/12, radius 12, pad 20 14 / 20 24 / 24 30 (테두리 inside 라 1px 뺌). 1024~1439 는 6칸이 좁아 좌우 pad 를 mobile 과 같은 14 로.
 //   숫자 28/34/48 SemiBold 흰색 + 설명 14/14/18 Regular 150% Grey/50. mobile 은 가운데 정렬(시안 이미지).
 //   숫자와 설명 목록이라 <dl>. 읽는 순서는 설명 → 숫자, 보이는 순서는 숫자 → 설명 (flex-col-reverse).
 // 태블릿(시안 없음): mobile 구성에 통계 3열.
@@ -75,7 +75,7 @@ export function AboutHero({ image, stats }: AboutHeroProps) {
               {stats.map(({ id, value, label }) => (
                 <div
                   key={id}
-                  className="flex flex-col-reverse rounded-xl border border-dark-12 bg-dark-06 px-3.25 py-4.75 text-center lg:px-5.75 lg:text-left 3xl:px-7.25 3xl:py-5.75"
+                  className="flex flex-col-reverse rounded-xl border border-dark-12 bg-dark-06 px-3.25 py-4.75 text-center lg:px-3.25 lg:text-left xl:px-5.75 3xl:px-7.25 3xl:py-5.75"
                 >
                   <dt className="text-caption leading-normal text-grey-50">
                     {label}

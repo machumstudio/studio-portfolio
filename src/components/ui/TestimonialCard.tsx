@@ -26,6 +26,7 @@ type TestimonialCardProps = {
 // Dark/06 + 테두리 Dark/12, radius 10/10/12, pad 24/30/40 (테두리 inside 라 1px 뺌), 줄 간격 20/24/30.
 // 이름(16/18/20 Medium Grey/90) + 지역(14/16/18 Grey/40) | 소셜 알약(Dark/03 + 테두리 Dark/12, pad 8/8/10, 간격 8/8/10).
 // 별 20/20/24 간격 4/4/5, 본문 16/18/20 Medium Grey/90.
+// 카드가 좁아 이름과 소셜 알약이 한 줄에 안 들어가면(노트북 1024~1279 의 3장 배치) 알약을 이름 아래로 내린다.
 // 배경 "Abstract Design"(45도 돌린 둥근 사각형 2개, 그라디언트)은 노드에 위치/색 정지점이 없어 시안 픽셀을 보고 맞췄다.
 export function TestimonialCard({
   name,
@@ -47,8 +48,8 @@ export function TestimonialCard({
         <div className="absolute -top-1/2 left-2/3 size-62 rotate-45 rounded-3xl bg-linear-to-b from-dark-08 to-dark-06 lg:size-75.75 3xl:size-93.25" />
         <div className="absolute top-1/3 -left-1/4 size-81.5 rotate-45 rounded-3xl bg-linear-to-b from-dark-08 to-dark-06 lg:size-99.5 3xl:size-122.5" />
       </div>
-      <div className="relative flex items-center justify-between gap-2.5 lg:gap-6.5">
-        <div className="min-w-0">
+      <div className="relative flex flex-wrap items-center justify-between gap-x-2.5 gap-y-4 lg:gap-x-6.5">
+        <div className="max-w-full">
           <h3 className="text-lead text-grey-90">{name}</h3>
           <p className="text-body text-grey-40">{location}</p>
         </div>
