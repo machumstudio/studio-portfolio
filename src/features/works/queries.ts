@@ -1,5 +1,10 @@
 import "server-only";
 import { cacheLife, cacheTag } from "next/cache";
+import { connection } from "next/server";
+import {
+  getAdminWork as getAdminWorkUseCase,
+  listAdminWorks as listAdminWorksUseCase,
+} from "@/application/works/admin-works";
 import { getAdjacentWorks as getAdjacentWorksUseCase } from "@/application/works/get-adjacent-works";
 import {
   getPublishedWorks as getPublishedWorksUseCase,
@@ -7,6 +12,7 @@ import {
 } from "@/application/works/get-published-works";
 import { getWorkBySlug as getWorkBySlugUseCase } from "@/application/works/get-work-by-slug";
 import { getWorkGalleries as getWorkGalleriesUseCase } from "@/application/works/get-work-galleries";
+import { requireAdmin } from "@/features/admin-auth/queries";
 import { container } from "@/infrastructure/container";
 
 // RSC 에서 부르는 작업 읽기. 유스케이스에 container 의 저장소를 꽂기만 한다.
@@ -44,4 +50,28 @@ export async function getAdjacentWorks(slug: string) {
   "use cache";
   cached();
   return getAdjacentWorksUseCase({ repo })(slug);
+}
+
+// 관리자 화면 읽기 (비공개 포함). 요청의 관리자 세션으로 읽어서 캐시하지 않는다.
+// 관리자가 아니면 로그인 화면으로 (돌아올 곳: returnTo)
+
+export async function listAdminWorks(returnTo: string) {
+  await requireAdmin(returnTo);
+  const { repo } = await container.works.admin();
+  return listAdminWorksUseCase({ repo })();
+}
+
+/** 없거나 형식이 틀린 id 면 null */
+export async function getAdminWork(id: string, returnTo: string) {
+  await requireAdmin(returnTo);
+  const { repo } = await container.works.admin();
+  return getAdminWorkUseCase({ repo })(id);
+}
+
+/** 새 작업 편집 화면의 id. 저장 전에 사진을 이 작업 폴더에 올린다 */
+export async function newWorkId(returnTo: string) {
+  await requireAdmin(returnTo);
+  // 요청마다 다른 값이라 미리 그리지 않는다
+  await connection();
+  return container.works.ids.next();
 }
