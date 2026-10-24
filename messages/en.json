@@ -355,6 +355,102 @@
       }
     }
   },
+  "ServicesPage": {
+    "metadata": {
+      "title": "Services | Machum Studio",
+      "description": "Portrait, event, and commercial photography packages and pricing by Machum Studio."
+    },
+    "hero": {
+      "eyebrow": "Services",
+      "title": "Diverse Photography Offerings",
+      "body": "Unlock the full spectrum of professional photography services tailored to your vision. From timeless portraits to captivating event coverage, we bring a unique blend of creativity and technical expertise to each project.",
+      "scroll": "Scroll down to see all services"
+    },
+    "view": "View Projects",
+    "photos": "{service} photos",
+    "previous": "Previous {service} photo",
+    "next": "Next {service} photo",
+    "slide": "{index} of {total}",
+    "book": "Book a Call",
+    "custom": "Custom Pricing",
+    "services": {
+      "portrait": "Portrait Photography",
+      "events": "Events Photography",
+      "commercial": "Commercial Photography"
+    },
+    "packages": {
+      "individual": {
+        "name": "Individual Session",
+        "features": {
+          "fit": "Ideal for capturing your unique personality and style.",
+          "includes": "Includes a 2-hour photoshoot and 20 professionally edited images.",
+          "extra": "Additional images can be purchased at ₩10,000 each."
+        }
+      },
+      "family": {
+        "name": "Family Session",
+        "features": {
+          "fit": "Perfect for creating lasting memories with your loved ones.",
+          "includes": "Includes a 3-hour photoshoot and 30 professionally edited images.",
+          "extra": "Additional images can be purchased at ₩10,000 each."
+        }
+      },
+      "couple": {
+        "name": "Couple Session",
+        "features": {
+          "fit": "Celebrate your love story with an intimate photoshoot.",
+          "includes": "Includes a 2.5-hour photoshoot and 25 professionally edited images.",
+          "extra": "Additional images can be purchased at ₩10,000 each."
+        }
+      },
+      "wedding": {
+        "name": "Wedding Photography",
+        "features": {
+          "fit": "Capture the magic of your special day.",
+          "includes": "Includes full-day coverage, a second photographer, and 300+ professionally edited images.",
+          "extra": "Customizable packages are available to suit your specific wedding needs."
+        }
+      },
+      "party": {
+        "name": "Party Coverage",
+        "features": {
+          "fit": "Preserve the fun and excitement of your event.",
+          "includes": "Includes up to 4 hours of coverage and 150+ professionally edited images.",
+          "extra": "Additional hours can be added at ₩150,000 per hour."
+        }
+      },
+      "corporate": {
+        "name": "Corporate Events",
+        "features": {
+          "fit": "Tailored solutions for corporate gatherings, conferences, and seminars.",
+          "quote": "Contact us for a personalized quote based on your event's requirements."
+        }
+      },
+      "product": {
+        "name": "Product Photography",
+        "features": {
+          "fit": "Showcase your products in the best light.",
+          "includes": "Includes a half-day photoshoot, 20 professionally edited product images, and high-resolution files.",
+          "extra": "Additional images can be purchased at ₩20,000 each."
+        }
+      },
+      "space": {
+        "name": "Real Estate Photography",
+        "features": {
+          "fit": "Highlight the beauty of your properties.",
+          "includes": "Includes interior and exterior shots, a 2-hour photoshoot, and 25 professionally edited images.",
+          "extra": "Additional images can be purchased at ₩20,000 each."
+        }
+      },
+      "brand": {
+        "name": "Brand Photography",
+        "features": {
+          "fit": "Craft a visual narrative that aligns with your brand identity.",
+          "quote": "Contact us to discuss your brand photography needs and receive a personalized quote."
+        }
+      }
+    }
+  },
   "NotFound": {
     "metadata": "Page not found | Machum Studio",
     "eyebrow": "404",
