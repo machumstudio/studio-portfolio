@@ -4,7 +4,10 @@ import { createWork, type Work, type WorkInput } from "@/domain/works/work";
 // 마지막 하나는 목록/상세에 나오면 안 되는 비공개 작업이다.
 // 사진은 작업마다 3장, 첫 장이 대표 (public/images/works/<slug>-<n>.jpg, 출처는 docs/design/photos.md).
 // alt 는 사진 내용을 짧게 적은 것
-type Seed = Omit<WorkInput, "coverSrc" | "images" | "published"> & {
+type Seed = Omit<
+  WorkInput,
+  "coverSrc" | "images" | "published" | "updatedAt"
+> & {
   published?: boolean;
   /** 순서대로 [ko, en] alt */
   photos: [ko: string, en: string][];
@@ -175,6 +178,9 @@ const seeds: Seed[] = [
   },
 ];
 
+// 시드의 수정 시각. 시드 데이터를 마지막으로 고친 날 (sitemap lastmod 가 매 배포마다 바뀌지 않게 고정한다)
+const seedUpdatedAt = new Date("2026-10-24T00:00:00Z");
+
 // 시드는 코드에 박힌 값이라, 규칙을 어기면 조용히 빼지 않고 시작할 때 실패시킨다
 export const seedWorks: readonly Work[] = seeds.map(
   ({ published = true, photos: alts, ...seed }) => {
@@ -184,6 +190,7 @@ export const seedWorks: readonly Work[] = seeds.map(
       coverSrc: images[0]!.src,
       images,
       published,
+      updatedAt: seedUpdatedAt,
     });
     if (!result.ok)
       throw new Error(

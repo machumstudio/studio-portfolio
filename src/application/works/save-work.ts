@@ -96,6 +96,7 @@ export const saveWork =
       coverSrc: input.coverSrc,
       images,
       published: input.published,
+      updatedAt: clock.now(),
     };
 
     let existing: Work | null;

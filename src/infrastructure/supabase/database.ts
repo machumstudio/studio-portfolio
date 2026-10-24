@@ -8,6 +8,8 @@ export type WorkRow = {
   category: string;
   year_month: string;
   published: boolean;
+  /** 마지막 저장 시각 (ISO). 저장하는 쪽이 정해서 넣는다 (20261025000003_works_updated_at.sql) */
+  updated_at: string;
   created_at: string;
 };
 

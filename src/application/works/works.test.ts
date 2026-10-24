@@ -16,6 +16,7 @@ const work = (input: Partial<WorkInput> & Pick<WorkInput, "slug">): Work => {
     coverSrc: "a.jpg",
     images: [{ src: "a.jpg", alt: { ko: "", en: "" }, order: 0 }],
     published: true,
+    updatedAt: new Date("2026-10-01T00:00:00Z"),
     ...input,
   });
   if (!result.ok) throw new Error(result.error.type);

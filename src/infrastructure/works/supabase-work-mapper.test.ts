@@ -26,6 +26,7 @@ const work = (() => {
       { src: "/w/2.jpg", alt: { ko: "반지", en: "Rings" }, order: 1 },
     ],
     published: true,
+    updatedAt: new Date("2026-10-24T08:00:00.000Z"),
   });
   if (!result.ok) throw new Error(result.error.type);
   return result.value;
@@ -39,6 +40,7 @@ const rows: WorkRowWithImages = {
   category: "events",
   year_month: "2021-09",
   published: true,
+  updated_at: "2026-10-24T08:00:00.000Z",
   work_images: [
     {
       work_id: "work-01",
@@ -85,6 +87,16 @@ describe("toWork", () => {
     }));
     const restored = toWork({ ...rows, work_images: [...same].reverse() });
     expect(restored.ok && restored.value.cover.order).toBe(0);
+  });
+
+  it("Postgres 의 timestamptz 문자열(+00:00, 마이크로초)도 수정 시각으로 읽는다", () => {
+    const restored = toWork({
+      ...rows,
+      updated_at: "2026-10-24T08:00:00.123456+00:00",
+    });
+    expect(restored.ok && restored.value.updatedAt.toISOString()).toBe(
+      "2026-10-24T08:00:00.123Z",
+    );
   });
 
   it("규칙을 어긴 행은 createWork 의 에러를 그대로 돌려준다", () => {

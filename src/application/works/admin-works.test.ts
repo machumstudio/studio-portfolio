@@ -89,6 +89,7 @@ const work = (input: Partial<WorkInput> & Pick<WorkInput, "id">): Work => {
     date: "2022-03",
     coverSrc: images[0]!.src,
     published: true,
+    updatedAt: new Date("2026-10-01T00:00:00Z"),
     ...input,
     images,
   });
@@ -147,6 +148,7 @@ describe("saveWork", () => {
       title: { ko: "새 작업", en: "Fresh Work" },
       published: false,
       cover: { src: src("new-1/y.jpg"), order: 1 },
+      updatedAt: now,
     });
     expect(saved.images.map((i) => [i.src, i.order, i.alt.ko])).toEqual([
       [src("new-1/x.jpg"), 0, "첫 장"],
@@ -172,6 +174,8 @@ describe("saveWork", () => {
     expect(result.ok).toBe(true);
     const saved = store.get("w-2")!;
     expect(saved.published).toBe(true);
+    // 수정 시각은 저장한 때 (원래 값 2026-10-01 이 아니다. sitemap lastmod)
+    expect(saved.updatedAt).toEqual(now);
     expect(saved.images.map((i) => i.src)).toEqual([
       src("w-2/b.jpg"),
       src("w-2/a.jpg"),

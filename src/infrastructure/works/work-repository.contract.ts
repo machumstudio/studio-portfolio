@@ -108,6 +108,7 @@ const wedding = work({
   coverSrc: "/w/2.jpg",
   images: [image("/w/1.jpg", 0), image("/w/2.jpg", 1), image("/w/3.jpg", 2)],
   published: true,
+  updatedAt: new Date("2026-10-01T09:00:00.123Z"),
 });
 const secret = work({
   id: "contract-secret",
@@ -118,6 +119,7 @@ const secret = work({
   coverSrc: "/s/1.jpg",
   images: [image("/s/1.jpg", 0)],
   published: false,
+  updatedAt: new Date("2026-10-02T09:00:00Z"),
 });
 const product = work({
   id: "contract-product",
@@ -128,6 +130,7 @@ const product = work({
   coverSrc: "/p/1.jpg",
   images: [image("/p/1.jpg", 0), image("/p/2.jpg", 1)],
   published: true,
+  updatedAt: new Date("2026-10-03T09:00:00Z"),
 });
 const works = [wedding, secret, product];
 
@@ -140,6 +143,7 @@ const added = work({
   coverSrc: "/n/2.jpg",
   images: [image("/n/1.jpg", 0), image("/n/2.jpg", 1)],
   published: false,
+  updatedAt: new Date("2026-10-04T09:00:00Z"),
 });
 // 제목, slug, 공개 여부, 사진(3장 → 2장, 순서와 대표)을 모두 바꾼 결혼식 작업
 const weddingEdited = work({
@@ -151,6 +155,8 @@ const weddingEdited = work({
   coverSrc: "/w/3.jpg",
   images: [image("/w/3.jpg", 0), image("/w/1.jpg", 1)],
   published: false,
+  // 저장소는 받은 수정 시각을 그대로 저장한다 (밀리초까지)
+  updatedAt: new Date("2026-10-25T10:20:30.456Z"),
 });
 const byId = (list: readonly Work[]) =>
   [...list].sort((a, b) => a.id.localeCompare(b.id));

@@ -33,6 +33,7 @@ export function toWork(row: WorkRowWithImages): Result<Work, WorkError> {
       order: image.sort_order,
     })),
     published: row.published,
+    updatedAt: new Date(row.updated_at),
   });
 }
 
@@ -46,6 +47,7 @@ export function toWorkRows(work: Work): WorkRows {
       category: work.category,
       year_month: work.date,
       published: work.published,
+      updated_at: work.updatedAt.toISOString(),
     },
     images: work.images.map((image) => ({
       work_id: work.id,
