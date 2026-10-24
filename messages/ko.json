@@ -458,5 +458,84 @@
     "body": "주소가 바뀌었거나 공개되지 않은 페이지예요. 홈이나 작업 목록에서 다시 찾아 주세요.",
     "home": "홈으로",
     "portfolio": "작업 둘러보기"
+  },
+  "ContactPage": {
+    "metadata": {
+      "title": "문의하기 | Machum Studio",
+      "description": "촬영 일정, 견적, 협업 문의를 남겨 주세요. 영업일 기준 하루 안에 답장드립니다."
+    },
+    "hero": {
+      "eyebrow": "문의하기",
+      "title": "함께 이야기해요",
+      "body": "Machum Studio 와 함께할 촬영을 이야기해 주세요. 인물, 이벤트, 광고 촬영까지 원하는 장면과 일정, 분위기를 알려 주시면 그에 맞는 촬영 방법과 견적을 안내해 드립니다. 아직 정해진 것이 없어도 괜찮습니다.",
+      "scroll": "아래로 내려 메시지 보내기"
+    },
+    "info": {
+      "title": "연락처 정보",
+      "body": "편한 방법으로 연락해 주세요. 전화, 이메일, 소셜 미디어 모두 열려 있습니다.",
+      "label": "연락처",
+      "phone": "전화",
+      "email": "이메일"
+    },
+    "message": {
+      "title": "메시지 보내기",
+      "body": "궁금한 점이나 촬영 요청이 있으면 아래 양식으로 보내 주세요. 빠르게 답장드리겠습니다."
+    }
+  },
+  "InquiryForm": {
+    "label": "문의 양식",
+    "fields": {
+      "firstName": {
+        "label": "이름",
+        "placeholder": "이름"
+      },
+      "lastName": {
+        "label": "성",
+        "placeholder": "성"
+      },
+      "email": {
+        "label": "이메일",
+        "placeholder": "이메일 주소"
+      },
+      "phone": {
+        "label": "연락처",
+        "placeholder": "전화번호",
+        "optional": "선택"
+      },
+      "message": {
+        "label": "메시지",
+        "placeholder": "메시지"
+      }
+    },
+    "honeypot": "이 칸은 비워 두세요",
+    "submit": "메시지 보내기",
+    "pending": "보내는 중",
+    "status": {
+      "success": "메시지를 보냈습니다. 영업일 기준 하루 안에 답장드릴게요.",
+      "invalid": "입력한 내용을 확인해 주세요. 고칠 칸이 {count}개 있습니다.",
+      "error": "잠시 문제가 생겨 보내지 못했습니다. 입력한 내용은 그대로 있으니 잠시 후 다시 보내 주세요."
+    },
+    "errors": {
+      "firstName": {
+        "required": "이름을 입력해 주세요.",
+        "tooLong": "이름은 {max}자까지 입력할 수 있습니다."
+      },
+      "lastName": {
+        "required": "성을 입력해 주세요.",
+        "tooLong": "성은 {max}자까지 입력할 수 있습니다."
+      },
+      "email": {
+        "required": "이메일을 입력해 주세요.",
+        "tooLong": "이메일은 {max}자까지 입력할 수 있습니다.",
+        "invalidEmail": "이메일 주소 형식을 확인해 주세요. 예: name@example.com"
+      },
+      "phone": {
+        "invalidPhone": "전화번호는 숫자 8~15자리로 입력해 주세요. 하이픈, 공백, 괄호, 맨 앞 + 는 쓸 수 있습니다."
+      },
+      "message": {
+        "required": "메시지를 입력해 주세요.",
+        "tooLong": "메시지는 {max}자까지 입력할 수 있습니다."
+      }
+    }
   }
 }
