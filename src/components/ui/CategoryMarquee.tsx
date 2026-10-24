@@ -8,6 +8,8 @@ type CategoryMarqueeProps = {
   items: string[];
   /** 목록 이름 (보조기기용) */
   label: string;
+  /** 항목 글자의 언어. 화면 언어와 다르면 준다 (ko 화면의 장식 영어 → "en") */
+  itemLang?: string;
   className?: string;
 };
 
@@ -20,6 +22,7 @@ type CategoryMarqueeProps = {
 export function CategoryMarquee({
   items,
   label,
+  itemLang,
   className,
 }: CategoryMarqueeProps) {
   const list = (hidden: boolean) => (
@@ -33,6 +36,7 @@ export function CategoryMarquee({
           <li
             key={`${round}-${item}`}
             aria-hidden={round > 0 || undefined}
+            lang={itemLang}
             className="flex items-center gap-1.5 text-button font-normal whitespace-nowrap text-purple-90 uppercase 3xl:gap-2.5"
           >
             <Sparkle

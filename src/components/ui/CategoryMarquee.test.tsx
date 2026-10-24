@@ -43,4 +43,18 @@ describe("CategoryMarquee", () => {
     await user.tab();
     expect(screen.getByRole("button", { name: "다음" })).toHaveFocus();
   });
+
+  it("itemLang 을 주면 항목에 lang 을 붙이고 목록 이름은 화면 언어 그대로다", () => {
+    render(
+      <CategoryMarquee
+        items={["Wedding Photography"]}
+        label="촬영 분야"
+        itemLang="en"
+      />,
+    );
+    const list = screen.getByRole("list", { name: "촬영 분야" });
+    expect(list).not.toHaveAttribute("lang");
+    for (const li of list.querySelectorAll("li"))
+      expect(li).toHaveAttribute("lang", "en");
+  });
 });

@@ -106,6 +106,7 @@ export function SiteFooter({ cta, year }: SiteFooterProps) {
           {t("wordmark")}
         </p>
         <CategoryMarquee
+          itemLang="en"
           className="w-full"
           label={t("categories.label")}
           items={categories.map((key) => t(`categories.${key}`))}
