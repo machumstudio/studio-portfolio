@@ -42,5 +42,5 @@
   - Harshit Suryawanshi ([@harshit_suryawanshi](https://unsplash.com/@harshit_suryawanshi)): [McrcNjB3WdA](https://unsplash.com/photos/McrcNjB3WdA), [0M9wB84qeFw](https://unsplash.com/photos/0M9wB84qeFw)
   - Olga Serjantu ([@olgaserjantu](https://unsplash.com/@olgaserjantu)): [qu2JENeCaE4](https://unsplash.com/photos/qu2JENeCaE4)
 - Font: Manrope (SIL Open Font License)
-- Font: Pretendard by Kil Hyung-jin (SIL Open Font License 1.1, Reserved Font Name Pretendard) — https://github.com/orioncactus/pretendard . 한글 대체 글꼴. npm `pretendard` 패키지의 가변 다이나믹 서브셋을 수정 없이 사용
+- Font: Pretendard by Kil Hyung-jin (SIL Open Font License 1.1, Reserved Font Name Pretendard) — https://github.com/orioncactus/pretendard . 공유 카드 이미지(`public/og`, `scripts/og-image.mts`)의 글자에만 쓴다. npm `pretendard` 패키지의 가변 글꼴을 수정 없이 사용 (사이트 화면의 한글은 OS 글꼴, docs/adr/0017)
 - Brand icons: Simple Icons (CC0 1.0) — https://simpleicons.org . 소셜 아이콘(Instagram, Facebook, X) path 를 사용. 각 상표는 해당 소유자의 것이다
