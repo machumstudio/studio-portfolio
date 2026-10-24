@@ -1,5 +1,6 @@
 import "server-only";
 import type { AuthGateway } from "@/application/admin-auth/auth-gateway";
+import type { AdminInquiryRepository } from "@/application/inquiry/admin-inquiry-repository";
 import type { AdminWorkRepository } from "@/application/works/admin-work-repository";
 import type { IdGenerator } from "@/application/works/clock";
 import type { PhotoStorage } from "@/application/works/photo-storage";
@@ -30,7 +31,7 @@ import { createSupabaseWorkRepository } from "./works/supabase-work-repository";
 // 저장소: Supabase env(URL + secret 키)가 있으면 Supabase, 없거나 DATA_STORE=memory 면 인메모리.
 // 알림: Resend env(키 + 받는 주소)가 있으면 이메일, 없거나 DATA_STORE=memory 면 서버 로그.
 // 관리자 인증: Supabase Auth, DATA_STORE=memory 면 테스트 계정, 둘 다 아니면 꺼짐 (admin-auth/mode.ts).
-// 관리자 작업: 요청의 관리자 세션으로 만든 Supabase 클라이언트(RLS, docs/adr/0012), DATA_STORE=memory 면 인메모리.
+// 관리자 작업/문의: 요청의 관리자 세션으로 만든 Supabase 클라이언트(RLS, docs/adr/0012), DATA_STORE=memory 면 인메모리.
 // e2e(playwright.config.ts)와 CI 빌드는 인메모리 + 로그라 클라우드 DB 를 건드리지 않고 메일도 보내지 않는다
 const supabaseEnv = readSupabaseServerEnv();
 const supabase = supabaseEnv ? createSupabaseServerClient(supabaseEnv) : null;
@@ -109,6 +110,26 @@ async function openAdminWorks(): Promise<AdminWorks> {
   throw new Error("[container] 관리자 작업 저장소가 꺼져 있다");
 }
 
+// 인메모리 문의. 공개 문의 폼이 저장한 문의를 관리자 화면이 읽어야 해서 프로세스에 하나만 둔다
+const inquiryRepository = supabase
+  ? createSupabaseInquiryRepository(supabase)
+  : processSingleton("memoryInquiries", () =>
+      createInMemoryInquiryRepository(),
+    );
+const memoryInquiries = supabase ? null : inquiryRepository;
+
+// 요청마다 그 요청의 관리자 세션에 묶인 문의 저장소 (목록, 상태 변경, 지우기). secret 키는 쓰지 않는다.
+// 작업과 같은 조건: 공개 문의 저장이 Supabase 일 때만 Supabase Auth 세션으로 쓴다.
+// 호출하는 쪽(features)은 먼저 requireAdmin 으로 관리자를 확인한다
+async function openAdminInquiries(): Promise<AdminInquiryRepository> {
+  if (supabaseEnv && authMode.kind === "supabase")
+    return createSupabaseInquiryRepository(
+      createSupabaseCookieClient(authMode.env, await nextCookieJar()),
+    );
+  if (authMode.kind === "memory" && memoryInquiries) return memoryInquiries;
+  throw new Error("[container] 관리자 문의 저장소가 꺼져 있다");
+}
+
 /** 새 작업 id, 사진 파일 이름: UUID v4 (공개 버킷 주소에서 짐작할 수 없게, docs/adr/0014) */
 const randomIds: IdGenerator = { next: () => crypto.randomUUID() };
 
@@ -116,12 +137,11 @@ export const container = {
   workRepository,
   inquiry: {
     // 인메모리 문의는 서버 프로세스가 다시 뜨면 비워진다
-    repo: supabase
-      ? createSupabaseInquiryRepository(supabase)
-      : createInMemoryInquiryRepository(),
+    repo: inquiryRepository,
     notifier: resendEnv ? createResendNotifier(resendEnv) : createLogNotifier(),
     clock: systemClock,
     ids: randomInquiryIds,
+    admin: openAdminInquiries,
   },
   adminAuth: { gateway: openAuthGateway },
   works: {
