@@ -50,6 +50,7 @@ src/
 - 상태는 판별 유니온 + 전이 함수. 문의: `New → Read → Done`(되돌리기 `Done → Read` 허용). 허용되지 않은 전이는 `Result` 에러
 - 생성은 스마트 생성자(`createInquiry(input): Result<Inquiry, InquiryError>`)로만
 - switch에는 `assertNever`로 누락 방지
+- 저장소에서 읽은 데이터도 domain 생성자(`createWork`, `restoreInquiry`)로 되살린다. 인프라 매퍼는 칼럼 모양만 바꾼다 (docs/adr/0010)
 
 ## 데이터 흐름 예시
 
@@ -76,7 +77,7 @@ app/[locale]/portfolio/page.tsx (RSC)
 |---|---|---|
 | domain | Vitest | 순수 함수 단위 테스트, 상태 전이 표 전체 |
 | application | Vitest | 포트를 인메모리 가짜로 주입 |
-| infrastructure | Vitest | 리포지토리 계약 테스트 (인메모리 구현과 Supabase 구현이 같은 테스트를 통과) |
+| infrastructure | Vitest | 리포지토리 계약 테스트 (인메모리 구현과 Supabase 구현이 같은 테스트를 통과). Supabase 쪽은 `pnpm test:contract` 로 분리 (클라우드 DB, RLS, DB 제약) |
 | components | Vitest + Testing Library, Storybook | 렌더, 키보드, aria, 변형별 스토리 |
 | 화면 흐름 | Playwright | 문의 제출, 관리자 로그인 → 작업 등록 |
 | 시안 재현 | Playwright + pixelmatch | 390/1440/1920 차이율 |
