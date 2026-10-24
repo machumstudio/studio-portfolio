@@ -6,7 +6,7 @@ Figma 시안을 PC / 태블릿 / 모바일 반응형 웹과 간단한 관리자�
 가상의 사진 스튜디오 "Machum Studio" 사이트를 시안 그대로, 빠르게, 운영할 수 있게 만드는 과정을 이 레포의 커밋 순서대로 남깁니다.
 
 - 라이브: TODO (22칸 배포 후)
-- Lighthouse (모바일): TODO (20칸 측정 후)
+- Lighthouse: [docs/performance.md](docs/performance.md) (20칸 로컬 운영 빌드 측정. README 표는 22칸 배포 후)
 - 시안 재현도: TODO (PR마다 `pnpm test:visual` 차이율 기록, 페이지 완성 후 표로 정리)
 
 ## 스택
@@ -145,6 +145,13 @@ secret 키가 브라우저로 가는 파일에 없는지는 `pnpm build && pnpm 
 - 지우기는 확인 창을 거쳐 문의와 연락처를 완전히 지웁니다 (되돌릴 수 없음). 서버 로그에는 문의 ID 와 에러 종류만 남습니다
 - 문의가 1000건을 넘어도 목록과 개수가 잘리지 않습니다 (저장소에서 범위로 읽고 개수는 따로 셈)
 
+## 검색 노출과 예전 주소 (SEO)
+- 사이트 주소: `NEXT_PUBLIC_SITE_URL` (비우면 Vercel 운영 도메인, 미리보기 주소, `http://localhost:3000` 순). canonical, hreflang(ko/en + x-default), sitemap, 공유 카드가 이 주소를 씁니다
+- 검색 색인은 Vercel 운영 배포(`VERCEL_ENV=production`)만 됩니다. 미리보기와 로컬 빌드는 모든 응답에 `X-Robots-Tag: noindex` 가 붙습니다 ([ADR 0018](docs/adr/0018-seo-site-url-and-preview-noindex.md))
+- `/sitemap.xml`: 공개 페이지와 공개 작업(ko/en). 관리자가 작업을 저장/공개 전환/지우면 바로 다시 만들어집니다. `/robots.txt`: `/admin` 차단 + sitemap 주소
+- 예전 사이트 주소의 301: `src/lib/seo/legacy-redirects.ts` 목록에 `{ from, to }` 한 줄을 더합니다 (언어 경로는 자동). 도착지가 없는 페이지이거나 다른 규칙을 다시 타면 `pnpm test` 가 실패합니다
+- 공유 카드 기본 이미지: `public/og/machum-studio-<ko|en>.jpg` (1200x630). 문구를 바꾸면 `pnpm og:image` 로 다시 그립니다. 작업 상세는 대표 사진이 카드입니다
+
 ## 스크립트
 | 명령 | 내용 |
 |---|---|
@@ -158,6 +165,8 @@ secret 키가 브라우저로 가는 파일에 없는지는 `pnpm build && pnpm 
 | `pnpm test:visual` | Figma 시안 PNG와 픽셀 비교해 차이율 출력 (로컬 전용, [ADR 0004](docs/adr/0004-visual-regression-against-figma.md)) |
 | `pnpm storybook` / `pnpm build-storybook` | Storybook 개발 서버 / 정적 빌드 |
 | `pnpm db:seed` | Supabase works 를 코드 시드로 되돌림 |
+| `pnpm og:image` | 공유 카드 기본 이미지(1200x630, ko/en)를 다시 그림 |
+| `pnpm lighthouse` | 공개 페이지 6개 × 모바일/데스크톱 Lighthouse 중앙값 표 (운영 빌드를 띄운 뒤, [docs/performance.md](docs/performance.md)) |
 | `pnpm check:bundle` | 빌드 결과의 클라이언트 번들에 서버 비밀이 없는지 검사 |
 | `pnpm format` | Prettier |
 
