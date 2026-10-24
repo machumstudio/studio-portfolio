@@ -37,3 +37,21 @@ describe("findLeaks", () => {
     expect(findLeaks([file("anything")], { SUPABASE_DB_URL: " " })).toEqual([]);
   });
 });
+
+describe("Resend 알림 env", () => {
+  it("Resend 키와 받는 주소도 값과 이름을 찾는다 (값은 출력하지 않는다)", () => {
+    const leaks = findLeaks(
+      [file('k="re_abc123";to="admin@example.com";process.env.RESEND_API_KEY')],
+      {
+        RESEND_API_KEY: "re_abc123",
+        INQUIRY_NOTIFY_EMAIL: "admin@example.com",
+      },
+    );
+    expect(leaks).toEqual([
+      "chunk.js: RESEND_API_KEY 의 값",
+      "chunk.js: INQUIRY_NOTIFY_EMAIL 의 값",
+      "chunk.js: 서버 전용 변수 이름 RESEND_API_KEY",
+    ]);
+    expect(leaks.join("\n")).not.toContain("admin@example.com");
+  });
+});
