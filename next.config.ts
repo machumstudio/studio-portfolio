@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { toNextRedirects } from "./src/lib/seo/legacy-redirects";
 import { isIndexable, noindexHeader } from "./src/lib/seo/site";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
@@ -21,6 +22,8 @@ const nextConfig: NextConfig = {
   images: { remotePatterns: workPhotoPattern },
   // 운영(VERCEL_ENV=production)이 아닌 배포: 페이지, 사진, sitemap 까지 모든 응답에 noindex 헤더.
   // 페이지에는 metadata 의 robots 메타 태그도 붙는다 ([locale]/layout.tsx). 빌드 때 정해진다
+  // 예전 사이트 주소의 301. 규칙 목록은 src/lib/seo/legacy-redirects.ts 한 곳에 둔다
+  redirects: async () => toNextRedirects(),
   headers: async () =>
     isIndexable()
       ? []
