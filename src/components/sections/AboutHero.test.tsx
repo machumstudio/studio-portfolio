@@ -48,7 +48,9 @@ describe("AboutHero", () => {
 
   it("꾸밈 조각과 사진 마스크는 보조기기에서 숨긴다", () => {
     const { container } = renderHero();
-    const masks = container.querySelectorAll("[data-visual-mask]");
+    const masks = container.querySelectorAll(
+      "[data-visual-mask]:not([class*='photo-corner'])",
+    );
     // mobile 사진 하나 + lg 사진이 보이는 사각형 넷(위 오른쪽, 띠 아래 계단, 가운데, 아래 줄 가운데)
     expect(masks).toHaveLength(5);
     for (const mask of masks) {

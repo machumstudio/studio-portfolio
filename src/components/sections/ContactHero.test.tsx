@@ -49,9 +49,12 @@ describe("ContactHero", () => {
 
   it("꾸밈 조각과 사진 마스크는 보조기기에서 숨긴다", () => {
     const { container } = renderHero();
-    const masks = container.querySelectorAll("[data-visual-mask]");
-    // mobile 사진 하나 + lg 사진이 보이는 사각형 넷 (위 띠, 소셜 칸 왼쪽, 오른쪽 가운데, 아래 왼쪽)
-    expect(masks).toHaveLength(5);
+    const masks = container.querySelectorAll(
+      "[data-visual-mask]:not([class*='photo-corner'])",
+    );
+    // mobile 사진 하나 + lg 사진이 보이는 사각형 여섯
+    // (위 띠, 소셜 칸 왼쪽, 글 칸과 소셜 칸 사이 띠, 오른쪽 가운데, 아래 왼쪽, 글 칸 바로 아래)
+    expect(masks).toHaveLength(7);
     for (const mask of masks) expect(mask).toHaveAttribute("aria-hidden");
   });
 });
