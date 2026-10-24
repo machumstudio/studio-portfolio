@@ -55,11 +55,12 @@ src/
 
 문의 제출
 ```
-features/inquiry/ui/InquiryForm (client, react-hook-form + zod)
+features/inquiry/ui/InquiryForm (client, useActionState + <form action>. JS 없이도 POST 로 동작)
   → features/inquiry/actions.ts submitInquiryAction (server)
-    → schema.parse → application/inquiry/submitInquiry({ repo, notifier, clock })(input)
+    → schema.safeParse(FormData 형태와 문자열 정리만) → application/inquiry/submitInquiry({ repo, notifier, clock, ids })(input)
        → domain/inquiry/createInquiry → repo.save → notifier.notify (실패해도 저장은 유지, 결과에 경고)
     → Result를 화면용 상태로 매핑 (성공 / 필드 에러 / 일시 오류)
+  검증 규칙(필수, 한도, 형식)은 domain 한 곳에만 있다. 화면은 칸별 오류 코드를 메시지 키로 번역한다 (docs/adr/0009)
 ```
 
 작업 목록 표시
