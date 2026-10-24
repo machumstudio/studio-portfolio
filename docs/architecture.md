@@ -44,6 +44,7 @@ src/
 - `infrastructure/`, `features/*/queries.ts`, `features/*/actions.ts`는 `server-only`
 - `domain/`은 React, Next, zod 등 어떤 라이브러리도 import하지 않는다
 - `application/`도 외부 패키지를 import하지 않는다 (포트와 domain, shared만). 테스트의 `vitest`만 예외
+- `src/proxy.ts` 는 폴더가 아니라 파일 하나라 ESLint 파일 분류 `proxy` 로 둔다. i18n 설정, `infrastructure/admin-auth/proxy-session.ts`(관리자 세션 빠른 확인), `features/admin-auth/return-to.ts`(돌아갈 주소 규칙)만 쓴다
 
 ## 도메인 모델링 규칙
 - ID는 브랜드 타입: `type InquiryId = Brand<string, "InquiryId">`
@@ -65,6 +66,20 @@ features/inquiry/ui/InquiryForm (client, useActionState + <form action>. JS 없�
   검증 규칙(필수, 한도, 형식)은 domain 한 곳에만 있다. 화면은 칸별 오류 코드를 메시지 키로 번역한다 (docs/adr/0009)
 ```
 
+관리자 로그인 (docs/adr/0012, 0013)
+```
+GET /admin/works → src/proxy.ts → infrastructure/admin-auth/proxy-session (쿠키만. Supabase 는 getClaims + 토큰 갱신)
+  → 관리자 아님 → 307 /admin/login?next=%2Fadmin%2Fworks
+GET /admin/login?next=… → proxy 가 safeAdminReturnPath(같은 사이트 /admin 경로만)로 검사 → 쿠키에 담는다 → 완전 정적 로그인 화면
+features/admin-auth/ui/AdminLoginForm (client, useActionState + <form action>. JS 없이도 POST)
+  → features/admin-auth/actions.ts signInAction
+    → schema(FormData 형태만) → application/admin-auth/signIn({ gateway })
+       → domain parseCredentials → gateway.signInWithPassword (세션 쿠키) → domain authorizeAdmin
+         (관리자가 아니면 세션을 끝내고 틀린 비밀번호와 같은 InvalidCredentials)
+    → 성공: 돌아갈 곳 쿠키를 다시 검사해 303 redirect / 실패: 코드 하나와 이메일만
+app/admin/page.tsx (RSC) → features/admin-auth/queries.ts requireAdmin → getCurrentAdmin (getUser 로 인증 서버 재확인)
+```
+
 작업 목록 표시
 ```
 app/[locale]/portfolio/page.tsx (RSC)
@@ -78,7 +93,7 @@ app/[locale]/portfolio/page.tsx (RSC)
 |---|---|---|
 | domain | Vitest | 순수 함수 단위 테스트, 상태 전이 표 전체 |
 | application | Vitest | 포트를 인메모리 가짜로 주입 |
-| infrastructure | Vitest | 리포지토리 계약 테스트 (인메모리 구현과 Supabase 구현이 같은 테스트를 통과). Supabase 쪽은 `pnpm test:contract` 로 분리 (클라우드 DB, RLS, DB 제약) |
+| infrastructure | Vitest | 리포지토리/AuthGateway 계약 테스트 (인메모리 구현과 Supabase 구현이 같은 테스트를 통과). Supabase 쪽은 `pnpm test:contract` 로 분리 (클라우드 DB, RLS, DB 제약, 공개 가입 차단. Auth 계정은 실행마다 임시 계정) |
 | components | Vitest + Testing Library, Storybook | 렌더, 키보드, aria, 변형별 스토리 |
 | 화면 흐름 | Playwright | 문의 제출, 관리자 로그인 → 작업 등록 |
 | 시안 재현 | Playwright + pixelmatch | 390/1440/1920 차이율 |
