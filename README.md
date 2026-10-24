@@ -116,6 +116,15 @@ secret 키가 브라우저로 가는 파일에 없는지는 `pnpm build && pnpm 
 - 로그와 에러 메시지에는 키, 메일 주소, 문의 내용을 남기지 않습니다
 - `pnpm test`, `pnpm test:e2e`, CI 는 실제로 보내지 않습니다 (단위 테스트는 가짜 fetch, e2e 는 `DATA_STORE=memory`)
 
+## 관리자 로그인
+`/admin/login` 에서 이메일과 비밀번호로 로그인하면 `/admin`(대시보드 자리)으로 갑니다. 관리자 화면은 한국어만 있고 검색에서 빠집니다 ([ADR 0013](docs/adr/0013-admin-routes-ko-only-and-static-login.md)).
+
+- 관리자 계정: Supabase 대시보드 > Authentication 에서 만들고 `app_metadata.role` 을 `"admin"` 으로 둡니다 (SQL: `update auth.users set raw_app_meta_data = raw_app_meta_data || '{"role":"admin"}' where email = ...`). 공개 가입과 익명 로그인은 꺼 둡니다. `user_metadata` 는 사용자가 고칠 수 있어 보지 않습니다
+- 보호: proxy 가 `/admin` 이하에서 세션 쿠키를 빠르게 보고(서명/만료, 토큰 갱신) 아니면 로그인으로 보냅니다. 화면과 서버 액션은 인증 서버에 세션을 다시 확인합니다. 테이블은 관리자 세션 + RLS `role=admin` 정책으로 씁니다 ([ADR 0012](docs/adr/0012-admin-data-access-via-rls.md))
+- 로그인 실패 문구는 하나입니다 (없는 이메일, 틀린 비밀번호, 관리자 아님을 구분하지 않음). 로그인 뒤 돌아갈 곳은 같은 사이트의 `/admin` 경로만 받습니다
+- env: Supabase URL + publishable 키가 있으면 Supabase Auth, `DATA_STORE=memory` 면 테스트 계정(`src/infrastructure/admin-auth/memory-accounts.ts`, e2e 용), 둘 다 없으면 꺼져서 아무도 로그인하지 못합니다. 테스트 계정은 Vercel production 에서는 켜지지 않습니다
+- 자동 테스트는 실제 관리자 계정을 쓰지 않습니다 (e2e 는 테스트 계정, 계약 테스트는 실행마다 임시 계정을 만들고 지움)
+
 ## 스크립트
 | 명령 | 내용 |
 |---|---|
