@@ -39,7 +39,6 @@ CI 에는 넣지 않았다: GitHub 러너는 CPU 를 나눠 써서 점수가 흔
 ## 20칸에서 고친 것
 | 무엇 | 전 | 후 |
 |---|---|---|
-| 한글 웹 글꼴 Pretendard 를 빼고 OS 글꼴로 ([ADR 0017](adr/0017-korean-text-in-os-fonts.md)) | 한국어 홈 글꼴 18파일 468KB, 모바일 성능 80~95 로 흔들림 (FCP 0.9 ↔ 2.6s) | 글꼴 1파일 24KB(Manrope), 96~99 |
 | 첫 화면 LCP 사진: preload → `loading="eager"` + `fetchPriority="high"` | Next 의 preload `<link>` 가 Low 우선순위로 나감 | High. 작업 상세 모바일 LCP 4.1s → 2.4s |
 | 홈 콜라주 칸별 `sizes` | 7칸이 같은 41vw → 38px 칸도 384~750px 사진 | 칸 폭 = (화면 폭 - page-x) × 칸 비율 |
 

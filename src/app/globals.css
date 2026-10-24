@@ -31,11 +31,12 @@
   --color-star: #ffce22; /* 후기 별점. Figma 색 스타일이 없고 노드 fill 에 hex 로만 있다 */
 
   /* 폰트: Manrope (Regular 400 / Medium 500 / SemiBold 600 / Bold 700), next/font 로 --font-manrope 주입.
-     한글은 Manrope 에 글리프가 없어 OS 의 한글 글꼴로 넘어간다: 맥/iOS Apple SD Gothic Neo,
-     윈도 맑은 고딕, 안드로이드/리눅스 Noto Sans KR(CJK). 웹 글꼴을 받지 않는다 (docs/adr/0017) */
+     한글은 Manrope 에 글리프가 없어 Pretendard 로 넘어간다 (src/lib/fonts.ts, docs/adr/0017).
+     Pretendard 조각이 아직 안 왔을 때(swap)와 받지 못했을 때는 OS 한글 글꼴로 그린다 */
   --font-sans:
-    var(--font-manrope), "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR",
-    "Noto Sans CJK KR", ui-sans-serif, system-ui, sans-serif;
+    var(--font-manrope), "Pretendard Variable", "Apple SD Gothic Neo",
+    "Malgun Gothic", "Noto Sans KR", "Noto Sans CJK KR", ui-sans-serif,
+    system-ui, sans-serif;
 
   /* 브레이크포인트: 시안은 390(모바일) / 1440(노트북) / 1920(데스크톱). 태블릿 시안은 없음 */
   --breakpoint-md: 768px; /* 태블릿: 직접 정의 */
