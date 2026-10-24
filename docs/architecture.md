@@ -22,7 +22,7 @@ src/
   infrastructure/         포트 구현(Supabase, 이메일, Slack)과 조립(container.ts, server-only)
   shared/                 Result, Brand, assertNever 같은 범용 타입/함수
   i18n/                   next-intl 설정
-  lib/                    폰트 등 프레임워크 설정
+  lib/                    폰트 등 프레임워크 설정. seo/: 사이트 주소, metadata, sitemap/robots, 301 규칙, 구조화 데이터 (docs/adr/0018)
 ```
 
 컨텍스트: `inquiry`(문의), `works`(작업/이미지), `admin-auth`(관리자 로그인)
@@ -117,6 +117,18 @@ GET /admin/inquiries/[id] → getAdminInquiry (열어도 상태를 바꾸지 않
 지우기: 확인 <dialog> 안의 폼 → deleteInquiryAction → application deleteInquiry → repo.remove → 목록?notice=deleted
 ```
 
+검색 노출 (docs/adr/0018)
+```
+공개 페이지 generateMetadata → app/[locale]/(site)/_seo/page-metadata → lib/seo/metadata pageMetadata
+  → 제목/설명(메시지), canonical(지금 언어), hreflang ko/en + x-default, OG/X 카드 (기본 카드 public/og, 작업은 대표 사진)
+[locale]/layout → metadataBase(lib/seo/site readSiteUrl) + 운영이 아니면 robots noindex. next.config headers 가 X-Robots-Tag 도 붙인다
+app/sitemap.ts → features/works/queries getPublishedWorks ("works" 태그) → lib/seo/sitemap buildSitemap
+  → 고정 페이지 5개 + 공개 작업 × ko/en, lastmod 는 Work.updatedAt (saveWork 가 Clock 에서). 저장 액션의 updateTag("works") 로 다시 만들어진다
+app/robots.ts → /admin 차단 + sitemap 주소 (운영/미리보기 같음)
+next.config redirects → lib/seo/legacy-redirects toNextRedirects (예전 주소 → 지금 주소, 언어마다, 301)
+홈/작업 상세 → lib/seo/structured-data (Organization + WebSite / CreativeWork) → lib/seo/json-ld <script>
+```
+
 ## 테스트 전략
 | 대상 | 도구 | 방식 |
 |---|---|---|
@@ -124,6 +136,7 @@ GET /admin/inquiries/[id] → getAdminInquiry (열어도 상태를 바꾸지 않
 | application | Vitest | 포트를 인메모리 가짜로 주입 |
 | infrastructure | Vitest | 리포지토리/AuthGateway/PhotoStorage 계약 테스트 (인메모리 구현과 Supabase 구현이 같은 테스트를 통과. 문의는 관리자 목록의 정렬/필터/범위/개수/1000건 초과/지우기 포함). Supabase 쪽은 `pnpm test:contract` 로 분리 (클라우드 DB/Storage, 테이블과 버킷 RLS, DB 제약, 공개 가입 차단. Auth 계정과 Storage 파일은 실행마다 임시로 만들고 지운다) |
 | components | Vitest + Testing Library, Storybook | 렌더, 키보드, aria, 변형별 스토리 |
+| 검색 노출 | Vitest, Playwright | 태그/sitemap/robots/301 규칙을 만드는 함수 단위 테스트(301 고리 검사 포함), e2e 로 빌드한 서버의 실제 태그, sitemap, robots, 301 상태와 Location, noindex 헤더 |
 | 화면 흐름 | Playwright | 문의 제출, 관리자 로그인 → 작업 등록(사진 여러 장, 순서, 대표, 공개/비공개, 지우기, 키보드), 문의 처리(제출 → 확인 → 완료 → 다시 열기, 필터와 개수, 두 탭 충돌, 지우기, JS 없이) |
 | 시안 재현 | Playwright + pixelmatch | 390/1440/1920 차이율 |
 

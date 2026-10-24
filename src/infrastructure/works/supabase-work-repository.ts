@@ -9,7 +9,7 @@ import {
 } from "./supabase-work-mapper";
 
 const columns =
-  "id, slug, title_ko, title_en, category, year_month, published, work_images (work_id, sort_order, src, alt_ko, alt_en, is_cover)";
+  "id, slug, title_ko, title_en, category, year_month, published, updated_at, work_images (work_id, sort_order, src, alt_ko, alt_en, is_cover)";
 
 // 규칙을 어긴 행은 건너뛰지 않고 거부한다. 메시지에는 작업 id 와 에러만 (docs/adr/0010)
 const restore = (row: WorkRowWithImages): Work => {

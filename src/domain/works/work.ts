@@ -25,6 +25,8 @@ export type Work = {
   /** order 오름차순 */
   readonly images: readonly WorkImage[];
   readonly published: boolean;
+  /** 마지막으로 저장한 시각. sitemap 의 lastmod 가 된다 */
+  readonly updatedAt: Date;
 };
 
 export type WorkInput = {
@@ -37,6 +39,8 @@ export type WorkInput = {
   coverSrc: string;
   images: readonly WorkImage[];
   published: boolean;
+  /** 저장하는 유스케이스가 Clock 에서 받는다. 저장소에서 읽을 때는 저장된 값 */
+  updatedAt: Date;
 };
 
 export type WorkError =
@@ -45,7 +49,8 @@ export type WorkError =
   | EmptyTitle
   | { type: "InvalidCategory"; value: string }
   | YearMonthError
-  | ImageError;
+  | ImageError
+  | { type: "InvalidUpdatedAt" };
 
 const isCategory = (value: string): value is WorkCategory =>
   (workCategories as readonly string[]).includes(value);
@@ -72,6 +77,9 @@ export function createWork(input: WorkInput): Result<Work, WorkError> {
   if (!isCategory(input.category))
     return err({ type: "InvalidCategory", value: input.category });
   const category = input.category;
+  if (Number.isNaN(input.updatedAt.getTime()))
+    return err({ type: "InvalidUpdatedAt" });
+  const updatedAt = new Date(input.updatedAt);
 
   return flatMap(parseYearMonth(input.date), (date) =>
     flatMap(parseSlug(input.slug), (slug) =>
@@ -87,6 +95,7 @@ export function createWork(input: WorkInput): Result<Work, WorkError> {
             cover,
             images,
             published: input.published,
+            updatedAt,
           }),
         ),
       ),

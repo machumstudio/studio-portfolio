@@ -56,10 +56,10 @@ for (const [label, path] of [
       path.startsWith("/en") ? "Page not found" : "페이지를 찾을 수 없어요",
     );
     await expect(page.getByRole("banner")).toBeVisible();
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
-      "content",
-      /noindex/,
-    );
+    // Next 가 404 응답에 붙이는 noindex (운영 배포에서도 붙는다. 미리보기는 레이아웃의 noindex, nofollow 가 하나 더 있다)
+    await expect(
+      page.locator('meta[name="robots"][content="noindex"]'),
+    ).toHaveCount(1);
   });
 }
 

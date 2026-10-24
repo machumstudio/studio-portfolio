@@ -84,6 +84,17 @@ const save = (page: Page) =>
   page.getByRole("button", { name: "저장", exact: true }).click();
 
 // 같은 주소로 다시 오면 이전 화면이 숨은 채 남아 있을 수 있어 보이는 main 안에서 찾는다
+// sitemap.xml 에 이 작업의 ko/en 주소가 있는지. 저장 액션의 updateTag("works") 로 sitemap 도 다시 만들어진다
+const sitemapLists = async (page: Page, slug: string) => {
+  const xml = await (await page.request.get("/sitemap.xml")).text();
+  const ko = xml.includes(
+    `<loc>${new URL(`/work/${slug}`, page.url()).href}</loc>`,
+  );
+  const en = xml.includes(`/en/work/${slug}</loc>`);
+  expect(ko, "ko 와 en 이 같이 있거나 같이 없다").toBe(en);
+  return ko;
+};
+
 const gallery = (page: Page) => page.getByRole("main").locator("#works");
 
 const eventsCard = (page: Page, title: string) =>
@@ -188,6 +199,7 @@ test("작업 만들기 → 사진 여러 장 → 순서 변경 → 대표 지정
       .getByRole("region", { name: "사진 4장" })
       .getByRole("button"),
   ).toHaveCount(4);
+  expect(await sitemapLists(page, work.slug)).toBe(true);
 
   // 목록에 공개로 보인다
   await page.goto("/admin");
@@ -206,6 +218,7 @@ test("작업 만들기 → 사진 여러 장 → 순서 변경 → 대표 지정
   await expect(gallery(page)).toBeVisible();
   await expect(eventsCard(page, work.ko)).toHaveCount(0);
   expect((await page.goto(`/work/${work.slug}`))?.status()).toBe(404);
+  expect(await sitemapLists(page, work.slug)).toBe(false);
 
   // 다시 공개한 뒤 지우면 상세가 404, 사진 파일도 지워진다
   await page.goto(editUrl);
@@ -226,6 +239,7 @@ test("작업 만들기 → 사진 여러 장 → 순서 변경 → 대표 지정
     "작업을 지웠습니다.",
   );
   expect((await page.goto(`/work/${work.slug}`))?.status()).toBe(404);
+  expect(await sitemapLists(page, work.slug)).toBe(false);
   for (const src of uploaded)
     expect((await page.request.get(src)).status(), src).toBe(404);
 });

@@ -180,7 +180,10 @@ describe("WorkEditor 새 작업", () => {
     expect(
       screen.getByText("사진을 한 장 이상 올려 주세요."),
     ).toBeInTheDocument();
-    expect(saveStatus()).toHaveTextContent("고칠 칸이 3개 있습니다.");
+    // 상태 문구는 포커스와 다른 렌더에서 바뀔 수 있다 (느린 CI 에서 포커스가 먼저 잡힌 적이 있다)
+    await waitFor(() =>
+      expect(saveStatus()).toHaveTextContent("고칠 칸이 3개 있습니다."),
+    );
   });
 
   it("세션이 끝나면 입력을 그대로 두고 다시 로그인하라고 알린다", async () => {
