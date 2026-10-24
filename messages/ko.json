@@ -580,7 +580,13 @@
   "AdminDashboard": {
     "label": "관리자",
     "signedInAs": "{email} 계정으로 로그인했습니다.",
-    "signOut": "로그아웃"
+    "signOut": "로그아웃",
+    "nav": {
+      "label": "관리자 메뉴",
+      "works": "작업",
+      "inquiries": "문의",
+      "newInquiries": "새 문의 {count}건"
+    }
   },
   "AdminWorks": {
     "metadata": {
@@ -723,6 +729,87 @@
       "metadata": "작업을 찾을 수 없음 | Machum Studio 관리자",
       "title": "작업을 찾을 수 없습니다",
       "body": "지웠거나 주소가 잘못된 작업입니다. 작업 목록에서 다시 골라 주세요."
+    }
+  },
+  "AdminInquiries": {
+    "metadata": {
+      "list": "문의 | Machum Studio 관리자",
+      "detail": "문의 보기 | Machum Studio 관리자",
+      "notFound": "문의를 찾을 수 없음 | Machum Studio 관리자"
+    },
+    "status": {
+      "New": "새 문의",
+      "Read": "확인",
+      "Done": "완료"
+    },
+    "list": {
+      "title": "문의",
+      "description": "문의 폼으로 받은 메시지입니다. 열어 보기만 해서는 상태가 바뀌지 않습니다. 읽었으면 ‘확인’, 답장까지 끝냈으면 ‘완료’로 바꿔 주세요.",
+      "filterLabel": "상태로 거르기",
+      "all": "전체",
+      "count": "{count}건",
+      "label": "문의 목록",
+      "empty": "아직 받은 문의가 없습니다. 공개 사이트의 문의 폼으로 들어온 메시지가 여기에 쌓입니다.",
+      "emptyFiltered": "‘{status}’ 상태인 문의가 없습니다.",
+      "receivedAt": "받은 시각",
+      "openLabel": "{name} 님의 문의 열기",
+      "pagination": "페이지",
+      "previous": "이전 페이지",
+      "next": "다음 페이지",
+      "pageOf": "{page} / {pageCount} 페이지"
+    },
+    "detail": {
+      "back": "문의 목록",
+      "title": "{name} 님의 문의",
+      "message": "메시지",
+      "contact": "연락처",
+      "email": "이메일",
+      "phone": "전화번호",
+      "noPhone": "남기지 않음",
+      "handling": "처리",
+      "status": "지금 상태",
+      "receivedAt": "받은 시각",
+      "changedAt": {
+        "Read": "확인한 시각",
+        "Done": "완료한 시각"
+      },
+      "noAutoRead": "이 화면을 열기만 해서는 상태가 바뀌지 않습니다.",
+      "reply": "메일로 답장",
+      "replyLabel": "{name} 님에게 메일로 답장 (메일 앱이 열립니다)",
+      "replySubject": "[Machum Studio] 문의 주셔서 감사합니다"
+    },
+    "actions": {
+      "markRead": "확인으로 바꾸기",
+      "markDone": "완료로 바꾸기",
+      "reopen": "다시 열기",
+      "pending": "바꾸는 중…",
+      "hints": {
+        "markRead": "읽었지만 아직 답장하지 않았을 때 누릅니다.",
+        "markDone": "답장까지 끝냈을 때 누릅니다.",
+        "reopen": "다시 처리해야 할 때 누릅니다. ‘확인’으로 돌아갑니다."
+      }
+    },
+    "notices": {
+      "markRead": "‘확인’으로 바꿨습니다.",
+      "markDone": "‘완료’로 바꿨습니다.",
+      "reopen": "다시 열어 ‘확인’으로 바꿨습니다.",
+      "conflict": "다른 탭이나 기기에서 이 문의의 상태를 먼저 바꿨습니다. 지금 상태를 다시 불러왔으니 확인한 뒤 필요하면 다시 눌러 주세요.",
+      "unavailable": "지금은 처리할 수 없습니다. 잠시 후 다시 시도해 주세요.",
+      "malformed": "처리할 수 없는 요청입니다. 화면을 새로 고친 뒤 다시 시도해 주세요.",
+      "deleted": "문의를 지웠습니다.",
+      "notFound": "문의를 찾을 수 없습니다. 다른 탭이나 기기에서 이미 지웠을 수 있습니다."
+    },
+    "deleteDialog": {
+      "open": "문의 지우기",
+      "title": "이 문의를 지울까요?",
+      "body": "{name} 님의 문의와 연락처를 모두 지웁니다. 지운 뒤에는 되돌릴 수 없습니다.",
+      "confirm": "지우기",
+      "deleting": "지우는 중…",
+      "cancel": "취소"
+    },
+    "notFound": {
+      "title": "문의를 찾을 수 없습니다",
+      "body": "이미 지웠거나 주소가 잘못된 문의입니다. 문의 목록에서 다시 골라 주세요."
     }
   }
 }
