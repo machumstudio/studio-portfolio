@@ -7,5 +7,6 @@
 | [0004](0004-visual-regression-against-figma.md) | Figma 시안과 픽셀 비교로 재현도 측정 | 채택 |
 | [0005](0005-issue-pr-ci-workflow.md) | 칸 단위 이슈 → PR → CI, Rebase and merge | 채택 |
 | [0006](0006-site-route-group.md) | 공개 사이트 공통 틀(Header/Footer/CTA)은 `(site)` 라우트 그룹 레이아웃 | 채택 |
+| [0007](0007-inquiry-notification-failure-is-warning.md) | 문의 알림이 실패해도 저장은 유지하고 경고로 돌려준다 | 채택 |
 
 형식: 배경 / 결정 / 대안 / 결과(트레이드오프). 바꾸면 새 ADR을 쓰고 이전 것을 "대체됨"으로 표시한다.
