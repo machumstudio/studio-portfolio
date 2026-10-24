@@ -62,6 +62,30 @@ describe("SiteHeader", () => {
     ).toEqual([within(nav).getByRole("link", { name: "포트폴리오" })]);
   });
 
+  it("/contact 에서는 문의 버튼만 현재 페이지다 (데스크톱, 모바일 메뉴 모두)", async () => {
+    const user = userEvent.setup();
+    pathname.current = "/contact";
+    renderHeader();
+    expect(
+      within(screen.getByRole("banner"))
+        .getAllByRole("link", { current: "page" })
+        .map((a) => a.textContent),
+    ).toEqual(["문의하기"]);
+
+    await user.click(screen.getByRole("button", { name: "메뉴 열기" }));
+    const [, mobileNav] = screen.getAllByRole("navigation", {
+      name: "주요 메뉴",
+    });
+    expect(
+      within(mobileNav).getByRole("link", { name: "문의하기" }),
+    ).toHaveAttribute("aria-current", "page");
+    expect(
+      within(mobileNav)
+        .getAllByRole("link")
+        .filter((a) => a.getAttribute("aria-current") === "page"),
+    ).toHaveLength(1);
+  });
+
   it("모바일 메뉴를 열면 같은 메뉴와 현재 표시가 보이고 Esc 로 닫힌다", async () => {
     const user = userEvent.setup();
     pathname.current = "/services";

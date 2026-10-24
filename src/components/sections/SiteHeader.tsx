@@ -57,7 +57,8 @@ export function SiteHeader() {
           </ul>
         </nav>
 
-        <Link
+        {/* 문의 버튼도 /contact 에서는 aria-current. 시안의 Contact 페이지도 버튼 모양은 같아 표시는 바꾸지 않는다 */}
+        <NavLink
           href="/contact"
           className={buttonStyles({
             variant: "outline",
@@ -65,7 +66,7 @@ export function SiteHeader() {
           })}
         >
           {t("nav.contact")}
-        </Link>
+        </NavLink>
 
         <MobileMenu openLabel={t("menu.open")} closeLabel={t("menu.close")}>
           <nav aria-label={t("nav.label")}>
@@ -83,12 +84,12 @@ export function SiteHeader() {
               ))}
             </ul>
             <div className="border-x border-dark-12 px-4 py-10">
-              <Link
+              <NavLink
                 href="/contact"
                 className={buttonStyles({ className: "w-full" })}
               >
                 {t("nav.contact")}
-              </Link>
+              </NavLink>
             </div>
           </nav>
         </MobileMenu>
