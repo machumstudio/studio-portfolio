@@ -38,6 +38,8 @@ export default defineConfig({
   ],
   webServer: {
     command: `pnpm build && pnpm start -p ${port}`,
+    // .env.local 에 Supabase 값이 있어도 인메모리로 띄운다. 문의 제출 e2e 가 클라우드 DB 에 쌓이지 않게
+    env: { DATA_STORE: "memory" },
     url: `http://localhost:${port}`,
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
