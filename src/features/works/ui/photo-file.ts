@@ -16,7 +16,9 @@ export type PhotoProblem =
   /** 줄여도 업로드 한도를 넘는다 */
   | "tooLargeAfterResize"
   /** 네트워크가 끊기거나 저장소가 거부했다 */
-  | "uploadFailed";
+  | "uploadFailed"
+  /** 작업 하나의 사진 장수를 넘는다 */
+  | "tooMany";
 
 export class PhotoUploadError extends Error {
   constructor(readonly code: PhotoProblem) {

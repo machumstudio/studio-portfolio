@@ -43,6 +43,8 @@ const sameInBothLocales = new Set([
   "AboutPage.stats.items.followers.value",
   "AboutPage.stats.items.retention.value",
   "NotFound.eyebrow",
+  // 파일 이름과 실패 이유를 잇는 틀 (관리자 업로드 알림)
+  "AdminWorks.photos.failed",
   // 장식 영어: 시안의 띠배너와 "LET'S / WORK TOGETHER" 는 글자 모양(대문자 영어)이 디자인의 일부라
   // ko 화면에서도 영어로 둔다. 화면에는 lang="en", 보조기기에는 한국어 이름(목록 이름, 버튼, 숨긴 제목)이 읽힌다
   "Layout.categories.event",

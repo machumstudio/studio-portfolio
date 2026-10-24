@@ -584,5 +584,142 @@
     "signedInAs": "{email} 계정으로 로그인했습니다.",
     "empty": "작업 관리와 문의 관리가 이곳에 들어옵니다.",
     "signOut": "로그아웃"
+  },
+  "AdminWorks": {
+    "metadata": {
+      "list": "작업 | Machum Studio 관리자",
+      "new": "새 작업 | Machum Studio 관리자",
+      "edit": "{title} 고치기 | Machum Studio 관리자"
+    },
+    "list": {
+      "title": "작업",
+      "description": "공개한 작업은 저장하는 즉시 홈과 포트폴리오에 보입니다.",
+      "create": "새 작업 만들기",
+      "empty": "아직 작업이 없습니다. 새 작업을 만들어 사진을 올려 보세요.",
+      "deleted": "작업을 지웠습니다.",
+      "label": "작업 목록",
+      "published": "공개",
+      "private": "비공개",
+      "photoCount": "사진 {count}장",
+      "edit": "고치기",
+      "editLabel": "{title} 고치기",
+      "view": "공개 화면",
+      "viewLabel": "{title} 공개 화면에서 보기 (새 탭)"
+    },
+    "editor": {
+      "newTitle": "새 작업",
+      "editTitle": "작업 고치기",
+      "back": "작업 목록",
+      "form": "작업 정보",
+      "basics": "기본 정보",
+      "titleKo": "제목 (한국어)",
+      "titleEn": "제목 (영어)",
+      "slug": "주소 이름",
+      "slugHint": "작업 상세 주소에 들어갑니다: /work/{slug}",
+      "slugRule": "영문 소문자, 숫자, 하이픈(-)만 씁니다. 영어 제목을 쓰면 자동으로 채워집니다.",
+      "category": "분야",
+      "categoryPlaceholder": "분야를 고르세요",
+      "date": "촬영 연월",
+      "dateHint": "예: 2024-05",
+      "published": "공개하기",
+      "publishedHint": "켜고 저장하면 홈과 포트폴리오에 바로 보입니다. 끄면 관리자만 봅니다.",
+      "save": "저장",
+      "saving": "저장하는 중…",
+      "saved": "저장했습니다.",
+      "created": "작업을 만들었습니다.",
+      "invalid": "고칠 칸이 {count}개 있습니다.",
+      "waitUploads": "사진을 올리는 중입니다. 다 올라간 뒤 저장해 주세요.",
+      "preview": "공개 화면에서 보기",
+      "previewLabel": "공개 화면에서 보기 (새 탭)",
+      "previewHint": "공개로 저장하면 공개 화면에서 볼 수 있습니다.",
+      "unsaved": "저장하지 않은 변경이 있습니다.",
+      "delete": "작업 지우기"
+    },
+    "photos": {
+      "title": "사진",
+      "description": "여러 장을 한 번에 올릴 수 있습니다. 올리기 전에 긴 변 2400px 로 줄이고 촬영 위치 같은 정보를 지웁니다.",
+      "drop": "사진을 여기에 끌어다 놓거나",
+      "pick": "사진 고르기",
+      "rules": "JPG, PNG, WebP · 한 장 {max}MB 까지 · 작업 하나에 {count}장까지",
+      "listLabel": "사진 순서",
+      "reorderHint": "끌어서 놓거나 앞으로/뒤로 버튼으로 순서를 바꿉니다. 첫 사진부터 차례로 보입니다.",
+      "position": "{index}번째",
+      "photoAlt": "사진 {index}",
+      "cover": "대표 사진",
+      "makeCover": "대표로 지정",
+      "makeCoverLabel": "사진 {index} 대표로 지정",
+      "moveUp": "앞으로",
+      "moveUpLabel": "사진 {index} 앞으로",
+      "moveDown": "뒤로",
+      "moveDownLabel": "사진 {index} 뒤로",
+      "remove": "빼기",
+      "removeLabel": "사진 {index} 빼기",
+      "altKo": "설명 (한국어)",
+      "altEn": "설명 (영어)",
+      "altLabel": "사진 {index}",
+      "altHint": "화면을 읽어 주는 프로그램이 읽습니다. 비워도 됩니다.",
+      "uploadsLabel": "올리는 중인 사진",
+      "processing": "{name}: 줄이는 중",
+      "uploading": "{name}: 올리는 중 {percent}%",
+      "failed": "{name}: {reason}",
+      "dismiss": "{name} 알림 닫기",
+      "announce": {
+        "added": "사진을 추가했습니다. 지금 {count}장입니다.",
+        "moved": "사진을 {index}번째로 옮겼습니다.",
+        "cover": "{index}번째 사진을 대표 사진으로 지정했습니다.",
+        "removed": "사진을 뺐습니다. 저장하면 파일도 지워집니다.",
+        "failed": "{name} 파일을 올리지 못했습니다."
+      },
+      "problems": {
+        "unsupportedType": "JPG, PNG, WebP 사진만 올릴 수 있습니다. 아이폰 HEIC 사진은 공유 메뉴에서 JPG 로 저장한 뒤 올려 주세요.",
+        "tooLarge": "사진 한 장은 {max}MB 까지 올릴 수 있습니다.",
+        "tooLargeAfterResize": "줄여도 너무 큰 사진입니다. 다른 사진을 골라 주세요.",
+        "unreadable": "사진을 열 수 없습니다. 파일이 손상되었거나 사진이 아닙니다.",
+        "tooMany": "작업 하나에 사진은 {count}장까지 올릴 수 있습니다.",
+        "signedOut": "로그인이 끝났습니다. 새 탭에서 다시 로그인한 뒤 다시 올려 주세요.",
+        "unavailable": "지금은 올릴 수 없습니다. 잠시 후 다시 시도해 주세요.",
+        "uploadFailed": "올리는 중에 연결이 끊겼습니다. 다시 시도해 주세요.",
+        "malformed": "올릴 수 없는 요청입니다. 화면을 새로 고친 뒤 다시 시도해 주세요."
+      }
+    },
+    "deleteDialog": {
+      "title": "이 작업을 지울까요?",
+      "body": "‘{title}’ 작업과 사진 {count}장을 지웁니다. 지운 뒤에는 되돌릴 수 없습니다.",
+      "confirm": "지우기",
+      "deleting": "지우는 중…",
+      "cancel": "취소"
+    },
+    "failures": {
+      "signedOut": "로그인이 끝났습니다. 새 탭에서 다시 로그인한 뒤 이 화면에서 다시 저장해 주세요. 입력한 내용은 그대로 있습니다.",
+      "notFound": "이 작업을 찾을 수 없습니다. 다른 곳에서 지웠을 수 있습니다.",
+      "alreadyExists": "이미 저장된 작업입니다. 작업 목록에서 다시 열어 주세요.",
+      "unavailable": "지금은 저장할 수 없습니다. 잠시 후 다시 시도해 주세요.",
+      "malformed": "저장할 수 없는 내용입니다. 화면을 새로 고친 뒤 다시 시도해 주세요."
+    },
+    "errors": {
+      "titleKo": {
+        "required": "한국어 제목을 입력해 주세요."
+      },
+      "titleEn": {
+        "required": "영어 제목을 입력해 주세요."
+      },
+      "slug": {
+        "invalid": "영문 소문자, 숫자, 하이픈(-)만 쓸 수 있습니다. 예: jeju-wedding",
+        "taken": "다른 작업이 이미 쓰는 주소 이름입니다."
+      },
+      "category": {
+        "invalid": "분야를 골라 주세요."
+      },
+      "date": {
+        "invalid": "촬영 연월을 2024-05 처럼 입력해 주세요."
+      },
+      "photos": {
+        "required": "사진을 한 장 이상 올려 주세요.",
+        "cover": "대표 사진을 골라 주세요.",
+        "tooMany": "사진은 작업 하나에 {max}장까지 올릴 수 있습니다.",
+        "unknown": "이 작업에 올리지 않은 사진이 섞여 있습니다. 그 사진을 빼고 다시 올려 주세요.",
+        "invalid": "사진 순서가 맞지 않습니다. 화면을 새로 고친 뒤 다시 시도해 주세요."
+      }
+    }
   }
 }
