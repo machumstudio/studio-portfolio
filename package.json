@@ -12,6 +12,7 @@
     "test:contract": "vitest run --config vitest.contract.config.mts",
     "test:e2e": "playwright test --grep-invert @visual",
     "test:visual": "playwright test --grep @visual",
+    "db:seed": "tsx --conditions=react-server --env-file-if-exists=.env.local scripts/seed-works.mts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "format": "prettier --write .",
