@@ -22,6 +22,8 @@ export const secretClient = () =>
     secretKey: required(secretKey),
   });
 
+export const supabaseUrl = () => required(url);
+
 export const publishableEnv = () => ({
   url: required(url),
   publishableKey: required(publishableKey),
@@ -32,3 +34,37 @@ export const publishableClient = () =>
   createClient<Database>(required(url), required(publishableKey), {
     auth: { persistSession: false, autoRefreshToken: false },
   });
+
+type SecretClient = ReturnType<typeof secretClient>;
+
+/**
+ * admin API 로 임시 계정을 만들고 그 계정으로 로그인한 클라이언트 (브라우저 세션과 같은 권한).
+ * 만든 계정 id 를 userIds 에 넣는다. 테스트가 끝나면 지운다
+ */
+export async function signedInClient(
+  service: SecretClient,
+  {
+    email,
+    password,
+    appMetadata,
+    userIds,
+  }: {
+    email: string;
+    password: string;
+    appMetadata: object;
+    userIds: string[];
+  },
+) {
+  const { data, error } = await service.auth.admin.createUser({
+    email,
+    password,
+    email_confirm: true,
+    app_metadata: appMetadata,
+  });
+  if (error) throw error;
+  userIds.push(data.user.id);
+  const client = publishableClient();
+  const signIn = await client.auth.signInWithPassword({ email, password });
+  if (signIn.error) throw signIn.error;
+  return client;
+}
