@@ -7,6 +7,8 @@ const deps = vi.hoisted(() => ({
 }));
 
 vi.mock("server-only", () => ({}));
+// 요청 밖(테스트)에서는 connection() 이 던진다. 실제 요청처럼 바로 넘어가게 한다
+vi.mock("next/server", () => ({ connection: async () => {} }));
 vi.mock("next/navigation", () => ({
   redirect: (url: string) => {
     throw new Error(`redirect ${url}`);

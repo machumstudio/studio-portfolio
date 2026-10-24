@@ -1,13 +1,17 @@
 import "server-only";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 import { cache } from "react";
 import { getCurrentAdmin } from "@/application/admin-auth/get-current-admin";
 import type { Admin } from "@/domain/admin-auth/admin";
 import { container } from "@/infrastructure/container";
 import { adminLoginUrl } from "./return-to";
 
-// 요청 하나에서 레이아웃, 페이지, 컴포넌트가 여러 번 불러도 인증 서버에는 한 번만 묻는다
+// 요청 하나에서 레이아웃, 페이지, 컴포넌트가 여러 번 불러도 인증 서버에는 한 번만 묻는다.
+// connection(): 실제 요청에서만 확인한다. 링크 프리페치(partialPrefetching)의 런타임 prerender 는 쿠키는 읽히지만
+// Supabase SDK 안의 Date.now()/fetch 를 막아서, 그대로 두면 세션 확인이 중간에 끊겨 장애로 기록되고 화면이 500 이 된다
 const currentAdmin = cache(async () => {
+  await connection();
   const result = await getCurrentAdmin({
     gateway: await container.adminAuth.gateway(),
   })();
