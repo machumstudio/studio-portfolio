@@ -176,3 +176,28 @@ describe("container 관리자 작업 선택", () => {
     await expect(container.works.admin()).rejects.toThrow("꺼져 있다");
   });
 });
+
+describe("container 관리자 문의 선택", () => {
+  it("DATA_STORE=memory 면 공개 문의 폼과 같은 인메모리 저장소 (제출한 문의가 관리자 목록에 보인다)", async () => {
+    const { container } = await load({ ...authEnv, DATA_STORE: "memory" });
+    expect(await container.inquiry.admin()).toBe(container.inquiry.repo);
+  });
+
+  it("Supabase 저장소 + Supabase Auth 면 요청 세션의 Supabase 저장소 (secret 키 저장소와 다르다)", async () => {
+    const { container } = await load({
+      ...supabaseEnv,
+      ...authEnv,
+      DATA_STORE: undefined,
+    });
+    expect(await container.inquiry.admin()).not.toBe(container.inquiry.repo);
+  });
+
+  it("관리자 인증이 꺼져 있으면 쓰지 못한다", async () => {
+    const { container } = await load({
+      NEXT_PUBLIC_SUPABASE_URL: undefined,
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: undefined,
+      DATA_STORE: undefined,
+    });
+    await expect(container.inquiry.admin()).rejects.toThrow("꺼져 있다");
+  });
+});
