@@ -27,19 +27,19 @@
     },
     "categories": {
       "label": "촬영 분야",
-      "event": "이벤트 촬영",
-      "commercial": "광고 촬영",
-      "product": "제품 촬영",
-      "wedding": "웨딩 촬영",
-      "landscape": "풍경 촬영",
-      "branding": "브랜딩 촬영",
-      "portrait": "인물 촬영"
+      "event": "Event Photography",
+      "commercial": "Commercial Photography",
+      "product": "Product Photography",
+      "wedding": "Wedding Photography",
+      "landscape": "Landscape Photography",
+      "branding": "Branding Photography",
+      "portrait": "Portrait Photography"
     },
     "cta": {
       "eyebrow": "사진이 더 의미 있게 머무는 곳",
       "title": "함께 작업해요",
-      "lead": "함께",
-      "rest": "작업해요",
+      "lead": "Let’s",
+      "rest": "Work Together",
       "action": "문의하기"
     },
     "footer": {

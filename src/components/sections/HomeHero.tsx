@@ -87,6 +87,7 @@ export function HomeHero({ photos }: HomeHeroProps) {
       </div>
 
       <CategoryMarquee
+        itemLang="en"
         label={t("Layout.categories.label")}
         items={categories.map((key) => t(`Layout.categories.${key}`))}
       />

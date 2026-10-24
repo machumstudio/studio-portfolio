@@ -3,15 +3,19 @@ import userEvent from "@testing-library/user-event";
 import { NextIntlClientProvider } from "next-intl";
 import { describe, expect, it, vi } from "vitest";
 import messages from "../../../messages/en.json";
+import ko from "../../../messages/ko.json";
 import { SiteCta } from "./SiteCta";
 
 vi.mock("@/i18n/navigation", () => ({
   Link: ({ href, ...props }: { href: string }) => <a href={href} {...props} />,
 }));
 
-const renderCta = (props?: { eyebrow?: boolean }) =>
+const renderCta = (props?: { eyebrow?: boolean }, locale = "en") =>
   render(
-    <NextIntlClientProvider locale="en" messages={messages}>
+    <NextIntlClientProvider
+      locale={locale}
+      messages={locale === "ko" ? ko : messages}
+    >
       <SiteCta {...props} />
     </NextIntlClientProvider>,
   );
@@ -42,5 +46,20 @@ describe("SiteCta", () => {
     expect(
       screen.getByRole("link", { name: "Contact Me" }),
     ).toBeInTheDocument();
+  });
+
+  it("ko 화면에서도 두 줄은 장식 영어(lang=en)이고, 제목과 버튼 이름은 한국어로 읽힌다", () => {
+    const { container } = renderCta({ eyebrow: false }, "ko");
+    const lines = [...container.querySelectorAll("span[aria-hidden]")];
+    expect(lines.map((el) => el.textContent)).toEqual([
+      "Let’s",
+      "Work Together",
+    ]);
+    for (const el of lines) expect(el).toHaveAttribute("lang", "en");
+    expect(
+      screen.getByRole("heading", { level: 2, name: "함께 작업해요" }),
+    ).toBeInTheDocument();
+    const link = screen.getByRole("link", { name: "문의하기" });
+    expect(link.closest("[lang]")).toBeNull();
   });
 });

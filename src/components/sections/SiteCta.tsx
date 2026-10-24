@@ -9,6 +9,8 @@ import { Link } from "@/i18n/navigation";
 // 첫 줄 끝의 보라 알약 버튼(48/56/66)은 문의 페이지 링크.
 // 버튼이 제목 사이에 끼어 있어 제목은 sr-only 로 한 번 더 두고, 보이는 두 줄은 보조기기에서 숨긴다.
 // 홈 히어로 오른쪽도 같은 두 줄 + 버튼이라 라벨만 빼고(eyebrow={false}) 재사용한다.
+// 두 줄 글자는 장식 영어라 ko 화면에서도 영어(lang="en")이고, 시안처럼 "LET'S [버튼]" / "WORK TOGETHER" 두 줄로 고정한다
+// (줄 안에서는 꺾지 않는다). 보조기기에는 숨긴 제목(한국어)과 버튼 이름(한국어)이 읽힌다.
 export function SiteCta({ eyebrow = true }: { eyebrow?: boolean }) {
   const t = useTranslations("Layout.cta");
 
@@ -18,9 +20,11 @@ export function SiteCta({ eyebrow = true }: { eyebrow?: boolean }) {
         <p className="text-eyebrow text-grey-50 uppercase">{t("eyebrow")}</p>
       )}
       <h2 className="sr-only">{t("title")}</h2>
-      <div className="flex flex-col gap-1 text-h1 text-white uppercase 3xl:gap-2.5">
+      <div className="flex flex-col gap-1 text-h1 whitespace-nowrap text-white uppercase 3xl:gap-2.5">
         <div className="flex items-center gap-2.5">
-          <span aria-hidden>{t("lead")}</span>
+          <span aria-hidden lang="en">
+            {t("lead")}
+          </span>
           <Link
             href="/contact"
             aria-label={t("action")}
@@ -29,7 +33,9 @@ export function SiteCta({ eyebrow = true }: { eyebrow?: boolean }) {
             <ArrowUpRight />
           </Link>
         </div>
-        <span aria-hidden>{t("rest")}</span>
+        <span aria-hidden lang="en">
+          {t("rest")}
+        </span>
       </div>
     </div>
   );
