@@ -9,7 +9,7 @@ const meta = {
   argTypes: {
     variant: {
       control: "inline-radio",
-      options: ["primary", "outline", "icon"],
+      options: ["primary", "outline", "link", "icon"],
     },
     size: { control: "inline-radio", options: ["md", "lg"] },
   },
@@ -53,6 +53,18 @@ export const IconLarge: Story = {
   },
 };
 
+export const Link: Story = {
+  args: {
+    variant: "link",
+    children: (
+      <>
+        Book a Call
+        <ArrowUpRight strokeWidth={1.5} />
+      </>
+    ),
+  },
+};
+
 export const Disabled: Story = { args: { variant: "outline", disabled: true } };
 
 export const AsLink: Story = {
@@ -78,6 +90,10 @@ export const AllVariants: Story = {
         <Button variant="outline">View All Works →</Button>
         <Button variant="outline" disabled>
           Disabled
+        </Button>
+        <Button variant="link">
+          View Projects
+          <ArrowUpRight strokeWidth={1.5} />
         </Button>
       </div>
       <div className="flex flex-wrap items-center gap-4">

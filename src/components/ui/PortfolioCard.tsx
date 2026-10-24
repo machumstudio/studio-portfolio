@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
+import { buttonStyles } from "./Button";
 import { cx } from "./cx";
 
 type PortfolioCardProps = {
@@ -44,8 +45,7 @@ const variants = {
 // 수치: docs/design/nodes/home-*.json 의 Portfolio "Card" (mobile → lg → 3xl).
 // 사진 높이 353/428/519, radius 16/16/20 → 간격 16/19/19 → 아래 줄(간격 12/16/20, 위 정렬).
 // 제목 16/18/20 Medium Grey/80 → 간격 0/2/4 → 날짜 14/16/18 Regular Grey/50 (둘 다 행간 auto).
-// 링크: 아래 테두리 Dark/20, pad 4 0 / 4 0 / 6 0 (테두리 inside 라 아래 1px 뺌), 글자 14/14/18 Medium Grey/95 대문자,
-//   아이콘 20/20/24 흰색, 간격 6/6/10.
+// 링크: Button link 변형 (아래 테두리 Dark/20, 글자 14/14/18 Medium Grey/95 대문자, 아이콘 20/20/24, 간격 6/6/10).
 // gallery 변형 (docs/design/nodes/portfolio-*.json 의 갤러리 "Card"): 사진 335/409/519, 간격 14/14/19 → 아래 줄(간격 14/14/20),
 //   제목 16/16/20 Medium → 간격 2/2/4 → 날짜 14/14/18 Regular, 링크 간격 4/4/10. 나머지는 같다.
 export function PortfolioCard({
@@ -85,18 +85,11 @@ export function PortfolioCard({
         </div>
         <Link
           href={href}
-          className={cx(
-            "flex shrink-0 items-center border-b border-dark-20 pt-1 pb-0.75 text-caption font-medium text-grey-95 uppercase transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-70 3xl:gap-2.5 3xl:pt-1.5 3xl:pb-1.25",
-            v.link,
-          )}
+          className={buttonStyles({ variant: "link", className: v.link })}
         >
           {viewLabel}
           <span className="sr-only">: {title}</span>
-          <ArrowUpRight
-            aria-hidden
-            className="size-5 text-white 3xl:size-6"
-            strokeWidth={1.5}
-          />
+          <ArrowUpRight aria-hidden strokeWidth={1.5} />
         </Link>
       </div>
     </article>

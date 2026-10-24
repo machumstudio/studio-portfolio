@@ -67,4 +67,15 @@ describe("Button", () => {
       "surface-raised",
     );
   });
+
+  it("link 변형은 밑줄 글자 링크 모양이다", () => {
+    render(
+      <a href="#contact" className={buttonStyles({ variant: "link" })}>
+        상담 예약
+      </a>,
+    );
+    const { className } = screen.getByRole("link", { name: "상담 예약" });
+    expect(className).toContain("border-b");
+    expect(className).not.toContain("surface-raised");
+  });
 });
