@@ -16,6 +16,7 @@ const textSizes = [
   "category",
   "package",
   "quote",
+  "send",
   "tagline",
   "lead",
   "body",

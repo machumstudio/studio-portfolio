@@ -32,6 +32,7 @@ describe("cx", () => {
       "text-category",
       "text-package",
       "text-quote",
+      "text-send",
       "text-tagline",
       "text-lead",
       "text-body",

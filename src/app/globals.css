@@ -211,6 +211,18 @@
     font-size: 55px;
   }
 }
+/* send: Contact 문의 폼의 "Send Message" 제출 글자 (SemiBold 행간 auto, 28/38/58). h1 과 노트북만 다르다 (48) */
+@utility text-send {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: normal;
+  @media (width >= 1024px) {
+    font-size: 38px;
+  }
+  @media (width >= 1920px) {
+    font-size: 58px;
+  }
+}
 @utility text-tagline {
   font-size: 14px;
   font-weight: 500;
