@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { err, ok } from "@/shared/result";
 import {
+  allowedInquiryActions,
   inquiryActions,
+  inquiryStatusTypes,
   transitionStatus,
   type InquiryAction,
   type InquiryStatus,
@@ -60,5 +62,28 @@ describe("transitionStatus", () => {
     const read = statuses.Read;
     transitionStatus(read, "markDone", at);
     expect(read).toEqual({ type: "Read", changedAt: before });
+  });
+});
+
+describe("allowedInquiryActions", () => {
+  it("상태마다 전이표에서 허용된 동작만", () => {
+    for (const type of inquiryStatusTypes)
+      expect(allowedInquiryActions(statuses[type])).toEqual(
+        table
+          .filter(([from, , to]) => from === type && to !== null)
+          .map(([, action]) => action),
+      );
+  });
+
+  it("New 는 확인, Read 는 완료, Done 은 다시 열기 하나씩", () => {
+    expect(allowedInquiryActions(statuses.New)).toEqual(["markRead"]);
+    expect(allowedInquiryActions(statuses.Read)).toEqual(["markDone"]);
+    expect(allowedInquiryActions(statuses.Done)).toEqual(["reopen"]);
+  });
+
+  it("상태 종류 목록이 전이표의 상태를 빠짐없이 덮는다", () => {
+    expect([...inquiryStatusTypes].sort()).toEqual(
+      Object.keys(statuses).sort(),
+    );
   });
 });
