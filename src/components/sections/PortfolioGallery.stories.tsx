@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { PortfolioGallery } from "./PortfolioGallery";
+import { oddPhotos } from "@/components/ui/photo-fixtures";
 
 const image = { src: "/images/placeholder.svg", alt: "" };
 const items = (titles: [string, string, string][]) =>
@@ -51,4 +52,18 @@ export const Desktop: Story = {
 // 공개 작업이 없는 카테고리 (필터로 골랐을 때)
 export const Empty: Story = {
   args: { galleries: [{ category: "commercial", items: [] }] },
+};
+
+// 관리자 업로드처럼 비율/크기가 제각각인 사진(1:4, 4:1, 200px). 사진 칸 크기와 주변 배치는 그대로, 사진만 잘린다
+export const OddPhotos: Story = {
+  args: {
+    galleries: meta.args.galleries.map((gallery) => ({
+      ...gallery,
+      items: gallery.items.map((item, i) => ({
+        ...item,
+        image: oddPhotos(3)[i % 3]!,
+      })),
+    })),
+  },
+  globals: { viewport: { value: "laptop", isRotated: false } },
 };

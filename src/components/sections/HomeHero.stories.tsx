@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { HomeHero, heroPhotoCount } from "./HomeHero";
+import { oddPhotos } from "@/components/ui/photo-fixtures";
 
 const meta = {
   title: "Sections/HomeHero",
@@ -24,4 +25,10 @@ export const Laptop: Story = {
 };
 export const Desktop: Story = {
   globals: { viewport: { value: "desktop", isRotated: false } },
+};
+
+// 관리자 업로드처럼 비율/크기가 제각각인 사진(1:4, 4:1, 200px). 사진 칸 크기와 주변 배치는 그대로, 사진만 잘린다
+export const OddPhotos: Story = {
+  args: { photos: oddPhotos(heroPhotoCount) },
+  globals: { viewport: { value: "laptop", isRotated: false } },
 };
