@@ -11,6 +11,7 @@ import { HomeServices } from "@/components/sections/HomeServices";
 import type { LocalizedText } from "@/domain/works/localized-text";
 import { getPublishedWorks } from "@/features/works/queries";
 import { Faq, Testimonials } from "./_sections/site-sections";
+import { studioContact } from "./_sections/studio-contact";
 
 // 사진은 16칸에서 Unsplash 로 교체할 때까지 임시 이미지. 꾸밈용 자리라 alt 는 비운다
 const placeholder = { src: "/images/placeholder.svg", alt: "" };
@@ -39,11 +40,10 @@ export default function Page({ params }: PageProps<"/[locale]">) {
   return (
     <main className="flex flex-col gap-20 pb-20 lg:gap-37.5 lg:pb-37.5 3xl:gap-50 3xl:pb-50">
       <HomeHero photos={heroPhotos} />
-      {/* 연락처는 가짜 예시값 (가상 스튜디오) */}
       <HomeAbout
         photo={placeholder}
-        email="hello@example.com"
-        phone="+00 000000000"
+        email={studioContact.email}
+        phone={studioContact.phone}
       />
       <HomeServices
         items={Object.entries(services).map(([id, highlights]) => ({
