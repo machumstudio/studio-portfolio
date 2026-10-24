@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("metadata.list") };
 }
 
-// /admin: 작업 목록 (비공개 포함, 최신순). 19칸 문의 관리가 들어오면 메뉴를 나눈다.
+// /admin: 작업 목록 (비공개 포함, 최신순). 문의는 메뉴의 /admin/inquiries.
 // proxy 를 지나왔어도 여기서 인증 서버에 세션을 다시 확인한다 (requireAdmin)
 export default async function AdminWorksPage({
   searchParams,
@@ -20,7 +20,7 @@ export default async function AdminWorksPage({
   const works = await listAdminWorks("/admin");
   const { deleted } = await searchParams;
   return (
-    <AdminShell email={admin.email}>
+    <AdminShell email={admin.email} section="works">
       <AdminWorkList
         works={works.map(toAdminWorkRow)}
         notice={deleted === "1" ? "deleted" : undefined}
