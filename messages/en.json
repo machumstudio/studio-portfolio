@@ -561,5 +561,28 @@
         "3": "Product shoot set under studio lights"
       }
     }
+  },
+  "AdminLogin": {
+    "metadata": "Admin Sign In | Machum Studio",
+    "title": "Admin Sign In",
+    "description": "Sign in to manage works and inquiries.",
+    "form": "Admin sign-in form",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign In",
+    "pending": "Signing in…",
+    "errors": {
+      "required": "Enter your email and password.",
+      "invalid": "The email or password is incorrect.",
+      "unavailable": "Sign-in is unavailable right now. Please try again shortly."
+    }
+  },
+  "AdminDashboard": {
+    "metadata": "Dashboard | Machum Studio Admin",
+    "label": "Admin",
+    "title": "Dashboard",
+    "signedInAs": "Signed in as {email}.",
+    "empty": "Work and inquiry management will appear here.",
+    "signOut": "Sign Out"
   }
 }
