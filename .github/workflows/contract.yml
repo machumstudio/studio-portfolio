@@ -1,0 +1,45 @@
+# Supabase 계약/RLS/제약 테스트 (pnpm test:contract). 개발과 테스트가 같은 클라우드 무료 DB 를 쓴다.
+# - 레포 전체에서 한 번에 하나만 돈다. 중간에 끊으면 테스트 데이터가 남으므로 진행 중인 실행은 취소하지 않는다
+#   (ci.yml 은 같은 브랜치의 새 push 가 이전 실행을 취소해서 워크플로를 나눴다)
+# - secrets 가 없으면(포크 PR) 테스트가 모두 건너뛰어진다
+# - 마이그레이션은 여기서 적용하지 않는다. 로컬에서 supabase db push 로 적용한다 (README)
+name: Contract
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-contract
+  cancel-in-progress: false
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6 # 버전은 package.json packageManager
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm test:contract
+
+      # 테스트가 실패하거나 취소돼 globalSetup 의 되돌리기가 못 돌았을 때 개발 화면이 비지 않게
+      - name: works 시드 복구
+        if: failure() || cancelled()
+        run: pnpm db:seed
