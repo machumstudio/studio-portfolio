@@ -17,7 +17,8 @@
     "build-storybook": "storybook build",
     "format": "prettier --write .",
     "prepare": "husky",
-    "check:registry": "node scripts/check-registry.mjs"
+    "check:registry": "node scripts/check-registry.mjs",
+    "check:bundle": "node --env-file-if-exists=.env.local scripts/check-client-bundle.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",
