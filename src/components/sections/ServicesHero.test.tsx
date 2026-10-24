@@ -7,7 +7,9 @@ import { ServicesHero } from "./ServicesHero";
 const renderHero = () =>
   render(
     <NextIntlClientProvider locale="ko" messages={messages}>
-      <ServicesHero image={{ src: "/images/placeholder.svg", alt: "" }} />
+      <ServicesHero
+        image={{ src: "/images/works/faces-of-resilience-1.jpg", alt: "" }}
+      />
     </NextIntlClientProvider>,
   );
 

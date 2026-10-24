@@ -12,7 +12,10 @@ const renderAbout = () =>
   render(
     <NextIntlClientProvider locale="ko" messages={messages}>
       <HomeAbout
-        photo={{ src: "/images/placeholder.svg", alt: "스튜디오 사진" }}
+        photo={{
+          src: "/images/works/faces-of-resilience-1.jpg",
+          alt: "스튜디오 사진",
+        }}
         email="hello@example.com"
         phone="+00 000000000"
       />

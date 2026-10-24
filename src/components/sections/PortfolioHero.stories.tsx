@@ -9,7 +9,7 @@ import {
 const meta = {
   title: "Sections/PortfolioHero",
   component: PortfolioHero,
-  args: { image: { src: "/images/placeholder.svg", alt: "" } },
+  args: { image: { src: "/images/pages/portfolio-hero.jpg", alt: "" } },
   parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof PortfolioHero>;
 

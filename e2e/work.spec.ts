@@ -24,7 +24,7 @@ test("Portfolio 카드에서 상세로 들어오면 제목(h1), 카테고리, �
   await expect(page).toHaveTitle("어느 결혼식 이야기 | Machum Studio");
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     "content",
-    /\/images\/placeholder\.svg$/,
+    /\/images\/works\/a-wedding-tale-1\.jpg$/,
   );
 });
 

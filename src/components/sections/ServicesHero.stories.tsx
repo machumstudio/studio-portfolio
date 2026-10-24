@@ -9,7 +9,7 @@ import {
 const meta = {
   title: "Sections/ServicesHero",
   component: ServicesHero,
-  args: { image: { src: "/images/placeholder.svg", alt: "" } },
+  args: { image: { src: "/images/pages/services-hero.jpg", alt: "" } },
   parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof ServicesHero>;
 

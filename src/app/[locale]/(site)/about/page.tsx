@@ -5,10 +5,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AboutBiography } from "@/components/sections/AboutBiography";
 import { AboutHero } from "@/components/sections/AboutHero";
 import { AboutTimeline } from "@/components/sections/AboutTimeline";
+import { pagePhotos } from "../_sections/photos";
 import { Testimonials } from "../_sections/site-sections";
-
-// 사진은 16칸에서 Unsplash 로 교체할 때까지 임시 이미지. 꾸밈용 자리라 alt 는 비운다
-const placeholder = { src: "/images/placeholder.svg", alt: "" };
 
 // 통계, 이야기, 연표는 메시지로 만든 고정값을 섹션 props 로 넘긴다
 const statIds = [
@@ -36,12 +34,13 @@ export default function AboutPage({ params }: PageProps<"/[locale]/about">) {
   const { locale } = use(params);
   setRequestLocale(locale);
   const t = useTranslations("AboutPage");
+  const photo = useTranslations("Photos");
 
   return (
     <main className="flex flex-col gap-20 pt-10 pb-20 lg:gap-37.5 lg:pt-20 lg:pb-37.5 3xl:gap-50 3xl:pt-25 3xl:pb-50">
       <div className="flex flex-col gap-15 lg:gap-20 3xl:gap-25">
         <AboutHero
-          image={placeholder}
+          image={{ src: pagePhotos.aboutHero, alt: photo("aboutHero") }}
           stats={statIds.map((id) => ({
             id,
             value: t(`stats.items.${id}.value`),

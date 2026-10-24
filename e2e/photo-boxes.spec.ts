@@ -59,14 +59,15 @@ const measure = (page: Page) =>
     }),
   }));
 
-// 사진이 실제로 바뀌었는지: 보이는 첫 사진이 바꾼 크기로 읽혔는지 본다
-const firstLoaded = (page: Page) =>
+// 사진이 실제로 바뀌었는지: 보이는 첫 사진의 비율이 바꾼 사진 비율인지 본다.
+// naturalWidth 는 srcset 의 밀도로 나눈 값이라 크기 대신 비율을 본다 (기본 사진은 2:3, 3:2 라 겹치지 않는다)
+const firstLoadedRatio = (page: Page) =>
   page.waitForFunction(() => {
     const img = [...document.querySelectorAll("img")].find((el) =>
       el.checkVisibility(),
     );
     return img?.complete && img.naturalWidth > 0
-      ? `${img.naturalWidth}x${img.naturalHeight}`
+      ? img.naturalWidth / img.naturalHeight
       : false;
   });
 
@@ -82,9 +83,10 @@ const check = async (page: Page, path: string) => {
   for (const { name, width, height } of fixtures) {
     await servePhoto(page, png(width, height));
     await visit(page, path);
-    expect(await (await firstLoaded(page)).jsonValue(), `${path} ${name}`).toBe(
-      `${width}x${height}`,
-    );
+    expect(
+      await (await firstLoadedRatio(page)).jsonValue(),
+      `${path} ${name}`,
+    ).toBeCloseTo(width / height, 1);
     const odd = await measure(page);
     expect(odd.scrollWidth, `${path} ${name} 가로 넘침`).toBe(0);
     expect(odd.height, `${path} ${name} 문서 높이`).toBe(base.height);

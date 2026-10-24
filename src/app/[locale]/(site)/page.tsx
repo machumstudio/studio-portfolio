@@ -2,7 +2,7 @@ import { use } from "react";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { HomeAbout } from "@/components/sections/HomeAbout";
-import { HomeHero, heroPhotoCount } from "@/components/sections/HomeHero";
+import { HomeHero } from "@/components/sections/HomeHero";
 import {
   HomePortfolio,
   type PortfolioPreviewItem,
@@ -10,12 +10,9 @@ import {
 import { HomeServices } from "@/components/sections/HomeServices";
 import type { LocalizedText } from "@/domain/works/localized-text";
 import { getPublishedWorks } from "@/features/works/queries";
+import { heroCollage, pagePhotos, servicePhoto } from "./_sections/photos";
 import { Faq, Testimonials } from "./_sections/site-sections";
 import { studioContact } from "./_sections/studio-contact";
-
-// 사진은 16칸에서 Unsplash 로 교체할 때까지 임시 이미지. 꾸밈용 자리라 alt 는 비운다
-const placeholder = { src: "/images/placeholder.svg", alt: "" };
-const heroPhotos = Array.from({ length: heroPhotoCount }, () => placeholder);
 
 // 서비스는 당분간 메시지로 만든 고정값을 섹션 props 로 넘긴다.
 // 서비스 순서: 시안 홈은 Events 가 첫 장이다 (Services 페이지 순서는 Portrait, Events, Commercial)
@@ -32,6 +29,7 @@ export default function Page({ params }: PageProps<"/[locale]">) {
   const { locale } = use(params);
   setRequestLocale(locale);
   const service = useTranslations("Services.items");
+  const photo = useTranslations("Photos");
   // 공개 작업 중 최신 6개. 나머지는 "모든 작업 보기"(/portfolio)에서
   const works = use(getPublishedWorks({ limit: previewLimit }));
   // locale 은 layout 에서 hasLocale 로 확인한 값
@@ -39,9 +37,9 @@ export default function Page({ params }: PageProps<"/[locale]">) {
 
   return (
     <main className="flex flex-col gap-20 pb-20 lg:gap-37.5 lg:pb-37.5 3xl:gap-50 3xl:pb-50">
-      <HomeHero photos={heroPhotos} />
+      <HomeHero photos={heroCollage} />
       <HomeAbout
-        photo={placeholder}
+        photo={{ src: pagePhotos.homeAbout, alt: photo("homeAbout") }}
         email={studioContact.email}
         phone={studioContact.phone}
       />
@@ -53,7 +51,11 @@ export default function Page({ params }: PageProps<"/[locale]">) {
           highlights: highlights.map((key) =>
             service(`${id}.highlights.${key}`),
           ),
-          image: placeholder,
+          // Services 페이지 슬라이더의 첫 장
+          image: {
+            src: servicePhoto(id, "1"),
+            alt: photo(`services.${id}.1`),
+          },
         }))}
       />
       <HomePortfolio

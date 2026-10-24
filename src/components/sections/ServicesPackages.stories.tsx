@@ -4,7 +4,7 @@ import { ServicesPackages, type ServiceOffering } from "./ServicesPackages";
 import { oddPhotos } from "@/components/ui/photo-fixtures";
 
 const page = messages.ServicesPage;
-const photo = { src: "/images/placeholder.svg", alt: "" };
+const photo = { src: "/images/services/events-1.jpg", alt: "" };
 type PackageId = keyof typeof page.packages;
 type ServiceId = keyof typeof page.services;
 

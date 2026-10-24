@@ -13,7 +13,7 @@ const item = (slug: string, title: string): PortfolioPreviewItem => ({
   slug,
   title,
   date: "2022-03",
-  image: { src: "/images/placeholder.svg", alt: "" },
+  image: { src: "/images/works/faces-of-resilience-1.jpg", alt: "" },
 });
 
 const renderGallery = (

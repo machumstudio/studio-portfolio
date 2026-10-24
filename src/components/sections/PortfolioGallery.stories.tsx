@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { PortfolioGallery } from "./PortfolioGallery";
 import { oddPhotos } from "@/components/ui/photo-fixtures";
 
-const image = { src: "/images/placeholder.svg", alt: "" };
+const image = { src: "/images/works/faces-of-resilience-1.jpg", alt: "" };
 const items = (titles: [string, string, string][]) =>
   titles.map(([slug, title, date]) => ({ slug, title, date, image }));
 

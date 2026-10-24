@@ -13,7 +13,7 @@ const renderHero = () =>
   render(
     <NextIntlClientProvider locale="ko" messages={messages}>
       <AboutHero
-        image={{ src: "/images/placeholder.svg", alt: "" }}
+        image={{ src: "/images/works/faces-of-resilience-1.jpg", alt: "" }}
         stats={stats}
       />
     </NextIntlClientProvider>,

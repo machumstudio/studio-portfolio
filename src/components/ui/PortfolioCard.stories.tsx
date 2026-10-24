@@ -10,7 +10,7 @@ const meta = {
     title: "Faces of Resilience",
     date: "2022-03",
     dateLabel: "March 2022",
-    image: { src: "/images/placeholder.svg", alt: "" },
+    image: { src: "/images/works/faces-of-resilience-1.jpg", alt: "" },
     viewLabel: "View Project",
   },
   decorators: [

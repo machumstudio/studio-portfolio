@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import { use } from "react";
+import { useTranslations } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ContactHero } from "@/components/sections/ContactHero";
 import { ContactInfo } from "@/components/sections/ContactInfo";
 import { ContactMessage } from "@/components/sections/ContactMessage";
 import { submitInquiryAction } from "@/features/inquiry/actions";
 import { InquiryForm } from "@/features/inquiry/ui/InquiryForm";
+import { pagePhotos } from "../_sections/photos";
 import { studioContact } from "../_sections/studio-contact";
 import { Testimonials } from "../_sections/site-sections";
-
-// 사진은 16칸에서 Unsplash 로 교체할 때까지 임시 이미지. 꾸밈용 자리라 alt 는 비운다
-const placeholder = { src: "/images/placeholder.svg", alt: "" };
 
 export async function generateMetadata({
   params,
@@ -31,10 +30,13 @@ export default function ContactPage({
 }: PageProps<"/[locale]/contact">) {
   const { locale } = use(params);
   setRequestLocale(locale);
+  const photo = useTranslations("Photos");
 
   return (
     <main className="flex flex-col pt-10 pb-20 lg:pt-20 lg:pb-37.5 3xl:pt-25 3xl:pb-50">
-      <ContactHero image={placeholder} />
+      <ContactHero
+        image={{ src: pagePhotos.contactHero, alt: photo("contactHero") }}
+      />
       <div className="mt-12.5 page-x lg:mt-20 3xl:mt-25">
         <ContactInfo phone={studioContact.phone} email={studioContact.email} />
         <ContactMessage form={<InquiryForm action={submitInquiryAction} />} />

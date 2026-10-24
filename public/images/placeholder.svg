@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
-  <!-- 임시 사진 자리 (16칸에서 Unsplash 사진으로 교체). 색은 Dark/15 바탕 + Dark/25 아이콘 -->
-  <rect width="400" height="300" fill="#232329"/>
-  <g fill="none" stroke="#3b3b45" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" transform="translate(160 110)">
-    <rect x="0" y="0" width="80" height="80" rx="10"/>
-    <circle cx="26" cy="26" r="8"/>
-    <path d="M80 54 58 32 10 80"/>
-  </g>
-</svg>

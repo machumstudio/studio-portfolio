@@ -13,7 +13,10 @@ const works: PortfolioPreviewItem[] = [
   { slug: "faces-of-resilience", title: "단단한 얼굴들", date: "2022-03" },
   { slug: "a-wedding-tale", title: "어느 결혼식 이야기", date: "2020-01" },
   { slug: "product-elegance", title: "제품의 품격", date: "2020-01" },
-].map((w) => ({ ...w, image: { src: "/images/placeholder.svg", alt: "" } }));
+].map((w) => ({
+  ...w,
+  image: { src: "/images/works/faces-of-resilience-1.jpg", alt: "" },
+}));
 
 const renderPortfolio = (locale: "ko" | "en" = "ko") =>
   render(

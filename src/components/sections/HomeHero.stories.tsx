@@ -7,7 +7,7 @@ const meta = {
   component: HomeHero,
   args: {
     photos: Array.from({ length: heroPhotoCount }, () => ({
-      src: "/images/placeholder.svg",
+      src: "/images/works/festival-of-colors-2.jpg",
       alt: "",
     })),
   },
