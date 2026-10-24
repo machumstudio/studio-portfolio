@@ -580,7 +580,13 @@
   "AdminDashboard": {
     "label": "Admin",
     "signedInAs": "Signed in as {email}.",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "nav": {
+      "label": "Admin menu",
+      "works": "Works",
+      "inquiries": "Inquiries",
+      "newInquiries": "{count} new"
+    }
   },
   "AdminWorks": {
     "metadata": {
@@ -723,6 +729,87 @@
       "metadata": "Work not found | Machum Studio Admin",
       "title": "Work not found",
       "body": "It was deleted or the address is wrong. Choose it again from the work list."
+    }
+  },
+  "AdminInquiries": {
+    "metadata": {
+      "list": "Inquiries | Machum Studio Admin",
+      "detail": "Inquiry | Machum Studio Admin",
+      "notFound": "Inquiry not found | Machum Studio Admin"
+    },
+    "status": {
+      "New": "New",
+      "Read": "Read",
+      "Done": "Done"
+    },
+    "list": {
+      "title": "Inquiries",
+      "description": "Messages from the contact form. Opening one does not change its status. Mark it ‘Read’ once you have read it, and ‘Done’ after you reply.",
+      "filterLabel": "Filter by status",
+      "all": "All",
+      "count": "{count}",
+      "label": "Inquiry list",
+      "empty": "No inquiries yet. Messages sent through the contact form will appear here.",
+      "emptyFiltered": "No inquiries with status ‘{status}’.",
+      "receivedAt": "Received",
+      "openLabel": "Open inquiry from {name}",
+      "pagination": "Pages",
+      "previous": "Previous page",
+      "next": "Next page",
+      "pageOf": "Page {page} of {pageCount}"
+    },
+    "detail": {
+      "back": "Inquiries",
+      "title": "Inquiry from {name}",
+      "message": "Message",
+      "contact": "Contact",
+      "email": "Email",
+      "phone": "Phone",
+      "noPhone": "Not provided",
+      "handling": "Handling",
+      "status": "Status",
+      "receivedAt": "Received",
+      "changedAt": {
+        "Read": "Marked read",
+        "Done": "Marked done"
+      },
+      "noAutoRead": "Opening this page does not change the status.",
+      "reply": "Reply by email",
+      "replyLabel": "Reply to {name} by email (opens your mail app)",
+      "replySubject": "[Machum Studio] Thank you for your inquiry"
+    },
+    "actions": {
+      "markRead": "Mark as read",
+      "markDone": "Mark as done",
+      "reopen": "Reopen",
+      "pending": "Updating…",
+      "hints": {
+        "markRead": "Use this when you have read it but not replied yet.",
+        "markDone": "Use this after you have replied.",
+        "reopen": "Use this when it needs work again. It goes back to ‘Read’."
+      }
+    },
+    "notices": {
+      "markRead": "Marked as ‘Read’.",
+      "markDone": "Marked as ‘Done’.",
+      "reopen": "Reopened as ‘Read’.",
+      "conflict": "This inquiry was already changed in another tab or device. The current status has been reloaded. Check it and try again if needed.",
+      "unavailable": "This can’t be done right now. Please try again shortly.",
+      "malformed": "This request can’t be processed. Refresh the page and try again.",
+      "deleted": "Inquiry deleted.",
+      "notFound": "Inquiry not found. It may have been deleted in another tab or device."
+    },
+    "deleteDialog": {
+      "open": "Delete inquiry",
+      "title": "Delete this inquiry?",
+      "body": "This deletes the inquiry from {name}, including contact details. It can’t be undone.",
+      "confirm": "Delete",
+      "deleting": "Deleting…",
+      "cancel": "Cancel"
+    },
+    "notFound": {
+      "title": "Inquiry not found",
+      "body": "It was deleted or the address is wrong. Pick one from the inquiry list."
     }
   }
 }
