@@ -9,12 +9,17 @@ import {
 import { WorkDetail } from "@/components/sections/WorkDetail";
 import { WorkPager } from "@/components/sections/WorkPager";
 import type { LocalizedText } from "@/domain/works/localized-text";
+import type { Work } from "@/domain/works/work";
 import {
   getAdjacentWorks,
   getPublishedWorks,
   getWorkBySlug,
 } from "@/features/works/queries";
 import { formatYearMonth } from "@/i18n/use-year-month-format";
+import type { Locale } from "@/lib/seo/alternates";
+import { JsonLd } from "@/lib/seo/json-ld";
+import { readSiteUrl } from "@/lib/seo/site";
+import { workJsonLd } from "@/lib/seo/structured-data";
 import { sitePageMetadata } from "../../_seo/page-metadata";
 
 // 공개 작업은 빌드 때 미리 만든다 (locale 은 상위 layout 의 generateStaticParams 가 채운다).
@@ -27,6 +32,28 @@ export async function generateStaticParams() {
   return (await getPublishedWorks()).map(({ slug }) => ({ slug }));
 }
 
+// 검색/공유에 쓰는 작업 문구: 제목, 설명("2021년 9월 이벤트 촬영 · …"), 분야 이름.
+// metadata 와 구조화 데이터가 같은 문구를 쓴다
+async function workText(locale: string, { title, category, date }: Work) {
+  // locale 은 layout 에서 hasLocale 로 확인한 값
+  const lang = locale as keyof LocalizedText;
+  const t = await getTranslations({ locale, namespace: "WorkPage.metadata" });
+  const categories = await getTranslations({
+    locale,
+    namespace: "Works.categories",
+  });
+  const genre = categories(`${category}.name`);
+  return {
+    title: t("title", { title: title[lang] }),
+    description: t("description", {
+      title: title[lang],
+      category: genre,
+      date: formatYearMonth(await getFormatter({ locale }), date),
+    }),
+    genre,
+  };
+}
+
 // 제목, 설명, canonical/hreflang, OG/X 카드 이미지(대표 사진). 없는/비공개 작업은 not-found.tsx 가 제목을 정한다
 export async function generateMetadata({
   params,
@@ -34,24 +61,18 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const result = await getWorkBySlug(slug);
   if (!result.ok) return {};
-  const { title, category, date, cover } = result.value;
-  const lang = locale as keyof LocalizedText;
-  const t = await getTranslations({ locale, namespace: "WorkPage.metadata" });
-  const categories = await getTranslations({
-    locale,
-    namespace: "Works.categories",
-  });
+  const work = result.value;
+  const { title, description } = await workText(locale, work);
   return sitePageMetadata({
     locale,
-    path: `/work/${slug}`,
+    path: `/work/${work.slug}`,
     type: "article",
-    title: t("title", { title: title[lang] }),
-    description: t("description", {
-      title: title[lang],
-      category: categories(`${category}.name`),
-      date: formatYearMonth(await getFormatter({ locale }), date),
-    }),
-    image: { url: cover.src, alt: cover.alt[lang] },
+    title,
+    description,
+    image: {
+      url: work.cover.src,
+      alt: work.cover.alt[locale as keyof LocalizedText],
+    },
   });
 }
 
@@ -67,6 +88,7 @@ export default function WorkPage({
   // locale 은 layout 에서 hasLocale 로 확인한 값
   const lang = locale as keyof LocalizedText;
   const { title, category, date, cover, images } = result.value;
+  const text = use(workText(locale, result.value));
   const photo = ({ src, alt }: typeof cover) => ({ src, alt: alt[lang] });
   const pagerItem = (work: typeof previous) =>
     work && { slug: work.slug, title: work.title[lang] };
@@ -81,6 +103,21 @@ export default function WorkPage({
         images={images.map(photo)}
       />
       <WorkPager previous={pagerItem(previous)} next={pagerItem(next)} />
+      <JsonLd
+        data={workJsonLd({
+          siteUrl: readSiteUrl(),
+          locale: locale as Locale,
+          slug: result.value.slug,
+          title: title[lang],
+          description: text.description,
+          date,
+          genre: text.genre,
+          images: [
+            cover,
+            ...images.filter(({ order }) => order !== cover.order),
+          ].map(({ src }) => src),
+        })}
+      />
     </main>
   );
 }
