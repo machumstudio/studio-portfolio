@@ -22,7 +22,11 @@ const elements = [
 // 레이어 안에서 파일 단위로 구분해야 하는 것
 const files = [
   { category: "container", pattern: "src/infrastructure/container.ts" },
-  { category: "server-entry", pattern: "src/features/*/{actions,queries}.ts" },
+  // actions/queries: 서버 액션과 RSC 읽기, routes: app 의 route handler 가 부르는 입구
+  {
+    category: "server-entry",
+    pattern: "src/features/*/{actions,queries,routes}.ts",
+  },
   { category: "test", pattern: "**/*.test.{ts,tsx}" },
   // 요청마다 라우팅 전에 도는 proxy (언어 처리, /admin 빠른 확인). 폴더가 아니라 파일 하나라 파일 분류로 둔다
   { category: "proxy", pattern: "src/proxy.ts" },
@@ -50,7 +54,7 @@ const layerPolicies = [
   allow("infrastructure", "shared", "domain", "application", "infrastructure"),
   allow("features", "shared", "application", "features", "ui", "config"),
   allowTypes("features", "domain"),
-  // features 는 actions.ts / queries.ts 에서만 infrastructure/container.ts 를 쓴다
+  // features 는 actions.ts / queries.ts / routes.ts 에서만 infrastructure/container.ts 를 쓴다
   {
     from: {
       element: { type: "features" },
