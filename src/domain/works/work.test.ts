@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { err } from "@/shared/result";
 import type { WorkImage } from "./images";
-import { createWork, type WorkInput } from "./work";
+import { createWork, validateWorkFields, type WorkInput } from "./work";
 
 const image = (src: string, order: number): WorkImage => ({
   src,
@@ -111,5 +111,52 @@ describe("createWork", () => {
     expect(createWork({ ...valid, slug: "X", coverSrc: "z.jpg" })).toEqual(
       err({ type: "InvalidSlug", value: "X" }),
     );
+  });
+});
+
+describe("validateWorkFields", () => {
+  it("올바른 입력이면 빈 객체", () => {
+    expect(validateWorkFields(valid)).toEqual({});
+  });
+
+  it("틀린 칸을 모두 돌려준다", () => {
+    expect(
+      validateWorkFields({
+        ...valid,
+        slug: "Faces Of",
+        title: { ko: " ", en: "" },
+        category: "wedding",
+        date: "2022",
+        images: [],
+      }),
+    ).toEqual({
+      slug: { type: "InvalidSlug", value: "Faces Of" },
+      titleKo: { type: "EmptyTitle", locale: "ko" },
+      titleEn: { type: "EmptyTitle", locale: "en" },
+      category: { type: "InvalidCategory", value: "wedding" },
+      date: { type: "InvalidYearMonth", value: "2022" },
+      images: { type: "CoverNotInImages", src: "b.jpg" },
+    });
+  });
+
+  it("사진 순서 규칙도 images 칸 오류다", () => {
+    expect(
+      validateWorkFields({
+        ...valid,
+        images: [image("a.jpg", 0), image("b.jpg", 2)],
+      }),
+    ).toEqual({ images: { type: "MissingImageOrder", order: 1 } });
+  });
+
+  it.each<Partial<WorkInput>>([
+    { slug: "-x" },
+    { title: { ko: "", en: "x" } },
+    { category: "x" },
+    { date: "x" },
+    { coverSrc: "z.jpg" },
+  ])("칸 오류가 있으면 createWork 도 실패한다: %j", (patch) => {
+    const input = { ...valid, ...patch };
+    expect(Object.keys(validateWorkFields(input))).toHaveLength(1);
+    expect(createWork(input).ok).toBe(false);
   });
 });
