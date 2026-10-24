@@ -16,6 +16,7 @@ const work: Omit<WorkRow, "created_at"> = {
   category: "portrait",
   year_month: "2022-03",
   published: true,
+  updated_at: "2026-10-01T00:00:00.000Z",
 };
 const image = (sort_order: number, is_cover: boolean): WorkImageRow => ({
   work_id: work.id,

@@ -18,6 +18,7 @@ const valid: WorkInput = {
   coverSrc: "b.jpg",
   images: [image("b.jpg", 1), image("a.jpg", 0)],
   published: true,
+  updatedAt: new Date("2026-10-25T01:02:03Z"),
 };
 
 describe("createWork", () => {
@@ -33,8 +34,24 @@ describe("createWork", () => {
         cover: image("b.jpg", 1),
         images: [image("a.jpg", 0), image("b.jpg", 1)],
         published: true,
+        updatedAt: new Date("2026-10-25T01:02:03Z"),
       },
     });
+  });
+
+  it("수정 시각은 복사해 둔다 (입력 Date 를 나중에 바꿔도 작업은 그대로)", () => {
+    const updatedAt = new Date("2026-10-25T01:02:03Z");
+    const result = createWork({ ...valid, updatedAt });
+    updatedAt.setFullYear(2000);
+    expect(result.ok && result.value.updatedAt.toISOString()).toBe(
+      "2026-10-25T01:02:03.000Z",
+    );
+  });
+
+  it("수정 시각이 올바른 날짜가 아니면 InvalidUpdatedAt", () => {
+    expect(createWork({ ...valid, updatedAt: new Date("x") })).toEqual(
+      err({ type: "InvalidUpdatedAt" }),
+    );
   });
 
   it("비공개 작업도 만들 수 있다", () => {

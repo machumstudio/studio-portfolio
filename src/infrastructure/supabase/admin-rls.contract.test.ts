@@ -40,6 +40,7 @@ const work = (id: string, published: boolean): Work => {
     coverSrc: `/${id}/0.jpg`,
     images: [{ src: `/${id}/0.jpg`, alt: { ko: "", en: "" }, order: 0 }],
     published,
+    updatedAt: new Date("2026-10-01T00:00:00Z"),
   });
   if (!result.ok) throw new Error(result.error.type);
   return result.value;

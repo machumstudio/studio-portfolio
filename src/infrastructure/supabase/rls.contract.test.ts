@@ -25,6 +25,7 @@ const work = (input: Pick<WorkInput, "id" | "slug" | "published">): Work => {
     title: { ko: input.slug, en: input.slug },
     category: "portrait",
     date: "2022-03",
+    updatedAt: new Date("2026-10-01T00:00:00Z"),
     coverSrc: `/${input.slug}/0.jpg`,
     images: [0, 1].map((order) => ({
       src: `/${input.slug}/${order}.jpg`,
