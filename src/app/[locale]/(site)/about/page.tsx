@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { use } from "react";
 import { useTranslations } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { AboutBiography } from "@/components/sections/AboutBiography";
 import { AboutHero } from "@/components/sections/AboutHero";
 import { AboutTimeline } from "@/components/sections/AboutTimeline";
 import { pagePhotos } from "../_sections/photos";
 import { Testimonials } from "../_sections/site-sections";
+import { staticPageMetadata } from "../_seo/page-metadata";
 
 // 통계, 이야기, 연표는 메시지로 만든 고정값을 섹션 props 로 넘긴다
 const statIds = [
@@ -24,8 +25,7 @@ export async function generateMetadata({
   params,
 }: PageProps<"/[locale]/about">): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "AboutPage.metadata" });
-  return { title: t("title"), description: t("description") };
+  return staticPageMetadata(locale, "/about", "AboutPage.metadata");
 }
 
 // 시안 간격(about-*.json, 노드 h 합과 프레임 높이 차이): 헤더-소개 40/80/100,

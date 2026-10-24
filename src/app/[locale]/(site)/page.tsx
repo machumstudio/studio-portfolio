@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { use } from "react";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
@@ -13,6 +14,7 @@ import { getPublishedWorks } from "@/features/works/queries";
 import { heroCollage, pagePhotos, servicePhoto } from "./_sections/photos";
 import { Faq, Testimonials } from "./_sections/site-sections";
 import { studioContact } from "./_sections/studio-contact";
+import { staticPageMetadata } from "./_seo/page-metadata";
 
 // 서비스는 당분간 메시지로 만든 고정값을 섹션 props 로 넘긴다.
 // 서비스 순서: 시안 홈은 Events 가 첫 장이다 (Services 페이지 순서는 Portrait, Events, Commercial)
@@ -23,6 +25,13 @@ const services = {
 } as const;
 
 const previewLimit = 6;
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[locale]">): Promise<Metadata> {
+  const { locale } = await params;
+  return staticPageMetadata(locale, "/", "Metadata");
+}
 
 // 시안 섹션 간격: 80 / 150 / 200 (노드 h 합과 프레임 높이 차이를 간격 수로 나눈 값, 시안 픽셀로 확인)
 export default function Page({ params }: PageProps<"/[locale]">) {

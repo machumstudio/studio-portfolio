@@ -1,7 +1,8 @@
 {
   "Metadata": {
-    "title": "Machum Studio",
-    "description": "Portrait, event, and commercial photography by Machum Studio, a photo studio in Seoul."
+    "title": "Machum Studio | Photo Studio in Seoul",
+    "description": "Portrait, event, and commercial photography by Machum Studio, a photo studio in Seoul.",
+    "ogImageAlt": "\"Stunning photography by Machum Studio\" with a portrait, a wedding, and a product photo"
   },
   "Tokens": {
     "title": "Design tokens",
