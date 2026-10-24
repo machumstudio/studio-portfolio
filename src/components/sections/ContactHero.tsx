@@ -25,7 +25,7 @@ type ContactHeroProps = {
 //   소셜 칸: 오른쪽 붙음, 위 62/73, 229x102 / 260x130, 왼쪽이 둥근 알약 모양. 알약은 오른쪽 끝, 세로 가운데.
 //   아래로 안내 칸: 오른쪽 아래, 235x104 / 293x123, 글 14/18 Medium Grey/50 폭 179/205, pad 위 40 왼쪽 35/43.
 //   소셜 알약: Dark/03 + 테두리 Dark/12, pad 6/8/10 (테두리 포함), 버튼 50/60/68 간격 6/8/10, 아이콘 18/20/20.
-// 시각 비교 마스크는 사진이 실제로 보이는 사각형에만 건다.
+// 시각 비교 마스크는 사진이 실제로 보이는 사각형에만 건다 (글 칸 오른쪽과 소셜 칸 아래 사이 230 폭 띠, 글 칸 아래 띠 포함).
 export function ContactHero({ image }: ContactHeroProps) {
   const t = useTranslations("ContactPage.hero");
   const social = useTranslations("Layout.footer");
@@ -48,6 +48,8 @@ export function ContactHero({ image }: ContactHeroProps) {
           <p className="text-body text-grey-50">{t("body")}</p>
           <PhotoCutCorner className="absolute bottom-full left-0 hidden photo-corner-bl lg:block" />
           <PhotoCutCorner className="absolute top-full left-0 hidden photo-corner-tl lg:block" />
+          {/* 글 칸 높이는 문구 길이에 따라 달라서(한국어는 시안보다 짧다), 칸 바로 아래부터 아래 사진 자리까지 가린다 */}
+          <PhotoArea className="absolute inset-x-0 top-full hidden h-16 lg:block" />
         </div>
 
         <div className="relative flex flex-col items-center lg:contents">
@@ -63,6 +65,7 @@ export function ContactHero({ image }: ContactHeroProps) {
             <PhotoArea className="absolute inset-0 lg:hidden" />
             <PhotoArea className="absolute inset-x-0 top-0 hidden h-15.5 lg:block 3xl:h-18.25" />
             <PhotoArea className="absolute top-15.5 right-57.25 left-0 hidden h-20 lg:block 3xl:top-18.25 3xl:right-65 3xl:h-23.75" />
+            <PhotoArea className="absolute top-35.5 right-57.25 hidden h-5.25 w-57.5 lg:block 3xl:top-42 3xl:right-65 3xl:h-8.75" />
             <PhotoArea className="absolute top-40.75 right-0 bottom-26 hidden w-114.75 lg:block 3xl:top-50.75 3xl:bottom-30.75 3xl:w-122.5" />
             <PhotoArea className="absolute right-58.75 bottom-0 left-0 hidden h-58.25 lg:block 3xl:right-73.25 3xl:h-60.25" />
             {/* mobile: 알약이 들어앉는 파인 자리 */}

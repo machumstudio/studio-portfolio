@@ -5,9 +5,10 @@ import { Sparkle } from "lucide-react";
 // 칸 옆 사진 모서리는 photo-corner-* 조각으로 둥글게 덮는다.
 // radius 는 --radius-photo-cut (기본 34). 사진 radius 가 다른 곳은 감싼 요소에 photo-cut-24 처럼 준다.
 
-/** 사진 모서리 조각(꾸밈). className 에 photo-corner-* 와 위치를 준다 */
+/** 사진 모서리 조각(꾸밈). className 에 photo-corner-* 와 위치를 준다.
+ *  조각 상자 안에 사진이 비쳐 보여서 시각 비교에서 같이 가린다 */
 export const PhotoCutCorner = ({ className }: { className: string }) => (
-  <span aria-hidden className={className} />
+  <span aria-hidden data-visual-mask className={className} />
 );
 
 /** 사진이 보이는 사각형. 시각 비교에서 가린다 (안 보이는 크기에서는 display:none 이라 크기 0) */
