@@ -4,7 +4,7 @@ Figma 시안(Produce UI, CC BY 4.0)을 반응형 웹 + 간단한 관리자로 �
 목적은 외주 클라이언트에게 "피그마 시안을 PC/태블릿/모바일에서 그대로, 빠르게, 운영 가능하게 만든다"는 증거를 보여주는 것이다.
 
 ## 스택
-Next.js (App Router) · TypeScript strict · Tailwind CSS v4 · TanStack Query(관리자 데이터) · Zustand(UI 상태) · zod (문의 폼은 react-hook-form 없이 서버 액션 + domain 검증, ADR 0009) · Supabase(Auth/DB/Storage) · next-intl(ko/en) · Vitest · Playwright · Storybook · Vercel
+Next.js (App Router) · TypeScript strict · Tailwind CSS v4 · 관리자 데이터는 RSC + 서버 액션 + useReducer (TanStack Query/Zustand 는 쓰지 않음, ADR 0015) · zod (문의 폼은 react-hook-form 없이 서버 액션 + domain 검증, ADR 0009) · Supabase(Auth/DB/Storage) · next-intl(ko/en) · Vitest · Playwright · Storybook · Vercel
 
 ## 아키텍처와 작업 방식 (먼저 읽기)
 - `docs/architecture.md`: 레이어, 의존 규칙 표, 도메인 모델링 규칙, 데이터 흐름, 테스트 전략
