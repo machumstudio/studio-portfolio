@@ -7,7 +7,7 @@ export type SitemapWork = { slug: string; updatedAt: Date };
 
 // 검색에 내보낼 고정 페이지 (언어 접두사 없는 경로). 관리자, 개발용 /tokens, 404 는 넣지 않는다.
 // 작업 목록이 보이는 홈과 포트폴리오는 가장 최근에 고친 작업의 시각을 lastmod 로 쓴다
-const pages = [
+export const sitePages = [
   { path: "/", listsWorks: true },
   { path: "/portfolio", listsWorks: true },
   { path: "/about", listsWorks: false },
@@ -33,7 +33,7 @@ export function buildSitemap({
     undefined,
   );
   const entries = [
-    ...pages.map(({ path, listsWorks }) => ({
+    ...sitePages.map(({ path, listsWorks }) => ({
       path,
       lastModified: listsWorks ? latest : undefined,
     })),
