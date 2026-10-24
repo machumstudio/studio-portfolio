@@ -80,3 +80,4 @@
 - 홈 히어로 콜라주 7칸 (DOM 순서): faces-of-resilience #2, innocence-unveiled #2, a-wedding-tale #2, festival-of-colors #2, brand-storytelling #2, elegance-in-monochrome #2, culinary-delights #2
 - 홈 서비스 슬라이더 3개: 서비스 슬라이더 인물 #1, 이벤트 #1, 광고 #1
 - 홈 포트폴리오 미리보기 / Portfolio 카드: 작업 대표 사진 (데이터에서)
+- 공유 카드 기본 이미지 `public/og/machum-studio-<ko|en>.jpg` (1200x630, `pnpm og:image`): faces-of-resilience #1, a-wedding-tale #1, product-elegance #1
