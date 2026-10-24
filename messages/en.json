@@ -1,11 +1,11 @@
 {
   "Metadata": {
     "title": "Machum Studio",
-    "description": "Machum Studio portfolio"
+    "description": "Portrait, event, and commercial photography by Machum Studio, a photo studio in Seoul."
   },
   "Tokens": {
     "title": "Design tokens",
-    "intro": "Color and text styles from the Figma design. Temporary page for checking tokens before building sections.",
+    "intro": "Color and text styles from the Figma design. A temporary page for checking tokens before building sections.",
     "colors": "Colors ({count})",
     "typography": "Typography",
     "sample": "Photography by Machum Studio"
@@ -114,7 +114,7 @@
     "next": "Next service",
     "slide": "{index} of {total}",
     "highlights": "Service Highlights",
-    "more": "More about {name} photography",
+    "more": "Learn more about {name}",
     "items": {
       "events": {
         "name": "Events",
@@ -128,20 +128,20 @@
       },
       "portrait": {
         "name": "Portrait",
-        "body": "Our portrait photography service is all about showcasing your unique personality. Whether you need a professional headshot, a family portrait, or a couple's session, we start from a relaxed atmosphere and guide natural expressions. Light and location are chosen around you, for a picture you'll want to keep.",
+        "body": "Our portrait photography service is all about showcasing your unique personality. Whether you need a professional headshot, a family portrait, or a couple's session, we keep things relaxed and guide you toward natural expressions and poses. We choose the light and location around you, so you get a picture you'll want to look back on for years.",
         "highlights": {
           "style": "Headshots, family and couple portraits that show who you are.",
           "direction": "Gentle posing guidance, even if it's your first shoot.",
           "location": "Studio or outdoor sessions, wherever you feel at home.",
-          "retouch": "Natural retouching for skin tones and color."
+          "retouch": "Natural retouching that keeps skin tones and colors true."
         }
       },
       "commercial": {
         "name": "Commercial",
-        "body": "In the world of business, a compelling image can make all the difference. Our commercial photography service is designed to show your products, spaces and brand at their best. We listen to the message you want to send first, then shoot with the framing and color that fit where the images will live.",
+        "body": "In the world of business, a compelling image can make all the difference. Our commercial photography service is designed to show your products, spaces, and brand at their best. We start by listening to the message you want to send, then shoot with the framing and color that suit where the images will be used.",
         "highlights": {
           "product": "Detail and lifestyle shots that bring out texture and color.",
-          "space": "Bright, spacious shots of shops, offices and stays.",
+          "space": "Bright, spacious shots of shops, offices, and guesthouses.",
           "brand": "A shooting direction aligned with your brand identity.",
           "files": "High-resolution files ready for web and print."
         }
@@ -167,7 +167,7 @@
       },
       "booking": {
         "question": "How can I book a photography session with you?",
-        "answer": "Leave your preferred date and type of shoot on the Contact page, and we will send you a schedule and quote within a day."
+        "answer": "Send us your preferred date and type of shoot from the Contact page, and we'll get back to you with availability and a quote within a day."
       },
       "equipment": {
         "question": "What equipment do you use for your photography?",
@@ -175,7 +175,7 @@
       },
       "location": {
         "question": "Can I request a specific location for a photoshoot?",
-        "answer": "Yes. If you have a place in mind we scout it before the shoot; if not, we suggest locations that fit the mood."
+        "answer": "Yes. If you have a place in mind, we'll scout it before the shoot. If not, we'll suggest locations that fit the mood."
       },
       "editing": {
         "question": "What is your editing process like?",
@@ -191,7 +191,7 @@
       },
       "delivery": {
         "question": "How long does it take to receive the edited photos after a session?",
-        "answer": "Usually within two weeks through an online gallery. Weddings take three to four weeks."
+        "answer": "Usually within two weeks, delivered through an online gallery. Weddings take three to four weeks."
       }
     }
   },
@@ -224,12 +224,12 @@
       "olivia": {
         "name": "Olivia Park",
         "location": "South Korea, Seoul",
-        "quote": "Our brand shoot kept every texture of the product, and our product pages have never looked better."
+        "quote": "Our brand shoot captured every texture of the product, and our product pages have never looked better."
       },
       "lucas": {
         "name": "Lucas Martin",
         "location": "France, Paris",
-        "quote": "I was nervous about my first profile shoot, but they made it easy and my expressions came out natural."
+        "quote": "I was nervous about my first profile shoot, but they put me at ease and my expressions came out natural."
       },
       "sofia": {
         "name": "Sofia Rossi",
@@ -277,7 +277,7 @@
   "WorkPage": {
     "metadata": {
       "title": "{title} | Machum Studio",
-      "description": "{category} photography, {date} · \"{title}\" by Machum Studio"
+      "description": "\"{title}\" by Machum Studio · {category}, {date}"
     },
     "back": "Back to portfolio",
     "gallery": "{count} photos",
@@ -455,7 +455,7 @@
     "metadata": "Page not found | Machum Studio",
     "eyebrow": "404",
     "title": "Page not found",
-    "body": "The address may have changed, or the page is not published. Try the home page or the works list.",
+    "body": "This page may have moved or is no longer available. Try the home page or browse our works.",
     "home": "Go home",
     "portfolio": "Browse works"
   },
@@ -467,19 +467,19 @@
     "hero": {
       "eyebrow": "Contact",
       "title": "Get in Touch",
-      "body": "Tell us about the shoot you have in mind with Machum Studio. Portraits, events or commercial work: share the scenes, schedule and mood you want, and we will suggest the right approach and a quote. It is fine if nothing is decided yet.",
+      "body": "Tell us about the shoot you have in mind. Whether it's portraits, events, or commercial work, share the scenes, schedule, and mood you're after, and we'll suggest the right approach and a quote. It's fine if nothing is decided yet.",
       "scroll": "Scroll down to send a message"
     },
     "info": {
       "title": "Contact Information",
-      "body": "Reach out however suits you best. We are available by phone, email and social media.",
+      "body": "Reach out however suits you best. We're available by phone, email, and social media.",
       "label": "Contact details",
       "phone": "Phone",
       "email": "Email"
     },
     "message": {
       "title": "Send a Message",
-      "body": "Have a question or a shoot in mind? Use the form below and we will get back to you promptly."
+      "body": "Have a question or a shoot in mind? Use the form below and we'll get back to you soon."
     }
   },
   "InquiryForm": {
@@ -509,11 +509,11 @@
     },
     "honeypot": "Leave this field empty",
     "submit": "Send Message",
-    "pending": "Sending",
+    "pending": "Sending…",
     "status": {
-      "success": "Your message has been sent. We will reply within one business day.",
+      "success": "Your message has been sent. We'll reply within one business day.",
       "invalid": "Please check your entries. {count, plural, one {# field needs} other {# fields need}} attention.",
-      "error": "Something went wrong and your message was not sent. Your entries are still here, so please try again in a moment."
+      "error": "Something went wrong and your message wasn't sent. Your entries are still here, so please try again in a moment."
     },
     "errors": {
       "firstName": {
@@ -527,10 +527,10 @@
       "email": {
         "required": "Please enter your email.",
         "tooLong": "Email can be up to {max} characters.",
-        "invalidEmail": "Please check the email format, e.g. name@example.com."
+        "invalidEmail": "Please enter a valid email address, e.g. name@example.com."
       },
       "phone": {
-        "invalidPhone": "Please enter 8 to 15 digits. Hyphens, spaces, brackets and a leading + are allowed."
+        "invalidPhone": "Please enter 8 to 15 digits. Hyphens, spaces, parentheses, and a leading + are allowed."
       },
       "message": {
         "required": "Please enter a message.",

@@ -78,7 +78,7 @@ describe("InquiryForm", () => {
       "Please enter your last name.",
     );
     expect(screen.getByLabelText("Email")).toHaveAccessibleDescription(
-      "Please check the email format, e.g. name@example.com.",
+      "Please enter a valid email address, e.g. name@example.com.",
     );
     expect(screen.getByLabelText("Your Message")).toHaveAttribute(
       "aria-invalid",
