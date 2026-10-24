@@ -37,7 +37,7 @@ export default async function EditWorkPage({
   if (!work) notFound();
   const { created } = await searchParams;
   return (
-    <AdminShell email={admin.email} needsScript>
+    <AdminShell email={admin.email} section="works" needsScript>
       <WorkEditor
         initial={toWorkFormValues(work)}
         actions={{

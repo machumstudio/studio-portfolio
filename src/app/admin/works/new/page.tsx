@@ -22,7 +22,7 @@ export default async function NewWorkPage() {
   const admin = await requireAdmin("/admin/works/new");
   const id = await newWorkId("/admin/works/new");
   return (
-    <AdminShell email={admin.email} needsScript>
+    <AdminShell email={admin.email} section="works" needsScript>
       <WorkEditor
         initial={newWorkFormValues(id)}
         actions={{
