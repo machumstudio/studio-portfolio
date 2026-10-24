@@ -8,7 +8,7 @@ export type Email = Brand<string, "Email">;
 export type Phone = Brand<string, "Phone">;
 export type InquiryMessage = Brand<string, "InquiryMessage">;
 
-// 화면(13칸 zod 스키마)과 서버가 같은 한도를 쓴다
+// 검증의 단일 출처. 화면은 application/inquiry/limits 로 받아 입력 칸의 maxLength 에만 쓴다 (docs/adr/0009)
 export const inquiryLimits = {
   /** 이름 칸 하나(First/Last 각각). 한국 이름은 5자 안팎, 긴 외국 이름 + 여유 */
   name: 50,
