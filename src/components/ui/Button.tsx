@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 import { cx } from "./cx";
 
-export type ButtonVariant = "primary" | "outline" | "icon";
+export type ButtonVariant = "primary" | "outline" | "link" | "icon";
 export type IconButtonSize = "md" | "lg";
 
 // 수치: docs/design/nodes 의 "Button" (mobile → lg 노트북 → 3xl 데스크톱).
@@ -20,6 +20,11 @@ const variants: Record<Exclude<ButtonVariant, "icon">, string> = {
   outline:
     "surface-raised rounded-lg px-4.75 py-3.25 text-button text-white " +
     "3xl:rounded-10 3xl:px-5.75 3xl:py-3.75 [&_svg]:size-4 3xl:[&_svg]:size-5",
+  // 밑줄 글자 링크 (View Project, Book a Call): 아래 테두리 Dark/20, pad 4 0 / 4 0 / 6 0 (테두리 inside 라 아래 1px 뺌),
+  // 글자 14/14/18 Medium Grey/95 대문자, 아이콘 20/20/24 흰색, 간격 6/6/10
+  link:
+    "gap-1.5 border-b border-dark-20 pt-1 pb-0.75 text-caption font-medium text-grey-95 uppercase hover:text-white " +
+    "3xl:gap-2.5 3xl:pt-1.5 3xl:pb-1.25 [&_svg]:size-5 [&_svg]:text-white 3xl:[&_svg]:size-6",
 };
 
 const iconSizes: Record<IconButtonSize, string> = {
@@ -54,7 +59,7 @@ type BaseProps = ComponentProps<"button"> & {
 
 // icon 변형은 보이는 글자가 없으므로 aria-label 을 반드시 받는다
 export type ButtonProps =
-  | (BaseProps & { variant?: "primary" | "outline" })
+  | (BaseProps & { variant?: "primary" | "outline" | "link" })
   | (BaseProps & { variant: "icon"; "aria-label": string });
 
 export function Button({
