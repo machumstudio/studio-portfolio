@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { InquiryRepository } from "@/application/inquiry/inquiry-repository";
 import {
-  createInquiry,
+  restoreInquiry,
   type Inquiry,
   type InquiryId,
   type InquiryInput,
@@ -70,10 +70,14 @@ const inquiry = (
   receivedAt: Date,
   status: InquiryStatus,
 ): Inquiry => {
-  const result = createInquiry(input, { id: id as InquiryId, receivedAt });
+  const result = restoreInquiry(input, {
+    id: id as InquiryId,
+    receivedAt,
+    status,
+  });
   if (!result.ok)
     throw new Error(`계약 테스트 데이터 오류: ${result.error.type}`);
-  return { ...result.value, status };
+  return result.value;
 };
 
 // 밀리초까지 있는 시각: 저장소가 시각을 잘라 먹지 않는지 본다 (Postgres timestamptz 는 마이크로초)
