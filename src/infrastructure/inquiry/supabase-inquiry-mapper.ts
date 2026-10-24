@@ -4,7 +4,7 @@ import {
   type InquiryError,
   type InquiryId,
 } from "@/domain/inquiry/inquiry";
-import type { InquiryStatus } from "@/domain/inquiry/status";
+import type { InquiryStatus, InquiryStatusType } from "@/domain/inquiry/status";
 import { assertNever } from "@/shared/assert-never";
 import { err, flatMap, ok, type Result } from "@/shared/result";
 import type { InquiryRow } from "../supabase/database";
@@ -50,20 +50,27 @@ export const toInquiry = (row: InquiryRow): Result<Inquiry, InquiryRowError> =>
     ),
   );
 
+/** 상태 종류 → status 칼럼 값 (목록 필터, 개수) */
+export const statusColumn = {
+  New: "new",
+  Read: "read",
+  Done: "done",
+} as const satisfies Record<InquiryStatusType, string>;
+
 const statusColumns = (
   status: InquiryStatus,
 ): Pick<InquiryRow, "status" | "status_changed_at"> => {
   switch (status.type) {
     case "New":
-      return { status: "new", status_changed_at: null };
+      return { status: statusColumn.New, status_changed_at: null };
     case "Read":
       return {
-        status: "read",
+        status: statusColumn.Read,
         status_changed_at: status.changedAt.toISOString(),
       };
     case "Done":
       return {
-        status: "done",
+        status: statusColumn.Done,
         status_changed_at: status.changedAt.toISOString(),
       };
     default:

@@ -43,3 +43,25 @@ export function storageError(
     { cause: error },
   );
 }
+
+// PostgREST 는 한 응답의 행 수를 서버 설정(max-rows, Supabase 기본 1000)으로 자른다. 오류 없이 앞부분만 온다.
+// 전부 읽어야 하는 곳은 정렬이 고정된 범위 조회를 빈 응답이 나올 때까지 이어 붙인다 (한도 값에 기대지 않는다)
+export async function selectAllPages<Row>(
+  action: string,
+  page: (
+    from: number,
+    to: number,
+  ) => PromiseLike<{
+    data: Row[] | null;
+    error: { code?: string; message: string } | null;
+  }>,
+  batch = 1000,
+): Promise<Row[]> {
+  const rows: Row[] = [];
+  for (;;) {
+    const { data, error } = await page(rows.length, rows.length + batch - 1);
+    if (error) throw storageError(action, error);
+    if (!data || data.length === 0) return rows;
+    rows.push(...data);
+  }
+}

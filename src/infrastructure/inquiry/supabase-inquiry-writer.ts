@@ -1,6 +1,10 @@
 import "server-only";
 import type { Inquiry } from "@/domain/inquiry/inquiry";
-import { storageError, type SupabaseServerClient } from "../supabase/client";
+import {
+  selectAllPages,
+  storageError,
+  type SupabaseServerClient,
+} from "../supabase/client";
 import type { InquiryRow } from "../supabase/database";
 import { toInquiryRow } from "./supabase-inquiry-mapper";
 
@@ -22,11 +26,10 @@ export const replaceAllInquiries = (
   inquiries: readonly Inquiry[],
 ) => replaceAllInquiryRows(client, inquiries.map(toInquiryRow));
 
-// 되돌리기용으로 지금 행을 그대로 읽는다 (도메인 복원 없이)
-export async function readAllInquiryRows(
+// 되돌리기용으로 지금 행을 그대로 읽는다 (도메인 복원 없이). 1000행을 넘어도 다 읽는다
+export const readAllInquiryRows = (
   client: SupabaseServerClient,
-): Promise<InquiryRow[]> {
-  const { data, error } = await client.from("inquiries").select("*");
-  if (error) throw storageError("문의 백업 읽기", error);
-  return data;
-}
+): Promise<InquiryRow[]> =>
+  selectAllPages("문의 백업 읽기", (from, to) =>
+    client.from("inquiries").select("*").order("id").range(from, to),
+  );

@@ -5,7 +5,10 @@ import {
   type InquiryId,
 } from "@/domain/inquiry/inquiry";
 import { createWork, type Work } from "@/domain/works/work";
+import { changeInquiryStatus } from "@/application/inquiry/change-inquiry-status";
+import { ok } from "@/shared/result";
 import { toInquiryRow } from "../inquiry/supabase-inquiry-mapper";
+import { createSupabaseInquiryRepository } from "../inquiry/supabase-inquiry-repository";
 import { replaceAllInquiries } from "../inquiry/supabase-inquiry-writer";
 import { toWorkRows } from "../works/supabase-work-mapper";
 import { replaceAllWorks } from "../works/supabase-work-writer";
@@ -224,6 +227,31 @@ describe.skipIf(!hasSupabaseEnv)("관리자 권한: 가입과 로그인 세션",
       await client().from("inquiries").delete().eq("id", inquiry.id);
       expect(await snapshot()).toEqual(initial);
     });
+
+    it("관리자 화면의 문의 저장소로도 세지도, 바꾸지도, 지우지도 못한다", async () => {
+      const repo = createSupabaseInquiryRepository(client());
+      // anon 은 권한이 없어 거부(장애), authenticated 는 정책이 0행으로 거른다
+      const counts = await repo.countByStatus().catch(() => null);
+      expect(counts ?? { New: 0, Read: 0, Done: 0 }).toEqual({
+        New: 0,
+        Read: 0,
+        Done: 0,
+      });
+      expect(
+        await repo
+          .findPage({ status: null, offset: 0, limit: 20 })
+          .catch(() => []),
+      ).toEqual([]);
+      // update 가 0행이라 insert 로 넘어가고, insert 권한이 없어 거부된다
+      await expect(
+        repo.save({
+          ...inquiry,
+          status: { type: "Done", changedAt: new Date() },
+        }),
+      ).rejects.toThrow(PERMISSION_DENIED);
+      expect(await repo.remove(inquiry.id).catch(() => false)).toBe(false);
+      expect(await snapshot()).toEqual(initial);
+    });
   });
 
   describe("관리자 세션 (app_metadata.role=admin)", () => {
@@ -326,6 +354,31 @@ describe.skipIf(!hasSupabaseEnv)("관리자 권한: 가입과 로그인 세션",
         id: "00000000-0000-4000-8000-0000000000b3",
       });
       expect(insert.error?.code).toBe(PERMISSION_DENIED);
+    });
+
+    it("관리자 화면의 문의 저장소: 개수, 목록, 상태 변경(changeInquiryStatus), 지우기", async () => {
+      await replaceAllInquiries(service, [inquiry]);
+      const repo = createSupabaseInquiryRepository(admin);
+      expect(await repo.countByStatus()).toEqual({ New: 1, Read: 0, Done: 0 });
+      expect(
+        await repo.findPage({ status: "New", offset: 0, limit: 20 }),
+      ).toEqual([inquiry]);
+      const now = new Date("2026-10-25T01:02:03.456Z");
+      // save 가 upsert 였다면 insert 권한이 없어 42501 로 실패한다
+      expect(
+        await changeInquiryStatus({ repo, clock: { now: () => now } })(
+          inquiry.id,
+          "markRead",
+        ),
+      ).toEqual(ok({ ...inquiry, status: { type: "Read", changedAt: now } }));
+      expect(await repo.findById(inquiry.id)).toEqual({
+        ...inquiry,
+        status: { type: "Read", changedAt: now },
+      });
+      expect(await repo.remove(inquiry.id)).toBe(true);
+      expect(await repo.remove(inquiry.id)).toBe(false);
+      expect((await service.from("inquiries").select("id")).data).toEqual([]);
+      await replaceAllInquiries(service, [inquiry]);
     });
   });
 });
