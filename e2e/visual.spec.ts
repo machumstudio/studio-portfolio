@@ -11,6 +11,7 @@ const pages = [
   { name: "portfolio", path: "/portfolio" },
   { name: "about", path: "/about" },
   { name: "services", path: "/services" },
+  { name: "contact", path: "/contact" },
 ];
 
 // 섹션별 차이율: 구현 페이지의 섹션 상자와 시안의 같은 섹션 띠(y, h)를 잘라 비교한다.
@@ -19,6 +20,7 @@ const pages = [
 // 이후 80/150/200. 히어로 띠는 사진+글 부분만 (브랜드 띠 자리는 필터라 시안과 다르다).
 // about: 헤더-소개 40/80/100, 소개-이야기 60/80/100, 이후 80/150/200.
 // services: 헤더-히어로 40/80/100, 히어로-서비스 50/100/150, 이후 80/150/200. 서비스 셋은 패키지 띠를 노드 h 로 나눈 것.
+// contact: 헤더-히어로 40/80/100, 히어로-연락처 정보 50/80/100, 연락처 정보와 메시지는 붙어 있고, 메시지-후기 80/150/200.
 type Band = readonly [y: number, h: number];
 const sections: Record<
   string,
@@ -53,6 +55,28 @@ const sections: Record<
         mobile: [148, 454],
         laptop: [169, 712],
         desktop: [219, 784],
+      },
+    },
+  },
+  contactHero: {
+    selector: 'section[aria-labelledby="contact-hero-title"]',
+    ref: {
+      contact: { mobile: [148, 506], laptop: [169, 632], desktop: [219, 746] },
+    },
+  },
+  contactInfo: {
+    selector: 'section[aria-labelledby="contact-info-title"]',
+    ref: {
+      contact: { mobile: [704, 319], laptop: [881, 262], desktop: [1065, 304] },
+    },
+  },
+  contactMessage: {
+    selector: 'section[aria-labelledby="contact-message-title"]',
+    ref: {
+      contact: {
+        mobile: [1023, 764],
+        laptop: [1143, 521],
+        desktop: [1369, 678],
       },
     },
   },
@@ -169,6 +193,11 @@ const sections: Record<
         mobile: [2785, 591],
         laptop: [2491, 529],
         desktop: [2972, 657],
+      },
+      contact: {
+        mobile: [1867, 591],
+        laptop: [1814, 529],
+        desktop: [2247, 657],
       },
     },
   },
