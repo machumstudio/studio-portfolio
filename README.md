@@ -54,6 +54,53 @@ flowchart TD
 pnpm install
 pnpm dev        # http://localhost:3000 (/ 한국어, /en 영어)
 ```
+env 없이도 인메모리 저장소(코드 시드)로 모든 화면이 동작합니다. 문의는 서버를 다시 띄우면 비워집니다.
+
+## Supabase 연결
+작업과 문의를 Supabase(클라우드 무료 플랜 프로젝트 1개, 개발+테스트 공용)에 저장합니다. Docker 와 로컬 Supabase 는 쓰지 않습니다.
+`src/infrastructure/container.ts` 가 env 를 보고 저장소를 고릅니다: URL + secret 키가 있으면 Supabase, 없거나 `DATA_STORE=memory` 면 인메모리.
+
+### 1. 로컬 env 준비
+```bash
+cp .env.example .env.local   # .env.local 은 커밋하지 않습니다
+```
+| 변수 | 어디서 | 용도 |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Project Settings > Data API | 공개 값 |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Project Settings > API Keys (`sb_publishable_...`) | 공개 값. RLS 로 공개 작업 읽기만 됩니다 |
+| `SUPABASE_SECRET_KEY` | Project Settings > API Keys (`sb_secret_...`) | 서버 전용. RLS 를 우회합니다. `NEXT_PUBLIC_` 을 붙이지 않습니다 |
+| `SUPABASE_DB_URL` | Connect > Session pooler (IPv4) | 마이그레이션 적용에만 씁니다 |
+
+레거시 `anon` / `service_role` 키는 쓰지 않습니다. 무료 플랜의 Direct connection 은 IPv6 전용이라, IPv4 add-on 없이 쓰려면 Session pooler 주소를 씁니다.
+
+### 2. 마이그레이션 적용
+`supabase/migrations/` 의 SQL 을 원격 DB 에 적용합니다. CLI 는 devDependency 라 따로 설치하지 않습니다. CI 는 마이그레이션을 적용하지 않습니다.
+```bash
+set -a; . ./.env.local; set +a
+pnpm exec supabase db push --db-url "$SUPABASE_DB_URL" --dry-run   # 적용할 파일 확인
+pnpm exec supabase db push --db-url "$SUPABASE_DB_URL"
+pnpm db:seed                                                        # works 를 코드 시드로 채움 (문의는 그대로)
+```
+마이그레이션을 바꾸면 `src/infrastructure/supabase/database.ts` 의 테이블 타입도 같이 고칩니다 (`supabase gen types` 는 `--db-url` 에 Docker 가 필요해서 손으로 맞춥니다).
+
+### 3. 테스트
+| 명령 | 클라우드 DB |
+|---|---|
+| `pnpm test` | 건드리지 않음 (`*.contract.test.ts` 제외) |
+| `pnpm test:e2e`, `pnpm test:visual` | 건드리지 않음 (Playwright 서버를 `DATA_STORE=memory` 로 띄움) |
+| `pnpm test:contract` | 씀. 리포지토리 계약, publishable 키 RLS, DB 제약. 테이블을 비우고 채운 뒤 works 시드와 기존 문의를 되돌립니다. env 가 없으면 건너뜁니다 |
+
+CI 는 `Contract` 워크플로(`.github/workflows/contract.yml`)가 Actions secrets(`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`)로 계약 테스트를 돌립니다. 같은 DB 를 쓰므로 레포 전체에서 한 번에 하나만 돕니다.
+계약 테스트가 도중에 끊겨 화면에 테스트 작업이 보이면 `pnpm db:seed` 로 되돌립니다.
+
+secret 키가 브라우저로 가는 파일에 없는지는 `pnpm build && pnpm check:bundle` 로 확인합니다 (CI 도 빌드 뒤에 실행).
+
+### 무료 플랜 일시정지와 Resume
+무료 플랜 프로젝트는 7일 동안 활동이 없으면 일시정지됩니다. 정지되면 앱의 Supabase 요청과 `Contract` 워크플로가 실패합니다.
+1. [Supabase 대시보드](https://supabase.com/dashboard) 에서 프로젝트를 엽니다 (일시정지 배너가 보입니다)
+2. **Resume project**(또는 Restore project)를 누르고 상태가 Healthy 가 될 때까지 몇 분 기다립니다. 테이블과 데이터는 그대로 남아 있습니다
+3. `pnpm test:contract` 로 연결을 확인합니다
+기다리는 동안 로컬 개발은 `.env.local` 에 `DATA_STORE=memory` 를 넣어 인메모리로 할 수 있습니다.
 
 ## 스크립트
 | 명령 | 내용 |
@@ -62,10 +109,13 @@ pnpm dev        # http://localhost:3000 (/ 한국어, /en 영어)
 | `pnpm build` / `pnpm start` | 프로덕션 빌드 / 실행 |
 | `pnpm lint` | ESLint (레이어 의존 규칙, SDK import 제한, Tailwind 임의값 금지 포함) |
 | `pnpm typecheck` | 라우트 타입 생성 후 `tsc --noEmit` |
-| `pnpm test` | Vitest 단위 테스트 |
+| `pnpm test` | Vitest 단위 테스트 (클라우드 DB 를 쓰지 않음) |
+| `pnpm test:contract` | Supabase 계약/RLS/제약 테스트 (env 없으면 건너뜀) |
 | `pnpm test:e2e` | Playwright E2E (390 / 1440 / 1920 뷰포트) |
 | `pnpm test:visual` | Figma 시안 PNG와 픽셀 비교해 차이율 출력 (로컬 전용, [ADR 0004](docs/adr/0004-visual-regression-against-figma.md)) |
 | `pnpm storybook` / `pnpm build-storybook` | Storybook 개발 서버 / 정적 빌드 |
+| `pnpm db:seed` | Supabase works 를 코드 시드로 되돌림 |
+| `pnpm check:bundle` | 빌드 결과의 클라이언트 번들에 서버 비밀이 없는지 검사 |
 | `pnpm format` | Prettier |
 
 커밋할 때 `commit-msg` 훅(commitlint)과 `pre-commit` 훅(lint-staged)이 자동으로 실행됩니다. 커밋 형식은 [docs/commit-convention.md](docs/commit-convention.md)를 따릅니다.
