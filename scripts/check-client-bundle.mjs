@@ -9,7 +9,12 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
-export const SERVER_ONLY_ENV = ["SUPABASE_SECRET_KEY", "SUPABASE_DB_URL"];
+export const SERVER_ONLY_ENV = [
+  "SUPABASE_SECRET_KEY",
+  "SUPABASE_DB_URL",
+  "RESEND_API_KEY",
+  "INQUIRY_NOTIFY_EMAIL",
+];
 const SECRET_KEY_PREFIX = "sb_secret_";
 
 const walk = (dir) =>
