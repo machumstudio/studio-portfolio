@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { use } from "react";
 import { useTranslations } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { ServicesHero } from "@/components/sections/ServicesHero";
 import {
   ServicesPackages,
@@ -9,6 +9,7 @@ import {
 } from "@/components/sections/ServicesPackages";
 import { pagePhotos, servicePhoto, servicePhotoIds } from "../_sections/photos";
 import { Faq } from "../_sections/site-sections";
+import { staticPageMetadata } from "../_seo/page-metadata";
 
 // 패키지와 가격은 당분간 고정값. 가격은 문구가 아니라 숫자 + 통화로 두고 화면에서 언어별로 표기한다.
 // 통화는 원화: 가상 스튜디오가 한국 스튜디오라 원화로 받고, 같은 패키지는 표시 언어와 상관없이 같은 가격이다.
@@ -27,11 +28,7 @@ export async function generateMetadata({
   params,
 }: PageProps<"/[locale]/services">): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({
-    locale,
-    namespace: "ServicesPage.metadata",
-  });
-  return { title: t("title"), description: t("description") };
+  return staticPageMetadata(locale, "/services", "ServicesPage.metadata");
 }
 
 // 시안 간격(services-*.json, 노드 h 합과 프레임 높이 차이, 시안 픽셀의 테두리 위치로 확인):

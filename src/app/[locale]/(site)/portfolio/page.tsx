@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense, use } from "react";
 import { useTranslations } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { PortfolioFilter } from "@/components/sections/PortfolioFilter";
 import { PortfolioGallery } from "@/components/sections/PortfolioGallery";
 import { PortfolioHero } from "@/components/sections/PortfolioHero";
@@ -9,16 +9,13 @@ import type { LocalizedText } from "@/domain/works/localized-text";
 import { getWorkGalleries } from "@/features/works/queries";
 import { pagePhotos } from "../_sections/photos";
 import { Faq, Testimonials } from "../_sections/site-sections";
+import { staticPageMetadata } from "../_seo/page-metadata";
 
 export async function generateMetadata({
   params,
 }: PageProps<"/[locale]/portfolio">): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({
-    locale,
-    namespace: "PortfolioPage.metadata",
-  });
-  return { title: t("title"), description: t("description") };
+  return staticPageMetadata(locale, "/portfolio", "PortfolioPage.metadata");
 }
 
 // 필터 띠 + 갤러리. ?category= 는 요청마다 다른 값이라 Suspense 안에서 읽는다 (cacheComponents).

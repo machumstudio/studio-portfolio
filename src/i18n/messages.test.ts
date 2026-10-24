@@ -16,7 +16,6 @@ const koValues = new Map(entries(ko));
 // 번역하지 않는 값: 브랜드/고객사/SNS 이름, 후기 작성자 이름, 숫자, 시안 크레딧.
 // 새 키를 추가했는데 en 을 ko 그대로 두면 이 목록에 없어서 실패한다
 const sameInBothLocales = new Set([
-  "Metadata.title",
   "Layout.brand",
   "Layout.wordmark",
   "Layout.footer.clients.klovesto",

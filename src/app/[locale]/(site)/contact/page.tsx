@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { use } from "react";
 import { useTranslations } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { ContactHero } from "@/components/sections/ContactHero";
 import { ContactInfo } from "@/components/sections/ContactInfo";
 import { ContactMessage } from "@/components/sections/ContactMessage";
@@ -10,16 +10,13 @@ import { InquiryForm } from "@/features/inquiry/ui/InquiryForm";
 import { pagePhotos } from "../_sections/photos";
 import { studioContact } from "../_sections/studio-contact";
 import { Testimonials } from "../_sections/site-sections";
+import { staticPageMetadata } from "../_seo/page-metadata";
 
 export async function generateMetadata({
   params,
 }: PageProps<"/[locale]/contact">): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({
-    locale,
-    namespace: "ContactPage.metadata",
-  });
-  return { title: t("title"), description: t("description") };
+  return staticPageMetadata(locale, "/contact", "ContactPage.metadata");
 }
 
 // 시안 간격(contact-*.json, 노드 h 합과 프레임 높이 차이, 시안 픽셀의 테두리 위치로 확인):

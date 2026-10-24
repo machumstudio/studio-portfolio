@@ -15,6 +15,7 @@ import {
   getWorkBySlug,
 } from "@/features/works/queries";
 import { formatYearMonth } from "@/i18n/use-year-month-format";
+import { sitePageMetadata } from "../../_seo/page-metadata";
 
 // 공개 작업은 빌드 때 미리 만든다 (locale 은 상위 layout 의 generateStaticParams 가 채운다).
 // 목록에 없는 slug(없는/비공개 작업)는 notFound() → (site)/not-found.tsx.
@@ -26,7 +27,7 @@ export async function generateStaticParams() {
   return (await getPublishedWorks()).map(({ slug }) => ({ slug }));
 }
 
-// 제목, 설명, OG 이미지(대표 사진). 없는/비공개 작업은 not-found.tsx 가 제목을 정한다
+// 제목, 설명, canonical/hreflang, OG/X 카드 이미지(대표 사진). 없는/비공개 작업은 not-found.tsx 가 제목을 정한다
 export async function generateMetadata({
   params,
 }: PageProps<"/[locale]/work/[slug]">): Promise<Metadata> {
@@ -40,22 +41,18 @@ export async function generateMetadata({
     locale,
     namespace: "Works.categories",
   });
-  const text = {
+  return sitePageMetadata({
+    locale,
+    path: `/work/${slug}`,
+    type: "article",
     title: t("title", { title: title[lang] }),
     description: t("description", {
       title: title[lang],
       category: categories(`${category}.name`),
       date: formatYearMonth(await getFormatter({ locale }), date),
     }),
-  };
-  return {
-    ...text,
-    openGraph: {
-      ...text,
-      type: "article",
-      images: [{ url: cover.src, alt: cover.alt[lang] }],
-    },
-  };
+    image: { url: cover.src, alt: cover.alt[lang] },
+  });
 }
 
 // 간격: 헤더-본문 40/80/100 (Portfolio 히어로와 같음), 본문-이전/다음 80/100/150 (히어로 띠-갤러리와 같음)
