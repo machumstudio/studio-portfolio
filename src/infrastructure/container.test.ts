@@ -142,3 +142,37 @@ describe("container 관리자 인증 선택", () => {
     ).toBe("disabled");
   });
 });
+
+describe("container 관리자 작업 선택", () => {
+  it("DATA_STORE=memory 면 공개 화면과 같은 인메모리 저장소와 인메모리 사진 저장소", async () => {
+    const { container } = await load({ ...authEnv, DATA_STORE: "memory" });
+    const admin = await container.works.admin();
+    expect(admin.repo).toBe(container.workRepository);
+    expect(admin.storage).toBe(container.works.memoryPhotos);
+  });
+
+  it("Supabase 저장소 + Supabase Auth 면 요청 세션의 Supabase 저장소 (인메모리 사진 없음)", async () => {
+    const { container } = await load({
+      ...supabaseEnv,
+      ...authEnv,
+      DATA_STORE: undefined,
+    });
+    const admin = await container.works.admin();
+    expect(admin.repo).not.toBe(container.workRepository);
+    expect(
+      admin.storage.pathOf(
+        "https://example.supabase.co/storage/v1/object/public/work-photos/w-1/a.jpg",
+      ),
+    ).toBe("w-1/a.jpg");
+    expect(container.works.memoryPhotos).toBeNull();
+  });
+
+  it("관리자 인증이 꺼져 있으면 쓰지 못한다", async () => {
+    const { container } = await load({
+      NEXT_PUBLIC_SUPABASE_URL: undefined,
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: undefined,
+      DATA_STORE: undefined,
+    });
+    await expect(container.works.admin()).rejects.toThrow("꺼져 있다");
+  });
+});
