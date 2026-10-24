@@ -88,7 +88,7 @@ pnpm db:seed                                                        # works 를 
 |---|---|
 | `pnpm test` | 건드리지 않음 (`*.contract.test.ts` 제외) |
 | `pnpm test:e2e`, `pnpm test:visual` | 건드리지 않음 (Playwright 서버를 `DATA_STORE=memory` 로 띄움) |
-| `pnpm test:contract` | 씀. 리포지토리 계약, publishable 키 RLS, DB 제약. 테이블을 비우고 채운 뒤 works 시드와 기존 문의를 되돌립니다. env 가 없으면 건너뜁니다 |
+| `pnpm test:contract` | 씀. 리포지토리/인증 계약, publishable 키와 관리자 세션 RLS, 공개 가입·익명 로그인 차단, DB 제약. 테이블을 비우고 채운 뒤 works 시드와 기존 문의를 되돌립니다. Auth 계정은 실행마다 임시 계정을 만들고 지웁니다 (실제 관리자 계정은 쓰지 않음). env 가 없으면 건너뜁니다 |
 
 CI 는 `Contract` 워크플로(`.github/workflows/contract.yml`)가 Actions secrets(`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`)로 계약 테스트를 돌립니다. 같은 DB 를 쓰므로 레포 전체에서 한 번에 하나만 돕니다.
 계약 테스트가 도중에 끊겨 화면에 테스트 작업이 보이면 `pnpm db:seed` 로 되돌립니다.
