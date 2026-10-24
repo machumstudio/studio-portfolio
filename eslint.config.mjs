@@ -84,16 +84,17 @@ const eslintConfig = defineConfig([
             "레이어 의존 규칙 위반: {{from.type}} → {{to.type}} (docs/architecture.md)",
           policies: [
             ...layerPolicies,
-            // 외부 패키지는 domain 을 뺀 모든 곳에서 허용 (SDK 제한은 아래 no-restricted-imports)
+            // 외부 패키지는 domain, application 을 뺀 모든 곳에서 허용 (SDK 제한은 아래 no-restricted-imports)
             {
-              from: { element: { type: "!domain" } },
+              from: { element: { type: "!{domain,application}" } },
               allow: { to: { module: { origin: ["external", "core"] } } },
             },
+            // domain 은 순수 TS, application 은 포트에만 의존한다 (zod, React, SDK 모두 금지)
             {
-              from: { element: { type: "domain" } },
+              from: { element: { type: ["domain", "application"] } },
               disallow: { to: { module: { origin: ["external", "core"] } } },
               message:
-                "domain/ 은 순수 TS. 외부 라이브러리 import 금지: {{dependency.source}} (docs/architecture.md)",
+                "{{from.type}}/ 은 외부 라이브러리 import 금지: {{dependency.source}} (docs/architecture.md)",
             },
             // 테스트 파일의 vitest 만 예외
             {

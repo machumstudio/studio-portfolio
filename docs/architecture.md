@@ -42,6 +42,7 @@ src/
 - `@supabase/*`, `resend` 같은 외부 SDK import는 `infrastructure/` 안에서만 허용
 - `infrastructure/`, `features/*/queries.ts`, `features/*/actions.ts`는 `server-only`
 - `domain/`은 React, Next, zod 등 어떤 라이브러리도 import하지 않는다
+- `application/`도 외부 패키지를 import하지 않는다 (포트와 domain, shared만). 테스트의 `vitest`만 예외
 
 ## 도메인 모델링 규칙
 - ID는 브랜드 타입: `type InquiryId = Brand<string, "InquiryId">`
