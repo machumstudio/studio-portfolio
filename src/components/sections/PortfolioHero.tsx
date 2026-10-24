@@ -27,7 +27,8 @@ export function PortfolioHero({ image }: PortfolioHeroProps) {
             src={image.src}
             alt={image.alt}
             fill
-            preload
+            loading="eager"
+            fetchPriority="high"
             sizes="(min-width: 1024px) 90vw, 100vw"
             className="object-cover"
           />

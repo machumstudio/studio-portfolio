@@ -30,6 +30,25 @@ const percent = (value: number, total: number) =>
 
 export const heroPhotoCount = tiles.length;
 
+// 칸마다 실제 폭에 맞춘 sizes. 콜라주 폭 = 화면 폭 - 좌우 page-x (16 / 80 / 162), 칸 폭 = 그 비율.
+// 칸 하나에 같은 sizes 를 쓰면 38px 짜리 작은 칸도 384~750px 사진을 받는다 (20칸 측정)
+const pageX = [
+  [1920, 162],
+  [1024, 80],
+] as const;
+const tileSizes = (width: number) => {
+  const ratio = (width / W).toFixed(4);
+  return [
+    ...pageX.map(
+      ([min, pad]) =>
+        `(min-width: ${min}px) calc((100vw - ${pad * 2}px) * ${ratio})`,
+    ),
+    `calc((100vw - 32px) * ${ratio})`,
+  ].join(", ");
+};
+// 가장 큰 가운데 칸이 첫 화면의 LCP 다 (Lighthouse 모바일/데스크톱). 그 칸만 먼저 받는다
+const largestTile = 1;
+
 // 노드 "Abstract Design"(262/346 정사각형): 위아래 가장자리에 중심을 둔 동심원 3겹 두 벌.
 // 고리는 Dark/06 채움 + Dark/12 1px 테두리, 반지름은 시안 픽셀에서 잰 값(346 기준).
 const radii = [173, 153, 131, 111, 89, 70];
@@ -113,8 +132,10 @@ export function HomeHero({ photos }: HomeHeroProps) {
                     src={photo.src}
                     alt={photo.alt}
                     fill
-                    preload={i < 2}
-                    sizes="(min-width: 1920px) 653px, 41vw"
+                    // 콜라주 전체가 첫 화면 안이라(모바일 포함) 지연 로드하지 않는다
+                    loading="eager"
+                    fetchPriority={i === largestTile ? "high" : undefined}
+                    sizes={tileSizes(width)}
                     className="object-cover"
                   />
                 )}
