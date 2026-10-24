@@ -47,3 +47,52 @@ describe("container 저장소 선택", () => {
     ).toBe("memory");
   });
 });
+
+const resendEnv = {
+  RESEND_API_KEY: "re_test_key",
+  INQUIRY_NOTIFY_EMAIL: "admin@example.com",
+};
+
+describe("container 알림 선택", () => {
+  it("Resend 키와 받는 주소가 있으면 이메일", async () => {
+    expect(
+      (await load({ ...resendEnv, DATA_STORE: undefined })).notifierKind,
+    ).toBe("resend");
+  });
+
+  it("하나라도 없으면 로그 (CI, 단위 테스트)", async () => {
+    expect(
+      (await load({ ...resendEnv, INQUIRY_NOTIFY_EMAIL: undefined }))
+        .notifierKind,
+    ).toBe("log");
+    expect(
+      (await load({ ...resendEnv, RESEND_API_KEY: undefined })).notifierKind,
+    ).toBe("log");
+  });
+
+  it("DATA_STORE=memory(e2e) 면 env 가 있어도 보내지 않는다", async () => {
+    const fetch = vi.fn<typeof globalThis.fetch>();
+    vi.stubGlobal("fetch", fetch);
+    const info = vi.spyOn(console, "info").mockImplementation(() => {});
+    try {
+      const { notifierKind, container } = await load({
+        ...resendEnv,
+        DATA_STORE: "memory",
+      });
+      expect(notifierKind).toBe("log");
+      const { submitInquiry } =
+        await import("@/application/inquiry/submit-inquiry");
+      const result = await submitInquiry(container.inquiry)({
+        firstName: "하늘",
+        lastName: "김",
+        email: "sky@example.com",
+        message: "문의",
+      });
+      expect(result.ok && result.value.warnings).toEqual([]);
+      expect(fetch).not.toHaveBeenCalled();
+    } finally {
+      info.mockRestore();
+      vi.unstubAllGlobals();
+    }
+  });
+});

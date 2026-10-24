@@ -1,6 +1,7 @@
 import "server-only";
 import { createInMemoryInquiryRepository } from "./inquiry/in-memory-inquiry-repository";
 import { createLogNotifier } from "./inquiry/log-notifier";
+import { createResendNotifier, readResendEnv } from "./inquiry/resend-notifier";
 import { createSupabaseInquiryRepository } from "./inquiry/supabase-inquiry-repository";
 import { randomInquiryIds, systemClock } from "./inquiry/system";
 import {
@@ -13,14 +14,18 @@ import { createSupabaseWorkRepository } from "./works/supabase-work-repository";
 
 // 포트 구현 조립. features 의 actions.ts / queries.ts 만 이 파일을 쓴다.
 // 저장소: Supabase env(URL + secret 키)가 있으면 Supabase, 없거나 DATA_STORE=memory 면 인메모리.
-// e2e(playwright.config.ts)와 CI 빌드는 인메모리라 클라우드 DB 를 건드리지 않는다.
-// 15칸에서 이메일/Slack 알림으로 바꿀 때 이 파일만 고친다
+// 알림: Resend env(키 + 받는 주소)가 있으면 이메일, 없거나 DATA_STORE=memory 면 서버 로그.
+// e2e(playwright.config.ts)와 CI 빌드는 인메모리 + 로그라 클라우드 DB 를 건드리지 않고 메일도 보내지 않는다
 const supabaseEnv = readSupabaseServerEnv();
 const supabase = supabaseEnv ? createSupabaseServerClient(supabaseEnv) : null;
 
 export const dataStore: "supabase" | "memory" = supabase
   ? "supabase"
   : "memory";
+
+const resendEnv = readResendEnv();
+
+export const notifierKind: "resend" | "log" = resendEnv ? "resend" : "log";
 
 export const container = {
   workRepository: supabase
@@ -31,7 +36,7 @@ export const container = {
     repo: supabase
       ? createSupabaseInquiryRepository(supabase)
       : createInMemoryInquiryRepository(),
-    notifier: createLogNotifier(),
+    notifier: resendEnv ? createResendNotifier(resendEnv) : createLogNotifier(),
     clock: systemClock,
     ids: randomInquiryIds,
   },
