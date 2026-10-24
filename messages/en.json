@@ -458,5 +458,84 @@
     "body": "The address may have changed, or the page is not published. Try the home page or the works list.",
     "home": "Go home",
     "portfolio": "Browse works"
+  },
+  "ContactPage": {
+    "metadata": {
+      "title": "Contact | Machum Studio",
+      "description": "Tell us about your shoot, schedule or budget. We reply within one business day."
+    },
+    "hero": {
+      "eyebrow": "Contact",
+      "title": "Get in Touch",
+      "body": "Tell us about the shoot you have in mind with Machum Studio. Portraits, events or commercial work: share the scenes, schedule and mood you want, and we will suggest the right approach and a quote. It is fine if nothing is decided yet.",
+      "scroll": "Scroll down to send a message"
+    },
+    "info": {
+      "title": "Contact Information",
+      "body": "Reach out however suits you best. We are available by phone, email and social media.",
+      "label": "Contact details",
+      "phone": "Phone",
+      "email": "Email"
+    },
+    "message": {
+      "title": "Send a Message",
+      "body": "Have a question or a shoot in mind? Use the form below and we will get back to you promptly."
+    }
+  },
+  "InquiryForm": {
+    "label": "Inquiry form",
+    "fields": {
+      "firstName": {
+        "label": "First Name",
+        "placeholder": "First Name"
+      },
+      "lastName": {
+        "label": "Last Name",
+        "placeholder": "Last Name"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Email Address"
+      },
+      "phone": {
+        "label": "Phone Number",
+        "placeholder": "Phone Number",
+        "optional": "Optional"
+      },
+      "message": {
+        "label": "Your Message",
+        "placeholder": "Message"
+      }
+    },
+    "honeypot": "Leave this field empty",
+    "submit": "Send Message",
+    "pending": "Sending",
+    "status": {
+      "success": "Your message has been sent. We will reply within one business day.",
+      "invalid": "Please check your entries. {count, plural, one {# field needs} other {# fields need}} attention.",
+      "error": "Something went wrong and your message was not sent. Your entries are still here, so please try again in a moment."
+    },
+    "errors": {
+      "firstName": {
+        "required": "Please enter your first name.",
+        "tooLong": "First name can be up to {max} characters."
+      },
+      "lastName": {
+        "required": "Please enter your last name.",
+        "tooLong": "Last name can be up to {max} characters."
+      },
+      "email": {
+        "required": "Please enter your email.",
+        "tooLong": "Email can be up to {max} characters.",
+        "invalidEmail": "Please check the email format, e.g. name@example.com."
+      },
+      "phone": {
+        "invalidPhone": "Please enter 8 to 15 digits. Hyphens, spaces, brackets and a leading + are allowed."
+      },
+      "message": {
+        "required": "Please enter a message.",
+        "tooLong": "Message can be up to {max} characters."
+      }
+    }
   }
 }
