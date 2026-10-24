@@ -11,6 +11,10 @@ import {
 import { HomeServices } from "@/components/sections/HomeServices";
 import type { LocalizedText } from "@/domain/works/localized-text";
 import { getPublishedWorks } from "@/features/works/queries";
+import type { Locale } from "@/lib/seo/alternates";
+import { JsonLd } from "@/lib/seo/json-ld";
+import { readSiteUrl } from "@/lib/seo/site";
+import { studioJsonLd } from "@/lib/seo/structured-data";
 import { heroCollage, pagePhotos, servicePhoto } from "./_sections/photos";
 import { Faq, Testimonials } from "./_sections/site-sections";
 import { studioContact } from "./_sections/studio-contact";
@@ -39,6 +43,7 @@ export default function Page({ params }: PageProps<"/[locale]">) {
   setRequestLocale(locale);
   const service = useTranslations("Services.items");
   const photo = useTranslations("Photos");
+  const metadata = useTranslations("Metadata");
   // 공개 작업 중 최신 6개. 나머지는 "모든 작업 보기"(/portfolio)에서
   const works = use(getPublishedWorks({ limit: previewLimit }));
   // locale 은 layout 에서 hasLocale 로 확인한 값
@@ -79,6 +84,14 @@ export default function Page({ params }: PageProps<"/[locale]">) {
       />
       <Faq />
       <Testimonials />
+      <JsonLd
+        data={studioJsonLd({
+          siteUrl: readSiteUrl(),
+          locale: locale as Locale,
+          description: metadata("description"),
+          contact: studioContact,
+        })}
+      />
     </main>
   );
 }
