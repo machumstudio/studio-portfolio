@@ -14,7 +14,10 @@ const renderCard = (variant?: "preview" | "gallery") =>
       title="단단한 얼굴들"
       date="2022-03"
       dateLabel="2022년 3월"
-      image={{ src: "/images/placeholder.svg", alt: "인물 사진" }}
+      image={{
+        src: "/images/works/faces-of-resilience-1.jpg",
+        alt: "인물 사진",
+      }}
       viewLabel="프로젝트 보기"
     />,
   );

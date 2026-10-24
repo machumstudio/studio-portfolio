@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { HomePortfolio } from "./HomePortfolio";
 import { oddPhotos } from "@/components/ui/photo-fixtures";
 
-const image = { src: "/images/placeholder.svg", alt: "" };
+const image = { src: "/images/works/faces-of-resilience-1.jpg", alt: "" };
 
 const meta = {
   title: "Sections/HomePortfolio",

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { WorkDetail } from "./WorkDetail";
 import { oddPhotos, tallPhoto } from "@/components/ui/photo-fixtures";
 
-const photo = { src: "/images/placeholder.svg", alt: "" };
+const photo = { src: "/images/works/a-wedding-tale-1.jpg", alt: "" };
 
 const meta = {
   title: "Sections/WorkDetail",

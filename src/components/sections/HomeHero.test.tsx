@@ -9,7 +9,7 @@ vi.mock("@/i18n/navigation", () => ({
 }));
 
 const photos = Array.from({ length: heroPhotoCount }, (_, i) => ({
-  src: "/images/placeholder.svg",
+  src: "/images/works/faces-of-resilience-1.jpg",
   alt: `사진 ${i + 1}`,
 }));
 

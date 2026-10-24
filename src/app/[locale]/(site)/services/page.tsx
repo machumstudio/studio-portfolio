@@ -7,11 +7,8 @@ import {
   ServicesPackages,
   type ServiceOffering,
 } from "@/components/sections/ServicesPackages";
+import { pagePhotos, servicePhoto, servicePhotoIds } from "../_sections/photos";
 import { Faq } from "../_sections/site-sections";
-
-// 사진은 16칸에서 Unsplash 로 교체할 때까지 임시 이미지. 꾸밈용 자리라 alt 는 비운다
-const placeholder = { src: "/images/placeholder.svg", alt: "" };
-const photosPerService = 3;
 
 // 패키지와 가격은 당분간 고정값. 가격은 문구가 아니라 숫자 + 통화로 두고 화면에서 언어별로 표기한다.
 // 통화는 원화: 가상 스튜디오가 한국 스튜디오라 원화로 받고, 같은 패키지는 표시 언어와 상관없이 같은 가격이다.
@@ -46,13 +43,17 @@ export default function ServicesPage({
   setRequestLocale(locale);
   const t = useTranslations("ServicesPage");
   const service = useTranslations("Services.items");
+  const photo = useTranslations("Photos");
 
   const offerings: ServiceOffering[] = Object.entries(services).map(
     ([id, packages]) => ({
       id,
       title: t(`services.${id}`),
       body: service(`${id}.body`),
-      images: Array.from({ length: photosPerService }, () => placeholder),
+      images: servicePhotoIds.map((n) => ({
+        src: servicePhoto(id, n),
+        alt: photo(`services.${id}.${n}`),
+      })),
       packages: Object.entries(packages).map(([pkg, amount]) => ({
         id: pkg,
         name: t(`packages.${pkg}.name`),
@@ -66,7 +67,9 @@ export default function ServicesPage({
 
   return (
     <main className="flex flex-col pt-10 pb-20 lg:pt-20 lg:pb-37.5 3xl:pt-25 3xl:pb-50">
-      <ServicesHero image={placeholder} />
+      <ServicesHero
+        image={{ src: pagePhotos.servicesHero, alt: photo("servicesHero") }}
+      />
       <div className="mt-12.5 lg:mt-25 3xl:mt-37.5">
         <ServicesPackages services={offerings} />
       </div>

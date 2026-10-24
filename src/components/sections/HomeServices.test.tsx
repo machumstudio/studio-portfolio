@@ -16,7 +16,10 @@ const services: HomeService[] = (
   name: items[id].name,
   body: items[id].body,
   highlights: Object.values(items[id].highlights),
-  image: { src: "/images/placeholder.svg", alt: `${items[id].name} 사진` },
+  image: {
+    src: "/images/works/faces-of-resilience-1.jpg",
+    alt: `${items[id].name} 사진`,
+  },
 }));
 
 const renderServices = () =>

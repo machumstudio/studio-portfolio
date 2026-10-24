@@ -10,7 +10,7 @@ const meta = {
   title: "Sections/HomeAbout",
   component: HomeAbout,
   args: {
-    photo: { src: "/images/placeholder.svg", alt: "" },
+    photo: { src: "/images/pages/home-about.jpg", alt: "" },
     email: "hello@example.com",
     phone: "+00 000000000",
   },

@@ -2,13 +2,13 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { PhotoSlider } from "./PhotoSlider";
 import { oddPhotos } from "./photo-fixtures";
 
-const placeholder = { src: "/images/placeholder.svg", alt: "" };
+const photo = { src: "/images/services/portrait-1.jpg", alt: "" };
 
 const meta = {
   title: "UI/PhotoSlider",
   component: PhotoSlider,
   args: {
-    images: [placeholder, placeholder, placeholder],
+    images: [photo, photo, photo],
     label: "인물 촬영 사진",
     previousLabel: "이전 인물 촬영 사진",
     nextLabel: "다음 인물 촬영 사진",

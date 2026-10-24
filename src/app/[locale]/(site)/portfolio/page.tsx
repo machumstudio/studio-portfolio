@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import { Suspense, use } from "react";
+import { useTranslations } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PortfolioFilter } from "@/components/sections/PortfolioFilter";
 import { PortfolioGallery } from "@/components/sections/PortfolioGallery";
 import { PortfolioHero } from "@/components/sections/PortfolioHero";
 import type { LocalizedText } from "@/domain/works/localized-text";
 import { getWorkGalleries } from "@/features/works/queries";
+import { pagePhotos } from "../_sections/photos";
 import { Faq, Testimonials } from "../_sections/site-sections";
-
-// 사진은 16칸에서 Unsplash 로 교체할 때까지 임시 이미지. 꾸밈용 자리라 alt 는 비운다
-const placeholder = { src: "/images/placeholder.svg", alt: "" };
 
 export async function generateMetadata({
   params,
@@ -64,10 +63,13 @@ export default function PortfolioPage({
   setRequestLocale(locale);
   // locale 은 layout 에서 hasLocale 로 확인한 값
   const lang = locale as keyof LocalizedText;
+  const photo = useTranslations("Photos");
 
   return (
     <main className="flex flex-col pt-10 pb-20 lg:pt-20 lg:pb-37.5 3xl:pt-25 3xl:pb-50">
-      <PortfolioHero image={placeholder} />
+      <PortfolioHero
+        image={{ src: pagePhotos.portfolioHero, alt: photo("portfolioHero") }}
+      />
       <Suspense fallback={<Works lang={lang} />}>
         {searchParams.then(({ category }) => (
           <Works

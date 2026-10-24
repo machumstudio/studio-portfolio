@@ -4,7 +4,7 @@ import { Gallery } from "./Gallery";
 import { oddPhotos } from "./photo-fixtures";
 
 const images = Array.from({ length: 5 }, () => ({
-  src: "/images/placeholder.svg",
+  src: "/images/works/a-wedding-tale-1.jpg",
   alt: "",
 }));
 

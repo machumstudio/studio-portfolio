@@ -9,7 +9,7 @@ vi.mock("@/i18n/navigation", () => ({
 }));
 
 const page = messages.ServicesPage;
-const photo = { src: "/images/placeholder.svg", alt: "" };
+const photo = { src: "/images/works/faces-of-resilience-1.jpg", alt: "" };
 const services: ServiceOffering[] = [
   {
     id: "portrait",

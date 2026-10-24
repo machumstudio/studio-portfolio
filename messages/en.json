@@ -537,5 +537,29 @@
         "tooLong": "Message can be up to {max} characters."
       }
     }
+  },
+  "Photos": {
+    "homeAbout": "Photographer in a beret holding a camera",
+    "aboutHero": "Photographer shooting the view from a mountaintop",
+    "portfolioHero": "Woman in red and blue light",
+    "servicesHero": "Photographer shooting a model in a studio",
+    "contactHero": "Camera on a desk",
+    "services": {
+      "portrait": {
+        "1": "Woman looking aside in low light",
+        "2": "Person lying in warm light",
+        "3": "Portrait of a woman in shadow"
+      },
+      "events": {
+        "1": "Father walking the bride down the aisle",
+        "2": "Bride smiling among her guests",
+        "3": "Black-and-white photo of a bride dancing with guests"
+      },
+      "commercial": {
+        "1": "Blue bottle on dark rocks",
+        "2": "Beard oil bottle with a comb and scissors",
+        "3": "Product shoot set under studio lights"
+      }
+    }
   }
 }

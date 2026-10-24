@@ -15,7 +15,7 @@ const meta = {
       name: items[id].name,
       body: items[id].body,
       highlights: Object.values(items[id].highlights),
-      image: { src: "/images/placeholder.svg", alt: "" },
+      image: { src: "/images/services/events-1.jpg", alt: "" },
     })),
   },
   parameters: { layout: "fullscreen" },

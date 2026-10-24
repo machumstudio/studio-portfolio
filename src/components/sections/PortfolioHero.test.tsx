@@ -7,7 +7,9 @@ import { PortfolioHero } from "./PortfolioHero";
 const renderHero = () =>
   render(
     <NextIntlClientProvider locale="ko" messages={messages}>
-      <PortfolioHero image={{ src: "/images/placeholder.svg", alt: "" }} />
+      <PortfolioHero
+        image={{ src: "/images/works/faces-of-resilience-1.jpg", alt: "" }}
+      />
     </NextIntlClientProvider>,
   );
 

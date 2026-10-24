@@ -10,7 +10,7 @@ const meta = {
   title: "Sections/AboutHero",
   component: AboutHero,
   args: {
-    image: { src: "/images/placeholder.svg", alt: "" },
+    image: { src: "/images/pages/about-hero.jpg", alt: "" },
     stats: [
       { id: "years", value: "15+", label: "Years in Business" },
       { id: "clients", value: "500+", label: "Happy Clients" },
