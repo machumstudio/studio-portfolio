@@ -1,6 +1,10 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
+// 관리자 인증은 요청 쿠키를 읽는다. 테스트에는 요청이 없어서 빈 쿠키로 둔다
+vi.mock("next/headers", () => ({
+  cookies: async () => ({ getAll: () => [], set: () => {} }),
+}));
 
 // container 는 불러올 때 env 를 읽는다. 매번 모듈을 새로 불러 env 별로 확인한다
 const load = async (env: Record<string, string | undefined>) => {
@@ -94,5 +98,47 @@ describe("container 알림 선택", () => {
       info.mockRestore();
       vi.unstubAllGlobals();
     }
+  });
+});
+
+const authEnv = {
+  NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co",
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "sb_publishable_test",
+};
+
+describe("container 관리자 인증 선택", () => {
+  it("URL 과 publishable 키가 있으면 Supabase Auth", async () => {
+    expect(
+      (await load({ ...authEnv, DATA_STORE: undefined })).adminAuthKind,
+    ).toBe("supabase");
+  });
+
+  it("DATA_STORE=memory 면 테스트 계정 (e2e)", async () => {
+    expect(
+      (await load({ ...authEnv, DATA_STORE: "memory" })).adminAuthKind,
+    ).toBe("memory");
+  });
+
+  it("env 가 없으면 인메모리로 넘어가지 않고 꺼진다 (누구도 로그인 못 함)", async () => {
+    const { adminAuthKind, container } = await load({
+      NEXT_PUBLIC_SUPABASE_URL: undefined,
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: undefined,
+      DATA_STORE: undefined,
+    });
+    expect(adminAuthKind).toBe("disabled");
+    const gateway = await container.adminAuth.gateway();
+    expect(
+      await gateway.signInWithPassword({
+        email: "admin@example.com",
+        password: "memory-admin-password",
+      }),
+    ).toBeNull();
+  });
+
+  it("Vercel production 에서는 DATA_STORE=memory 여도 테스트 계정을 켜지 않는다", async () => {
+    expect(
+      (await load({ DATA_STORE: "memory", VERCEL_ENV: "production" }))
+        .adminAuthKind,
+    ).toBe("disabled");
   });
 });
