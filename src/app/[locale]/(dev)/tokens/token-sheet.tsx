@@ -42,6 +42,8 @@ export const typeTokens = [
   { name: "category", className: "text-category" },
   { name: "stat", className: "text-stat" },
   { name: "prose", className: "text-prose" },
+  { name: "package", className: "text-package" },
+  { name: "quote", className: "text-quote" },
   { name: "tagline", className: "text-tagline" },
   { name: "lead", className: "text-lead" },
   { name: "body", className: "text-body" },
