@@ -24,6 +24,13 @@ const files = [
   { category: "container", pattern: "src/infrastructure/container.ts" },
   { category: "server-entry", pattern: "src/features/*/{actions,queries}.ts" },
   { category: "test", pattern: "**/*.test.{ts,tsx}" },
+  // 요청마다 라우팅 전에 도는 proxy (언어 처리, /admin 빠른 확인). 폴더가 아니라 파일 하나라 파일 분류로 둔다
+  { category: "proxy", pattern: "src/proxy.ts" },
+  {
+    category: "proxy-session",
+    pattern: "src/infrastructure/admin-auth/proxy-session.ts",
+  },
+  { category: "return-to", pattern: "src/features/admin-auth/return-to.ts" },
 ];
 
 const allow = (from, ...types) => ({
@@ -61,6 +68,21 @@ const layerPolicies = [
   allow("app", "shared", "features", "ui", "sections", "app", "config"),
   allowTypes("app", "domain"),
   allow("config", "config"),
+  // proxy 는 i18n 설정, 관리자 세션 빠른 확인(infrastructure), 돌아올 주소 규칙(features)만 쓴다
+  {
+    from: { file: { categories: "proxy" } },
+    allow: {
+      to: [
+        { element: { type: "config" } },
+        { module: { origin: ["external", "core"] } },
+        {
+          element: { type: "infrastructure" },
+          file: { categories: "proxy-session" },
+        },
+        { element: { type: "features" }, file: { categories: "return-to" } },
+      ],
+    },
+  },
 ];
 
 const eslintConfig = defineConfig([
