@@ -37,7 +37,7 @@ const columns = [
   {
     key: "services",
     links: [
-      { key: "portraits", href: "/services#portraits" },
+      { key: "portraits", href: "/services#portrait" },
       { key: "events", href: "/services#events" },
       { key: "commercial", href: "/services#commercial" },
     ],
