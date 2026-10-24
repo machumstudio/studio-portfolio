@@ -88,10 +88,11 @@ type SiteFooterProps = {
 // 수치: docs/design/nodes/home-*.json 의 마지막 "Container" (워드마크 + 마키 + "Footer").
 // 워드마크: Dark/15, 오른쪽 정렬(오른쪽 pad 16/80/162), 마키까지 간격 20/60/100.
 // 본문: mobile 은 CTA 상자(pad 40 20) 아래 링크 상자(pad 40 20, 2열 x 2줄, 열 간격 50 줄 간격 40),
-//   lg 부터 CTA(폭 521/644, pad 80 60 / 100 80. 언어마다 글자 폭이 달라 폭을 고정) | 링크 4열(pad 80 50 / 100 80). 세로선은 Dark/12.
+//   1440(xl) 부터 CTA(폭 521/644, pad 80 60 / 100 80. 언어마다 글자 폭이 달라 폭을 고정) | 링크 4열(pad 80 50 / 100 80). 세로선은 Dark/12.
 //   링크 열은 시안의 양끝 정렬 대신 왼쪽부터 일정한 간격 100/111 (시안 en 글자 폭에서 양끝 정렬이 만든 간격).
 //   한국어는 글자가 짧아 양끝 정렬이면 열 사이가 벌어지고 마지막 열이 오른쪽 끝에 붙는다.
-//   열 제목과 링크는 줄을 바꾸지 않는다.
+//   1024~1439(시안 없음): 링크 4열이 CTA 옆에 들어가지 않아(en 최소 약 760) CTA 위 / 링크 아래로 쌓는다.
+//   md 부터 링크는 4열 한 줄, mobile 은 2x2. 열 제목과 링크는 줄을 바꾸지 않는다 (한국어가 글자 단위로 꺾이지 않게).
 // 링크 열: 제목(14/14/18 SemiBold Grey/50) → 16/16/20 → 링크(14/14/18 Medium Grey/95, pad 6 0,
 //   아래 테두리 Dark/20) 간격 4/4/6.
 // 하단: mobile 세로 가운데(간격 16, pad 20 16), lg 부터 약관 | 소셜 | 저작권 (높이 89/107).
@@ -116,16 +117,16 @@ export function SiteFooter({ cta, year }: SiteFooterProps) {
         />
       </div>
 
-      <div className="relative px-4 lg:flex lg:px-20 3xl:px-40.5">
+      <div className="relative px-4 lg:px-20 xl:flex 3xl:px-40.5">
         <Stripes side="left" />
-        <div className="border-x border-b border-dark-12 px-5 py-10 lg:w-130.25 lg:shrink-0 lg:border-b-0 lg:px-15 lg:py-20 3xl:w-161 3xl:px-20 3xl:py-25">
+        <div className="border-x border-b border-dark-12 px-5 py-10 lg:px-15 lg:py-20 xl:w-130.25 xl:shrink-0 xl:border-b-0 3xl:w-161 3xl:px-20 3xl:py-25">
           {cta}
         </div>
         <nav
           aria-label={t("footer.label")}
-          className="border-x border-dark-12 px-5 py-10 lg:flex-1 lg:border-l-0 lg:px-12.5 lg:py-20 3xl:px-20 3xl:py-25"
+          className="border-x border-dark-12 px-5 py-10 lg:px-15 lg:py-20 xl:flex-1 xl:border-l-0 xl:px-12.5 3xl:px-20 3xl:py-25"
         >
-          <ul className="grid w-fit grid-cols-2 gap-x-12.5 gap-y-10 px-5 md:grid-cols-4 lg:flex lg:w-full lg:gap-25 lg:px-0 3xl:gap-27.75">
+          <ul className="grid w-fit grid-cols-2 gap-x-12.5 gap-y-10 px-5 md:flex lg:gap-x-25 lg:px-0 3xl:gap-x-27.75">
             {columns.map((column) => (
               <li
                 key={column.key}

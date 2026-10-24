@@ -174,12 +174,14 @@
 }
 /* stat: About 통계 숫자 (SemiBold 행간 auto, 28/34/48). category 와 데스크톱만 다르다 (44 vs 48)
    prose: About 소개글 (Regular 150%, 14/16/20). body 와 데스크톱만 다르다 (18 vs 20) */
+/* stat: 시안 28/34/48. 노트북은 6칸 한 줄이라 1024~1439 에서 "10,000+" 가 칸을 넘어서 폭에 맞춰 줄인다
+   (1024 에서 27, 1308 부터 시안 값 34) */
 @utility text-stat {
   font-size: 28px;
   font-weight: 600;
   line-height: normal;
   @media (width >= 1024px) {
-    font-size: 34px;
+    font-size: min(34px, 2.6vw);
   }
   @media (width >= 1920px) {
     font-size: 48px;
@@ -328,13 +330,15 @@
     font-size: 37.5px;
   }
 }
+/* wordmark: 시안 80/235/296. "MACHUM" 은 글자 크기의 약 4.45배 폭이라, 시안 사이 폭에서 왼쪽 밖으로 잘리지 않게
+   화면 폭에 맞춰 줄인다 (min: 390 에서 80, 1440 에서 235 그대로, 1024 에서 184 → 폭 819 + 오른쪽 여백 80) */
 @utility text-wordmark {
-  font-size: 80px;
+  font-size: min(80px, 20.52vw);
   font-weight: 500;
   line-height: 1;
   text-box: trim-both cap alphabetic;
   @media (width >= 1024px) {
-    font-size: 235px;
+    font-size: min(235px, 18vw);
   }
   @media (width >= 1920px) {
     font-size: 296px;
