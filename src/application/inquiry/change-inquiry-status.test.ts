@@ -98,6 +98,19 @@ describe("changeInquiryStatus", () => {
     expect(store.get(fresh.id)).toEqual(fresh);
   });
 
+  it("두 탭: 먼저 누른 탭이 바꾼 뒤 오래된 화면의 같은 버튼은 InvalidTransition (지금 상태 기준)", async () => {
+    const { repo, store } = memoryRepo([fresh]);
+    const change = changeInquiryStatus({ repo, clock });
+    expect((await change("inq-1", "markRead")).ok).toBe(true);
+    expect(await change("inq-1", "markRead")).toEqual(
+      err({ type: "InvalidTransition", from: "Read", action: "markRead" }),
+    );
+    expect(store.get(fresh.id)?.status).toEqual({
+      type: "Read",
+      changedAt: now,
+    });
+  });
+
   it.each([
     ["조회", { findById: () => Promise.reject(new Error("db down")) }],
     ["저장", { save: () => Promise.reject(new Error("db down")) }],
