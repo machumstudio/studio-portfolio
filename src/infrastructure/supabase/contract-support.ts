@@ -22,6 +22,11 @@ export const secretClient = () =>
     secretKey: required(secretKey),
   });
 
+export const publishableEnv = () => ({
+  url: required(url),
+  publishableKey: required(publishableKey),
+});
+
 // 브라우저와 같은 권한: publishable 키 = anon 역할. RLS 를 그대로 받는다
 export const publishableClient = () =>
   createClient<Database>(required(url), required(publishableKey), {
