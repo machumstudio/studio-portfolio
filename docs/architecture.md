@@ -103,14 +103,28 @@ app/admin/works/[id]/page.tsx (RSC) → requireAdmin → features/works/queries.
 DATA_STORE=memory: 같은 포트의 인메모리 구현. 업로드 주소는 app/admin/uploads/[token], 사진 주소는 app/media/work-photos/[...path] (features/works/routes.ts)
 ```
 
+관리자 문의 처리 (docs/adr/0012, 0016)
+```
+GET /admin/inquiries?status=new&page=2 (RSC) → features/inquiry/admin-view parseInquiryListParams
+  → queries.ts listAdminInquiries → requireAdmin → container.inquiry.admin() (요청의 관리자 세션 → RLS)
+    → application listInquiries: countByStatus (head + count) → 페이지 수, 범위 보정 → findPage (received_at desc, id desc, offset/limit)
+  → features/inquiry/ui/AdminInquiryList (필터/페이지는 링크). AdminShell 이 같은 개수로 "새 문의 N건"
+GET /admin/inquiries/[id] → getAdminInquiry (열어도 상태를 바꾸지 않는다) → 허용 동작(domain allowedInquiryActions)만 버튼으로
+상태 버튼: <form action> (숨은 칸 id, action. JS 없이도 POST) → actions.ts changeInquiryStatusAction
+  → requireAdmin → application changeInquiryStatus (12칸 그대로: findById → domain transitionInquiry → save)
+     오래된 화면(다른 탭이 먼저 바꿈)은 InvalidTransition → notice=conflict
+  → revalidatePath("/admin", "layout") → redirect(상세?notice=… 또는 목록?notice=notFound) → 다시 그린 화면이 지금 상태를 보여 준다
+지우기: 확인 <dialog> 안의 폼 → deleteInquiryAction → application deleteInquiry → repo.remove → 목록?notice=deleted
+```
+
 ## 테스트 전략
 | 대상 | 도구 | 방식 |
 |---|---|---|
 | domain | Vitest | 순수 함수 단위 테스트, 상태 전이 표 전체 |
 | application | Vitest | 포트를 인메모리 가짜로 주입 |
-| infrastructure | Vitest | 리포지토리/AuthGateway/PhotoStorage 계약 테스트 (인메모리 구현과 Supabase 구현이 같은 테스트를 통과). Supabase 쪽은 `pnpm test:contract` 로 분리 (클라우드 DB/Storage, 테이블과 버킷 RLS, DB 제약, 공개 가입 차단. Auth 계정과 Storage 파일은 실행마다 임시로 만들고 지운다) |
+| infrastructure | Vitest | 리포지토리/AuthGateway/PhotoStorage 계약 테스트 (인메모리 구현과 Supabase 구현이 같은 테스트를 통과. 문의는 관리자 목록의 정렬/필터/범위/개수/1000건 초과/지우기 포함). Supabase 쪽은 `pnpm test:contract` 로 분리 (클라우드 DB/Storage, 테이블과 버킷 RLS, DB 제약, 공개 가입 차단. Auth 계정과 Storage 파일은 실행마다 임시로 만들고 지운다) |
 | components | Vitest + Testing Library, Storybook | 렌더, 키보드, aria, 변형별 스토리 |
-| 화면 흐름 | Playwright | 문의 제출, 관리자 로그인 → 작업 등록(사진 여러 장, 순서, 대표, 공개/비공개, 지우기, 키보드) |
+| 화면 흐름 | Playwright | 문의 제출, 관리자 로그인 → 작업 등록(사진 여러 장, 순서, 대표, 공개/비공개, 지우기, 키보드), 문의 처리(제출 → 확인 → 완료 → 다시 열기, 필터와 개수, 두 탭 충돌, 지우기, JS 없이) |
 | 시안 재현 | Playwright + pixelmatch | 390/1440/1920 차이율 |
 
 ## 서버/클라이언트 경계
