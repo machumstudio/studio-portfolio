@@ -15,6 +15,7 @@ src/
     ui/                   폼, 관리자 화면 컴포넌트
     actions.ts            "use server". 입력 검증(zod) → 유스케이스 호출 → 결과 매핑
     queries.ts            server-only 읽기 (RSC에서 호출)
+    routes.ts             server-only. app 의 route handler 가 부르는 입구 (인메모리 사진 업로드/읽기)
     schema.ts             폼 스키마(zod). 도메인 입력으로 변환
   application/<context>/  유스케이스와 포트(인터페이스). 외부 SDK 모름
   domain/<context>/       엔티티, 값 객체, 상태 전이, 도메인 에러. 순수 TS
@@ -41,7 +42,7 @@ src/
 
 - `i18n/`(next-intl 설정, 로케일 Link, 날짜/가격 형식 훅)과 `lib/`(글꼴 등)은 ESLint 의 `config` 요소다. ui/sections 가 i18n 을 쓰는 것(`Link`, `useTranslations`, 형식 훅)은 허용이고, domain/application/infrastructure 는 쓰지 않는다
 - `@supabase/*`, `resend` 같은 외부 SDK import는 `infrastructure/` 안에서만 허용
-- `infrastructure/`, `features/*/queries.ts`, `features/*/actions.ts`는 `server-only`
+- `infrastructure/`, `features/*/queries.ts`, `features/*/actions.ts`, `features/*/routes.ts`는 `server-only`. features 에서 `container.ts` 를 쓸 수 있는 곳도 이 세 파일뿐이다
 - `domain/`은 React, Next, zod 등 어떤 라이브러리도 import하지 않는다
 - `application/`도 외부 패키지를 import하지 않는다 (포트와 domain, shared만). 테스트의 `vitest`만 예외
 - `src/proxy.ts` 는 폴더가 아니라 파일 하나라 ESLint 파일 분류 `proxy` 로 둔다. i18n 설정, `infrastructure/admin-auth/proxy-session.ts`(관리자 세션 빠른 확인), `features/admin-auth/return-to.ts`(돌아갈 주소 규칙)만 쓴다
@@ -83,9 +84,23 @@ app/admin/page.tsx (RSC) → features/admin-auth/queries.ts requireAdmin → get
 작업 목록 표시
 ```
 app/[locale]/portfolio/page.tsx (RSC)
-  → features/works/queries.ts getPublishedWorks() (server-only)
-    → infrastructure container의 WorkRepository
+  → features/works/queries.ts getPublishedWorks() ("use cache", cacheTag "works")
+    → infrastructure container의 WorkRepository (secret 키)
   → components/sections/PortfolioGallery 에 props로 전달
+```
+
+관리자 작업 저장과 사진 올리기 (docs/adr/0014, 0015)
+```
+app/admin/works/[id]/page.tsx (RSC) → requireAdmin → features/works/queries.ts getAdminWork
+  → container.works.admin() (요청의 관리자 세션으로 만든 Supabase 클라이언트 → RLS) → features/works/ui/WorkEditor (client, useReducer)
+사진 한 장: WorkPhotos → photo-file checkPhotoFile → shrinkPhoto (캔버스, 긴 변 2400, EXIF 없이 다시 인코딩)
+  → actions.ts preparePhotoUploadAction → application preparePhotoUpload → PhotoStorage.createUpload (서명 업로드 주소)
+  → 브라우저가 Storage 로 직접 PUT (XMLHttpRequest 진행률) → src 를 편집 상태에 추가
+저장: actions.ts saveWorkAction(화면 상태 JSON) → getAdmin (끝났으면 signedOut) → schema(형태만)
+  → application saveWork: validateWorkFields(domain) + slug 중복 + 사진 출처/장수 → createWork → repo.save (save_work 함수, 한 트랜잭션)
+    → cleanUpPhotos (이 작업 폴더의 안 쓰는 파일, 하루 지난 고아 파일. 실패는 경고)
+  → updateTag("works") 로 공개 화면 캐시 비우기 → 칸별 오류 코드 또는 saved
+DATA_STORE=memory: 같은 포트의 인메모리 구현. 업로드 주소는 app/admin/uploads/[token], 사진 주소는 app/media/work-photos/[...path] (features/works/routes.ts)
 ```
 
 ## 테스트 전략
@@ -93,9 +108,9 @@ app/[locale]/portfolio/page.tsx (RSC)
 |---|---|---|
 | domain | Vitest | 순수 함수 단위 테스트, 상태 전이 표 전체 |
 | application | Vitest | 포트를 인메모리 가짜로 주입 |
-| infrastructure | Vitest | 리포지토리/AuthGateway 계약 테스트 (인메모리 구현과 Supabase 구현이 같은 테스트를 통과). Supabase 쪽은 `pnpm test:contract` 로 분리 (클라우드 DB, RLS, DB 제약, 공개 가입 차단. Auth 계정은 실행마다 임시 계정) |
+| infrastructure | Vitest | 리포지토리/AuthGateway/PhotoStorage 계약 테스트 (인메모리 구현과 Supabase 구현이 같은 테스트를 통과). Supabase 쪽은 `pnpm test:contract` 로 분리 (클라우드 DB/Storage, 테이블과 버킷 RLS, DB 제약, 공개 가입 차단. Auth 계정과 Storage 파일은 실행마다 임시로 만들고 지운다) |
 | components | Vitest + Testing Library, Storybook | 렌더, 키보드, aria, 변형별 스토리 |
-| 화면 흐름 | Playwright | 문의 제출, 관리자 로그인 → 작업 등록 |
+| 화면 흐름 | Playwright | 문의 제출, 관리자 로그인 → 작업 등록(사진 여러 장, 순서, 대표, 공개/비공개, 지우기, 키보드) |
 | 시안 재현 | Playwright + pixelmatch | 390/1440/1920 차이율 |
 
 ## 서버/클라이언트 경계

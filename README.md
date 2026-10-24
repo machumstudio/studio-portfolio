@@ -10,7 +10,7 @@ Figma 시안을 PC / 태블릿 / 모바일 반응형 웹과 간단한 관리자�
 - 시안 재현도: TODO (PR마다 `pnpm test:visual` 차이율 기록, 페이지 완성 후 표로 정리)
 
 ## 스택
-Next.js 16 (App Router) · TypeScript strict · Tailwind CSS v4 · next-intl (ko/en) · Supabase (Auth/DB/Storage) · zod (문의 폼은 react-hook-form 없이 서버 액션 + domain 검증, ADR 0009) · TanStack Query · Zustand · Vitest · Playwright · Storybook · GitHub Actions · Vercel
+Next.js 16 (App Router) · TypeScript strict · Tailwind CSS v4 · next-intl (ko/en) · Supabase (Auth/DB/Storage) · zod (문의 폼은 react-hook-form 없이 서버 액션 + domain 검증, ADR 0009) · Vitest · Playwright · Storybook · GitHub Actions · Vercel
 
 ## 폴더 구조와 의존 규칙
 정적인 마케팅 섹션은 props만 받는 단순한 컴포넌트로 두고, 규칙과 외부 의존이 있는 기능(문의, 작업 관리, 관리자 인증)만 레이어를 나눕니다 ([ADR 0003](docs/adr/0003-layered-architecture-ports-and-adapters.md)).
@@ -88,7 +88,7 @@ pnpm db:seed                                                        # works 를 
 |---|---|
 | `pnpm test` | 건드리지 않음 (`*.contract.test.ts` 제외) |
 | `pnpm test:e2e`, `pnpm test:visual` | 건드리지 않음 (Playwright 서버를 `DATA_STORE=memory` 로 띄움) |
-| `pnpm test:contract` | 씀. 리포지토리/인증 계약, publishable 키와 관리자 세션 RLS, 공개 가입·익명 로그인 차단, DB 제약. 테이블을 비우고 채운 뒤 works 시드와 기존 문의를 되돌립니다. Auth 계정은 실행마다 임시 계정을 만들고 지웁니다 (실제 관리자 계정은 쓰지 않음). env 가 없으면 건너뜁니다 |
+| `pnpm test:contract` | 씀. 리포지토리/인증/사진 저장소 계약, publishable 키와 관리자 세션 RLS(테이블, `save_work` 함수, `work-photos` 버킷), 공개 가입·익명 로그인 차단, DB 제약. 테이블을 비우고 채운 뒤 works 시드와 기존 문의를 되돌립니다. Auth 계정과 Storage 파일은 실행마다 임시로 만들고(`contract-<run>/`, `rls-<run>/` 폴더) 지웁니다 (실제 관리자 계정은 쓰지 않음). env 가 없으면 건너뜁니다 |
 
 CI 는 `Contract` 워크플로(`.github/workflows/contract.yml`)가 Actions secrets(`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`)로 계약 테스트를 돌립니다. 같은 DB 를 쓰므로 레포 전체에서 한 번에 하나만 돕니다.
 계약 테스트가 도중에 끊겨 화면에 테스트 작업이 보이면 `pnpm db:seed` 로 되돌립니다.
@@ -117,13 +117,23 @@ secret 키가 브라우저로 가는 파일에 없는지는 `pnpm build && pnpm 
 - `pnpm test`, `pnpm test:e2e`, CI 는 실제로 보내지 않습니다 (단위 테스트는 가짜 fetch, e2e 는 `DATA_STORE=memory`)
 
 ## 관리자 로그인
-`/admin/login` 에서 이메일과 비밀번호로 로그인하면 `/admin`(대시보드 자리)으로 갑니다. 관리자 화면은 한국어만 있고 검색에서 빠집니다 ([ADR 0013](docs/adr/0013-admin-routes-ko-only-and-static-login.md)).
+`/admin/login` 에서 이메일과 비밀번호로 로그인하면 `/admin`(작업 목록)으로 갑니다. 관리자 화면은 한국어만 있고 검색에서 빠집니다 ([ADR 0013](docs/adr/0013-admin-routes-ko-only-and-static-login.md)).
 
 - 관리자 계정: Supabase 대시보드 > Authentication 에서 만들고 `app_metadata.role` 을 `"admin"` 으로 둡니다 (SQL: `update auth.users set raw_app_meta_data = raw_app_meta_data || '{"role":"admin"}' where email = ...`). 공개 가입과 익명 로그인은 꺼 둡니다. `user_metadata` 는 사용자가 고칠 수 있어 보지 않습니다
 - 보호: proxy 가 `/admin` 이하에서 세션 쿠키를 빠르게 보고(서명/만료, 토큰 갱신) 아니면 로그인으로 보냅니다. 화면과 서버 액션은 인증 서버에 세션을 다시 확인합니다. 테이블은 관리자 세션 + RLS `role=admin` 정책으로 씁니다 ([ADR 0012](docs/adr/0012-admin-data-access-via-rls.md))
 - 로그인 실패 문구는 하나입니다 (없는 이메일, 틀린 비밀번호, 관리자 아님을 구분하지 않음). 로그인 뒤 돌아갈 곳은 같은 사이트의 `/admin` 경로만 받습니다
 - env: Supabase URL + publishable 키가 있으면 Supabase Auth, `DATA_STORE=memory` 면 테스트 계정(`src/infrastructure/admin-auth/memory-accounts.ts`, e2e 용), 둘 다 없으면 꺼져서 아무도 로그인하지 못합니다. 테스트 계정은 Vercel production 에서는 켜지지 않습니다
 - 자동 테스트는 실제 관리자 계정을 쓰지 않습니다 (e2e 는 테스트 계정, 계약 테스트는 실행마다 임시 계정을 만들고 지움)
+
+## 관리자 작업 관리
+`/admin` 작업 목록(대표 사진, 제목, 공개 여부, 촬영 연월) → `/admin/works/new`(새 작업), `/admin/works/[id]`(고치기).
+
+- 사진: 끌어다 놓거나 "사진 고르기"로 여러 장. JPG/PNG/WebP, 원본 한 장 50MB, 작업당 30장. 브라우저가 긴 변 2400 으로 줄이고 다시 인코딩해(촬영 위치 같은 EXIF 가 지워짐) Storage 로 직접 올립니다. 비율은 제한하지 않습니다
+- 순서는 끌어서 놓기 또는 앞으로/뒤로 버튼, 대표는 "대표로 지정" 버튼. 첫 사진이 대표로 시작하고, 대표를 빼면 남은 첫 사진이 대표가 됩니다
+- 저장하면 공개 화면(홈, 포트폴리오, 상세)의 캐시를 바로 비웁니다. 지우기는 확인 단계를 거치고, 작업이나 사진을 지우면 Storage 파일도 지웁니다 (저장하지 않고 떠난 새 작업의 사진은 하루 뒤 다음 저장 때 정리)
+- Storage: 공개 버킷 `work-photos` (마이그레이션 `20261025000002`). 쓰기/목록/지우기는 관리자 세션만, 덮어쓰기는 아무도 못 합니다. 공개 버킷이라 **비공개 작업의 사진도 주소를 알면 열립니다** (주소는 추측할 수 없음, [ADR 0014](docs/adr/0014-work-photos-public-bucket.md))
+- 편집 화면은 JS 가 필요합니다. 상태는 서버 컴포넌트 + 서버 액션 + `useReducer` 이고 TanStack Query/Zustand 는 쓰지 않습니다 ([ADR 0015](docs/adr/0015-admin-editor-requires-js.md))
+- `DATA_STORE=memory` 면 작업과 사진이 서버 메모리에 있고(다시 띄우면 시드로 돌아감) 업로드는 `/admin/uploads/[token]`, 사진은 `/media/work-photos/...` 로 같은 흐름을 탑니다
 
 ## 스크립트
 | 명령 | 내용 |
