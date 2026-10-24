@@ -8,6 +8,6 @@ export type InquiryRepository = {
   save(inquiry: Inquiry): Promise<void>;
   /** 없으면 null */
   findById(id: InquiryId): Promise<Inquiry | null>;
-  /** 전체. 순서는 정해져 있지 않다 (19칸 관리자 목록에서 정렬, 필터는 유스케이스가 정한다) */
+  /** 전체. 순서는 정해져 있지 않다 (관리자 목록은 범위로 자르는 AdminInquiryRepository.findPage) */
   findAll(): Promise<readonly Inquiry[]>;
 };
