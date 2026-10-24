@@ -584,5 +584,142 @@
     "signedInAs": "Signed in as {email}.",
     "empty": "Work and inquiry management will appear here.",
     "signOut": "Sign Out"
+  },
+  "AdminWorks": {
+    "metadata": {
+      "list": "Works | Machum Studio Admin",
+      "new": "New work | Machum Studio Admin",
+      "edit": "Edit {title} | Machum Studio Admin"
+    },
+    "list": {
+      "title": "Works",
+      "description": "Published works appear on Home and Portfolio as soon as you save.",
+      "create": "Create a work",
+      "empty": "No works yet. Create one and upload photos.",
+      "deleted": "The work was deleted.",
+      "label": "Work list",
+      "published": "Published",
+      "private": "Private",
+      "photoCount": "{count, plural, one {# photo} other {# photos}}",
+      "edit": "Edit",
+      "editLabel": "Edit {title}",
+      "view": "Public page",
+      "viewLabel": "View {title} on the public site (new tab)"
+    },
+    "editor": {
+      "newTitle": "New work",
+      "editTitle": "Edit work",
+      "back": "Works",
+      "form": "Work details",
+      "basics": "Basics",
+      "titleKo": "Title (Korean)",
+      "titleEn": "Title (English)",
+      "slug": "URL name",
+      "slugHint": "Used in the work page address: /work/{slug}",
+      "slugRule": "Lowercase letters, numbers and hyphens (-) only. Filled in from the English title.",
+      "category": "Category",
+      "categoryPlaceholder": "Choose a category",
+      "date": "Shot in",
+      "dateHint": "e.g. 2024-05",
+      "published": "Publish",
+      "publishedHint": "When on, the work appears on Home and Portfolio as soon as you save. When off, only admins see it.",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Saved.",
+      "created": "The work was created.",
+      "invalid": "{count, plural, one {# field needs} other {# fields need}} attention.",
+      "waitUploads": "Photos are still uploading. Save after they finish.",
+      "preview": "View on public site",
+      "previewLabel": "View on public site (new tab)",
+      "previewHint": "Save it as published to view it on the public site.",
+      "unsaved": "You have unsaved changes.",
+      "delete": "Delete work"
+    },
+    "photos": {
+      "title": "Photos",
+      "description": "Upload several at once. Before upload, photos are resized to 2400px on the long edge and details like location are removed.",
+      "drop": "Drag photos here or",
+      "pick": "Choose photos",
+      "rules": "JPG, PNG, WebP · up to {max}MB each · up to {count} per work",
+      "listLabel": "Photo order",
+      "reorderHint": "Drag, or use the earlier/later buttons, to change the order. Photos are shown from the first.",
+      "position": "#{index}",
+      "photoAlt": "Photo {index}",
+      "cover": "Cover photo",
+      "makeCover": "Make cover",
+      "makeCoverLabel": "Make photo {index} the cover",
+      "moveUp": "Earlier",
+      "moveUpLabel": "Move photo {index} earlier",
+      "moveDown": "Later",
+      "moveDownLabel": "Move photo {index} later",
+      "remove": "Remove",
+      "removeLabel": "Remove photo {index}",
+      "altKo": "Description (Korean)",
+      "altEn": "Description (English)",
+      "altLabel": "Photo {index}",
+      "altHint": "Read aloud by screen readers. Optional.",
+      "uploadsLabel": "Photos being uploaded",
+      "processing": "{name}: resizing",
+      "uploading": "{name}: uploading {percent}%",
+      "failed": "{name}: {reason}",
+      "dismiss": "Dismiss {name}",
+      "announce": {
+        "added": "Photo added. {count, plural, one {# photo} other {# photos}} now.",
+        "moved": "Moved the photo to position {index}.",
+        "cover": "Photo {index} is now the cover.",
+        "removed": "Photo removed. The file is deleted when you save.",
+        "failed": "Could not upload {name}."
+      },
+      "problems": {
+        "unsupportedType": "Only JPG, PNG and WebP photos can be uploaded. Save iPhone HEIC photos as JPG from the share menu first.",
+        "tooLarge": "Each photo can be up to {max}MB.",
+        "tooLargeAfterResize": "This photo is too large even after resizing. Choose another one.",
+        "unreadable": "This photo can't be opened. The file may be damaged or not a photo.",
+        "tooMany": "A work can have up to {count} photos.",
+        "signedOut": "Your session ended. Sign in again in a new tab, then upload again.",
+        "unavailable": "Uploads are unavailable right now. Please try again shortly.",
+        "uploadFailed": "The connection dropped during upload. Please try again.",
+        "malformed": "This upload can't be accepted. Reload the page and try again."
+      }
+    },
+    "deleteDialog": {
+      "title": "Delete this work?",
+      "body": "This deletes ‘{title}’ and its {count, plural, one {# photo} other {# photos}}. This can't be undone.",
+      "confirm": "Delete",
+      "deleting": "Deleting…",
+      "cancel": "Cancel"
+    },
+    "failures": {
+      "signedOut": "Your session ended. Sign in again in a new tab, then save again here. Your changes are still on this page.",
+      "notFound": "This work can't be found. It may have been deleted elsewhere.",
+      "alreadyExists": "This work was already saved. Open it again from the work list.",
+      "unavailable": "Saving is unavailable right now. Please try again shortly.",
+      "malformed": "This can't be saved. Reload the page and try again."
+    },
+    "errors": {
+      "titleKo": {
+        "required": "Enter a Korean title."
+      },
+      "titleEn": {
+        "required": "Enter an English title."
+      },
+      "slug": {
+        "invalid": "Use lowercase letters, numbers and hyphens (-) only. e.g. jeju-wedding",
+        "taken": "Another work already uses this URL name."
+      },
+      "category": {
+        "invalid": "Choose a category."
+      },
+      "date": {
+        "invalid": "Enter the month like 2024-05."
+      },
+      "photos": {
+        "required": "Upload at least one photo.",
+        "cover": "Choose a cover photo.",
+        "tooMany": "A work can have up to {max} photos.",
+        "unknown": "Some photos weren't uploaded to this work. Remove them and upload again.",
+        "invalid": "The photo order is off. Reload the page and try again."
+      }
+    }
   }
 }
