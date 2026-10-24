@@ -44,6 +44,7 @@ export const typeTokens = [
   { name: "prose", className: "text-prose" },
   { name: "package", className: "text-package" },
   { name: "quote", className: "text-quote" },
+  { name: "send", className: "text-send" },
   { name: "tagline", className: "text-tagline" },
   { name: "lead", className: "text-lead" },
   { name: "body", className: "text-body" },
