@@ -67,7 +67,7 @@ export type InquiryError = {
   fields: InquiryFieldErrors;
 };
 
-// 문의는 이 함수로만 만든다. 새 문의는 항상 New
+// 새 문의는 이 함수로만 만든다. 새 문의는 항상 New (저장된 문의는 restoreInquiry)
 export function createInquiry(
   input: InquiryInput,
   { id, receivedAt }: { id: InquiryId; receivedAt: Date },
@@ -100,6 +100,21 @@ export function createInquiry(
     status: { type: "New" },
   });
 }
+
+// 저장소에서 읽은 문의를 되살린다. 칸 검증은 새 문의와 같고, 상태만 저장된 그대로 둔다.
+// 저장소가 상태를 바꿔 끼우려고 createInquiry 결과를 펼쳐 덮지 않게 이 함수로만 복원한다 (docs/adr/0010)
+export const restoreInquiry = (
+  input: InquiryInput,
+  {
+    id,
+    receivedAt,
+    status,
+  }: { id: InquiryId; receivedAt: Date; status: InquiryStatus },
+): Result<Inquiry, InquiryError> =>
+  map(createInquiry(input, { id, receivedAt }), (inquiry) => ({
+    ...inquiry,
+    status,
+  }));
 
 export const transitionInquiry = (
   inquiry: Inquiry,

@@ -4,6 +4,7 @@ import {
   transitionInquiry,
   createInquiry,
   parseInquiryId,
+  restoreInquiry,
   type Inquiry,
   type InquiryId,
   type InquiryInput,
@@ -76,6 +77,34 @@ describe("createInquiry", () => {
   it("틀린 칸 하나만 있으면 그 칸만", () => {
     expect(createInquiry({ ...valid, email: "" }, meta)).toEqual(
       err({ type: "InvalidInquiry", fields: { email: { type: "Required" } } }),
+    );
+  });
+});
+
+describe("restoreInquiry", () => {
+  const changedAt = new Date("2026-10-02T10:00:00Z");
+
+  it.each([
+    { type: "New" } as const,
+    { type: "Read", changedAt } as const,
+    { type: "Done", changedAt } as const,
+  ])("저장된 상태 $type 를 시각과 함께 그대로 둔다", (status) => {
+    expect(restoreInquiry(valid, { ...meta, status })).toEqual(
+      ok({ ...created(), status }),
+    );
+  });
+
+  it("칸 검증은 createInquiry 와 같다 (저장소의 데이터가 규칙을 어기면 에러)", () => {
+    expect(
+      restoreInquiry(
+        { ...valid, email: "not-an-email" },
+        { ...meta, status: { type: "Done", changedAt } },
+      ),
+    ).toEqual(
+      err({
+        type: "InvalidInquiry",
+        fields: { email: { type: "InvalidEmail" } },
+      }),
     );
   });
 });
