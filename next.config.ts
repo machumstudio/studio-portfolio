@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { isIndexable, noindexHeader } from "./src/lib/seo/site";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
@@ -18,6 +19,12 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   images: { remotePatterns: workPhotoPattern },
+  // 운영(VERCEL_ENV=production)이 아닌 배포: 페이지, 사진, sitemap 까지 모든 응답에 noindex 헤더.
+  // 페이지에는 metadata 의 robots 메타 태그도 붙는다 ([locale]/layout.tsx). 빌드 때 정해진다
+  headers: async () =>
+    isIndexable()
+      ? []
+      : [{ source: "/:path*", headers: [{ ...noindexHeader }] }],
   turbopack: {
     rules: {
       "*.css": {
