@@ -8,7 +8,7 @@ Header, Footer, CTA 는 공개 페이지(홈, 소개, 포트폴리오, 서비스
 ## 결정
 - `app/[locale]/(site)/layout.tsx` 에 Header + children + Footer(CTA 포함)를 둔다. 공개 페이지는 이 그룹 아래에 만든다
 - `[locale]/layout.tsx` 는 html/body, 폰트, 메시지 공급만 맡는다
-- 관리자는 나중에 별도 그룹(예: `(admin)`)과 자기 레이아웃을 갖는다. 개발용 화면도 그룹 밖에 둔다
+- 관리자는 나중에 별도 그룹(예: `(admin)`)과 자기 레이아웃을 갖는다. 개발용 화면도 그룹 밖에 둔다 (17칸에서 `[locale]` 밖 `app/admin/` 루트 레이아웃으로 정함, ADR 0013)
 - 라우트 그룹은 URL 에 나타나지 않는다. `/`, `/en` 그대로다
 
 ## 대안
