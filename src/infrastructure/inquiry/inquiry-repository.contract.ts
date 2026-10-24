@@ -37,9 +37,12 @@ export function describeInquiryRepositoryContract(
       expect(await repo.findById(inquiry().id)).toEqual(inquiry());
     });
 
-    it("없는 id 는 null", async () => {
+    it.each([
+      ["형식이 맞는 없는 id", "00000000-0000-4000-8000-0000000000ff"],
+      ["형식이 다른 id (주소에 직접 친 값)", "nope"],
+    ])("%s 는 null", async (_, id) => {
       const repo = await setup(inquiries);
-      expect(await repo.findById("nope" as InquiryId)).toBeNull();
+      expect(await repo.findById(id as InquiryId)).toBeNull();
     });
 
     it("save 한 새 문의는 findById, findAll 로 읽힌다", async () => {
@@ -80,9 +83,10 @@ const inquiry = (
   return result.value;
 };
 
+// id 는 실제 저장소처럼 UUID (Supabase 의 id 칼럼은 uuid).
 // 밀리초까지 있는 시각: 저장소가 시각을 잘라 먹지 않는지 본다 (Postgres timestamptz 는 마이크로초)
 const fresh = inquiry(
-  "contract-fresh",
+  "00000000-0000-4000-8000-00000000c001",
   {
     firstName: "하늘",
     lastName: "김",
@@ -94,7 +98,7 @@ const fresh = inquiry(
   { type: "New" },
 );
 const read = inquiry(
-  "contract-read",
+  "00000000-0000-4000-8000-00000000c002",
   {
     firstName: "Alex",
     lastName: "Morgan",
@@ -105,7 +109,7 @@ const read = inquiry(
   { type: "Read", changedAt: at("2026-10-19T08:00:00.789Z") },
 );
 const done = inquiry(
-  "contract-done",
+  "00000000-0000-4000-8000-00000000c003",
   {
     firstName: "😀 이모지",
     lastName: "박",
