@@ -10,7 +10,7 @@ Figma 시안을 PC / 태블릿 / 모바일 반응형 웹과 간단한 관리자�
 - 시안 재현도: TODO (PR마다 `pnpm test:visual` 차이율 기록, 페이지 완성 후 표로 정리)
 
 ## 스택
-Next.js 16 (App Router) · TypeScript strict · Tailwind CSS v4 · next-intl (ko/en) · Supabase (Auth/DB/Storage) · react-hook-form + zod · TanStack Query · Zustand · Vitest · Playwright · Storybook · GitHub Actions · Vercel
+Next.js 16 (App Router) · TypeScript strict · Tailwind CSS v4 · next-intl (ko/en) · Supabase (Auth/DB/Storage) · zod (문의 폼은 react-hook-form 없이 서버 액션 + domain 검증, ADR 0009) · TanStack Query · Zustand · Vitest · Playwright · Storybook · GitHub Actions · Vercel
 
 ## 폴더 구조와 의존 규칙
 정적인 마케팅 섹션은 props만 받는 단순한 컴포넌트로 두고, 규칙과 외부 의존이 있는 기능(문의, 작업 관리, 관리자 인증)만 레이어를 나눕니다 ([ADR 0003](docs/adr/0003-layered-architecture-ports-and-adapters.md)).

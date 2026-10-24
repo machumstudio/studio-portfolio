@@ -28,17 +28,18 @@ src/
 
 ## 의존 규칙 (ESLint로 강제, CI에서 실패 처리)
 
-| from \ to | shared | domain | application | infrastructure | features | components/ui | components/sections |
-|---|---|---|---|---|---|---|---|
-| shared | - | X | X | X | X | X | X |
-| domain | O | - | X | X | X | X | X |
-| application | O | O | - | X | X | X | X |
-| infrastructure | O | O | O (포트) | - | X | X | X |
-| features | O | O (타입) | O | container만 (actions/queries에서) | - | O | X |
-| components/ui | O | X | X | X | X | - | X |
-| components/sections | O | X | X | X | X | O | - |
-| app | O | O (타입) | X | X | O | O | O |
+| from \ to | shared | domain | application | infrastructure | features | components/ui | components/sections | i18n, lib |
+|---|---|---|---|---|---|---|---|---|
+| shared | - | X | X | X | X | X | X | X |
+| domain | O | - | X | X | X | X | X | X |
+| application | O | O | - | X | X | X | X | X |
+| infrastructure | O | O | O (포트) | - | X | X | X | X |
+| features | O | O (타입) | O | container만 (actions/queries에서) | - | O | X | O |
+| components/ui | O | X | X | X | X | - | X | O |
+| components/sections | O | X | X | X | X | O | - | O |
+| app | O | O (타입) | X | X | O | O | O | O |
 
+- `i18n/`(next-intl 설정, 로케일 Link, 날짜/가격 형식 훅)과 `lib/`(글꼴 등)은 ESLint 의 `config` 요소다. ui/sections 가 i18n 을 쓰는 것(`Link`, `useTranslations`, 형식 훅)은 허용이고, domain/application/infrastructure 는 쓰지 않는다
 - `@supabase/*`, `resend` 같은 외부 SDK import는 `infrastructure/` 안에서만 허용
 - `infrastructure/`, `features/*/queries.ts`, `features/*/actions.ts`는 `server-only`
 - `domain/`은 React, Next, zod 등 어떤 라이브러리도 import하지 않는다
