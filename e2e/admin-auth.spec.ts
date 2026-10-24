@@ -18,10 +18,9 @@ const signIn = async (
   await page.getByRole("button", { name: "로그인" }).click();
 };
 
+// 로그인 뒤 첫 화면(/admin)은 작업 목록 (18칸)
 const dashboard = (page: Page) =>
-  expect(
-    page.getByRole("heading", { level: 1, name: "대시보드" }),
-  ).toBeVisible();
+  expect(page.getByRole("heading", { level: 1, name: "작업" })).toBeVisible();
 
 test.describe("비로그인", () => {
   test("/admin → 로그인 화면 (돌아올 곳이 기본이면 next 없음)", async ({
@@ -135,10 +134,12 @@ test.describe("로그인", () => {
   });
 
   test("next 의 /admin 경로로 돌아간다", async ({ page }) => {
-    await page.goto("/admin/works?draft=1");
+    await page.goto("/admin/works/new?from=list");
     await signIn(page, admin);
-    // 18칸 전이라 화면은 없지만 돌아온 주소는 그대로다
-    await expect(page).toHaveURL("/admin/works?draft=1");
+    await expect(page).toHaveURL("/admin/works/new?from=list");
+    await expect(
+      page.getByRole("heading", { level: 1, name: "새 작업" }),
+    ).toBeVisible();
   });
 
   for (const next of [
@@ -183,14 +184,20 @@ test.describe("JS 끈 상태", () => {
   test.use({ javaScriptEnabled: false });
 
   test("로그인 실패와 성공, 로그아웃이 일반 POST 로 된다", async ({ page }) => {
-    await page.goto("/admin/works");
+    await page.goto("/admin/works/new");
     await signIn(page, { email: admin.email, password: "wrong-password" });
     await expect(page.getByRole("status")).toHaveText(failure);
     await expect(page.getByLabel("이메일")).toHaveValue(admin.email);
     await expect(page.getByLabel("비밀번호")).toBeFocused();
 
     await signIn(page, admin);
-    await expect(page).toHaveURL("/admin/works");
+    await expect(page).toHaveURL("/admin/works/new");
+    // 편집 화면은 JS 를 전제로 한다 (docs/adr/0015). 꺼져 있으면 noscript 안내가 보인다.
+    // Playwright 의 JS 끄기는 HTML 파서의 scripting 을 끄지 않아 noscript 를 그리지 않으므로 마크업으로 확인한다
+    await expect(page.locator("noscript")).toHaveCount(1);
+    expect(await page.locator("noscript").textContent()).toContain(
+      "자바스크립트가 필요합니다",
+    );
 
     await page.goto("/admin");
     await dashboard(page);

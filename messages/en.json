@@ -578,11 +578,8 @@
     }
   },
   "AdminDashboard": {
-    "metadata": "Dashboard | Machum Studio Admin",
     "label": "Admin",
-    "title": "Dashboard",
     "signedInAs": "Signed in as {email}.",
-    "empty": "Work and inquiry management will appear here.",
     "signOut": "Sign Out"
   },
   "AdminWorks": {
@@ -633,7 +630,8 @@
       "previewLabel": "View on public site (new tab)",
       "previewHint": "Save it as published to view it on the public site.",
       "unsaved": "You have unsaved changes.",
-      "delete": "Delete work"
+      "delete": "Delete work",
+      "noscript": "This page needs JavaScript to resize and upload photos. Turn on JavaScript in your browser settings."
     },
     "photos": {
       "title": "Photos",
@@ -720,6 +718,11 @@
         "unknown": "Some photos weren't uploaded to this work. Remove them and upload again.",
         "invalid": "The photo order is off. Reload the page and try again."
       }
+    },
+    "notFound": {
+      "metadata": "Work not found | Machum Studio Admin",
+      "title": "Work not found",
+      "body": "It was deleted or the address is wrong. Choose it again from the work list."
     }
   }
 }
