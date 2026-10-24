@@ -101,6 +101,12 @@ try {
             median(samples.map((l) => score(l, id))),
           ]),
         ),
+        // 중앙값이 숨기는 흔들림: 회차별 성능 점수와 FCP 범위
+        performanceRuns: samples.map((l) => score(l, "performance")),
+        fcpRange: [
+          Math.min(...samples.map((l) => metric(l, "first-contentful-paint"))),
+          Math.max(...samples.map((l) => metric(l, "first-contentful-paint"))),
+        ],
         lcp: median(samples.map((l) => metric(l, "largest-contentful-paint"))),
         cls: median(samples.map((l) => metric(l, "cumulative-layout-shift"))),
         tbt: median(samples.map((l) => metric(l, "total-blocking-time"))),
@@ -121,16 +127,21 @@ try {
 }
 
 console.log(
-  `측정: ${new Date().toISOString().slice(0, 10)}, Lighthouse ${environment.lighthouse}, Chrome ${environment.chrome}, ` +
+  `측정: ${new Date().toLocaleDateString("sv-SE")}, Lighthouse ${environment.lighthouse}, Chrome ${environment.chrome}, ` +
     `CPU benchmarkIndex ${Math.round(environment.benchmarkIndex)}, 페이지마다 ${runs}회 중앙값 (첫 회 버림), ${values.base}\n`,
 );
 const seconds = (ms) => `${(ms / 1000).toFixed(1)}s`;
 const lines = [
-  `| 화면 | 페이지 | 성능 | 접근성 | 권장사항 | SEO | LCP | CLS | TBT | FCP |`,
-  `|---|---|---|---|---|---|---|---|---|---|`,
+  `| 화면 | 페이지 | 성능 | 성능 회차 | 접근성 | 권장사항 | SEO | LCP | CLS | TBT | FCP | FCP 범위 |`,
+  `|---|---|---|---|---|---|---|---|---|---|---|---|`,
   ...results.map(
     (r) =>
-      `| ${r.form} | ${r.page} \`${r.path}\` | ${categories.map((id) => r.scores[id]).join(" | ")} | ${seconds(r.lcp)} | ${r.cls.toFixed(3)} | ${Math.round(r.tbt)}ms | ${seconds(r.fcp)} |`,
+      `| ${r.form} | ${r.page} \`${r.path}\` | ${r.scores.performance} | ${r.performanceRuns.join("/")} | ${categories
+        .slice(1)
+        .map((id) => r.scores[id])
+        .join(
+          " | ",
+        )} | ${seconds(r.lcp)} | ${r.cls.toFixed(3)} | ${Math.round(r.tbt)}ms | ${seconds(r.fcp)} | ${r.fcpRange.map(seconds).join("~")} |`,
   ),
 ];
 console.log(lines.join("\n"));
