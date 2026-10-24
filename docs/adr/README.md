@@ -12,5 +12,6 @@
 | [0009](0009-inquiry-validation-single-source.md) | 문의 입력 검증은 domain 한 곳에서만 하고, 폼은 서버 액션 결과로 오류를 그린다 | 채택 |
 | [0010](0010-restore-from-storage-via-domain.md) | 저장된 행은 domain 복원 생성자로 되살리고, 인프라 매퍼는 칼럼 변환만 한다 | 채택 |
 | [0011](0011-xl-breakpoint-at-design-laptop-width.md) | xl 브레이크포인트를 시안 노트북 프레임 폭 1440 으로 둔다 | 채택 |
+| [0012](0012-admin-data-access-via-rls.md) | 관리자 화면은 로그인 세션(authenticated) + RLS `role=admin` 정책으로 테이블을 쓴다 | 채택 |
 
 형식: 배경 / 결정 / 대안 / 결과(트레이드오프). 바꾸면 새 ADR을 쓰고 이전 것을 "대체됨"으로 표시한다.

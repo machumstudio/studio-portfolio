@@ -67,7 +67,10 @@ export type Database = {
       inquiries: Table<InquiryRow, InquiryRow>;
     };
     Views: Record<never, never>;
-    Functions: Record<never, never>;
+    Functions: {
+      // 20261024000003_admin_access.sql. RLS 정책 안에서 쓴다 (앱은 부르지 않는다)
+      is_admin: { Args: Record<never, never>; Returns: boolean };
+    };
     Enums: Record<never, never>;
     CompositeTypes: Record<never, never>;
   };
