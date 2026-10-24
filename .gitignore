@@ -56,3 +56,6 @@ storybook-static
 /storybook-static/
 *storybook.log
 .vscode/
+
+# supabase CLI 캐시
+/supabase/.temp/
