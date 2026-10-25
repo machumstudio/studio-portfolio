@@ -7,6 +7,7 @@ import { SkipLink } from "@/components/ui/SkipLink";
 import { signOutAction } from "@/features/admin-auth/actions";
 import { adminInquiriesPath } from "@/features/inquiry/admin-view";
 import { countAdminInquiries } from "@/features/inquiry/queries";
+import { AdminMain } from "./admin-main";
 
 export type AdminSection = "works" | "inquiries";
 
@@ -99,10 +100,7 @@ export async function AdminShell({
           </button>
         </form>
       </header>
-      <main
-        id="main"
-        className="mx-auto flex w-full max-w-6xl flex-col page-x pt-10 pb-20 lg:pt-15"
-      >
+      <AdminMain className="mx-auto flex w-full max-w-6xl flex-col page-x pt-10 pb-20 lg:pt-15">
         {needsScript && (
           <noscript>
             <p className="mb-10 rounded-10 border border-purple-70 px-5 py-4 text-body text-grey-90">
@@ -111,7 +109,7 @@ export async function AdminShell({
           </noscript>
         )}
         {children}
-      </main>
+      </AdminMain>
     </div>
   );
 }
