@@ -245,8 +245,9 @@ test.describe("문의 처리 흐름", () => {
     await expect(notice(page)).toHaveText("문의를 지웠습니다.");
     await expect(card(page, inquiry)).toHaveCount(0);
 
-    // 동적 경로(◐)는 응답을 먼저 보내기 시작해서 상태 코드는 200 이다. 화면과 제목으로 본다 (관리자 화면은 검색 제외)
-    await page.goto(url);
+    // 주소로 다시 열면 상태 코드도 404 (proxy 가 있는지 확인, docs/adr/0019). 주소는 그대로다
+    expect((await page.goto(url))?.status()).toBe(404);
+    await expect(page).toHaveURL(url);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(
       "문의를 찾을 수 없습니다",
     );
@@ -283,6 +284,12 @@ test("관리자 문의 화면은 로그인이 필요하고 검색에서 빠진�
   await page.goto("/admin/inquiries?status=done&page=2");
   await expect(page).toHaveURL(
     `/admin/login?next=${encodeURIComponent("/admin/inquiries?status=done&page=2")}`,
+  );
+  // 로그인 전에는 문의가 있는지 알려 주지 않는다: 없는 문의 주소도 로그인 화면으로
+  const missing = "/admin/inquiries/00000000-0000-4000-8000-000000000000";
+  await page.goto(missing);
+  await expect(page).toHaveURL(
+    `/admin/login?next=${encodeURIComponent(missing)}`,
   );
   const response = await page.request.get("/admin/inquiries", {
     maxRedirects: 0,

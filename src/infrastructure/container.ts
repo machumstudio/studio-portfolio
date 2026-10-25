@@ -7,6 +7,7 @@ import type { PhotoStorage } from "@/application/works/photo-storage";
 import { createInMemoryAuth } from "./admin-auth/in-memory-auth";
 import { memoryAccounts } from "./admin-auth/memory-accounts";
 import { disabledAuthGateway, readAdminAuthMode } from "./admin-auth/mode";
+import type { CookieJar } from "./admin-auth/cookie-jar";
 import { nextCookieJar } from "./admin-auth/next-cookie-jar";
 import {
   createSupabaseAuthGateway,
@@ -27,7 +28,7 @@ import { seedWorks } from "./works/seed";
 import { createSupabasePhotoStorage } from "./works/supabase-photo-storage";
 import { createSupabaseWorkRepository } from "./works/supabase-work-repository";
 
-// 포트 구현 조립. features 의 actions.ts / queries.ts 만 이 파일을 쓴다.
+// 포트 구현 조립. features 의 actions.ts / queries.ts / routes.ts / proxy-check.ts 만 이 파일을 쓴다.
 // 저장소: Supabase env(URL + secret 키)가 있으면 Supabase, 없거나 DATA_STORE=memory 면 인메모리.
 // 알림: Resend env(키 + 받는 주소)가 있으면 이메일, 없거나 DATA_STORE=memory 면 서버 로그.
 // 관리자 인증: Supabase Auth, DATA_STORE=memory 면 테스트 계정, 둘 다 아니면 꺼짐 (admin-auth/mode.ts).
@@ -93,12 +94,13 @@ export type AdminWorks = { repo: AdminWorkRepository; storage: PhotoStorage };
 
 // 요청마다 그 요청의 관리자 세션에 묶인 작업 저장소와 사진 저장소. secret 키는 쓰지 않는다.
 // 공개 읽기와 같은 저장소를 봐야 해서, 공개 작업이 Supabase 일 때만 Supabase Auth 세션으로 쓴다.
-// 호출하는 쪽(features)은 먼저 requireAdmin 으로 관리자를 확인한다
-async function openAdminWorks(): Promise<AdminWorks> {
+// 호출하는 쪽(features)은 먼저 requireAdmin 으로 관리자를 확인한다.
+// jar: 기본은 서버 컴포넌트/액션의 요청 쿠키. proxy 는 자기 요청 쿠키를 넘긴다
+async function openAdminWorks(jar?: CookieJar): Promise<AdminWorks> {
   if (supabaseEnv && authMode.kind === "supabase") {
     const client = createSupabaseCookieClient(
       authMode.env,
-      await nextCookieJar(),
+      jar ?? (await nextCookieJar()),
     );
     return {
       repo: createSupabaseWorkRepository(client),
@@ -121,10 +123,12 @@ const memoryInquiries = supabase ? null : inquiryRepository;
 // 요청마다 그 요청의 관리자 세션에 묶인 문의 저장소 (목록, 상태 변경, 지우기). secret 키는 쓰지 않는다.
 // 작업과 같은 조건: 공개 문의 저장이 Supabase 일 때만 Supabase Auth 세션으로 쓴다.
 // 호출하는 쪽(features)은 먼저 requireAdmin 으로 관리자를 확인한다
-async function openAdminInquiries(): Promise<AdminInquiryRepository> {
+async function openAdminInquiries(
+  jar?: CookieJar,
+): Promise<AdminInquiryRepository> {
   if (supabaseEnv && authMode.kind === "supabase")
     return createSupabaseInquiryRepository(
-      createSupabaseCookieClient(authMode.env, await nextCookieJar()),
+      createSupabaseCookieClient(authMode.env, jar ?? (await nextCookieJar())),
     );
   if (authMode.kind === "memory" && memoryInquiries) return memoryInquiries;
   throw new Error("[container] 관리자 문의 저장소가 꺼져 있다");
@@ -152,3 +156,5 @@ export const container = {
     memoryPhotos,
   },
 };
+
+export type { CookieJar };

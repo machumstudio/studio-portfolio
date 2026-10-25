@@ -240,6 +240,12 @@ test("작업 만들기 → 사진 여러 장 → 순서 변경 → 대표 지정
   );
   expect((await page.goto(`/work/${work.slug}`))?.status()).toBe(404);
   expect(await sitemapLists(page, work.slug)).toBe(false);
+  // 지운 작업의 편집 주소도 상태 코드 404 (proxy 가 있는지 확인, docs/adr/0019)
+  expect((await page.goto(editUrl))?.status()).toBe(404);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "작업을 찾을 수 없습니다",
+  );
+  await expect(page).toHaveTitle("작업을 찾을 수 없음 | Machum Studio 관리자");
   for (const src of uploaded)
     expect((await page.request.get(src)).status(), src).toBe(404);
 });
