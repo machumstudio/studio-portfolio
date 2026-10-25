@@ -76,7 +76,7 @@ export function AdminInquiryDetail({
       <div className="flex flex-col gap-7.5 lg:flex-row lg:items-start">
         <section
           aria-labelledby="inquiry-message"
-          className="flex min-w-0 flex-col gap-4 rounded-10 border border-dark-12 bg-dark-08 p-5 lg:flex-2 lg:p-7.5"
+          className="flex min-w-0 flex-col gap-4 rounded-10 border border-dark-12 bg-dark-06 p-5 lg:flex-2 lg:p-7.5"
         >
           <h2 id="inquiry-message" className="text-h4 text-white">
             {t("detail.message")}
@@ -89,7 +89,7 @@ export function AdminInquiryDetail({
         <div className="flex flex-col gap-7.5 lg:flex-1">
           <section
             aria-labelledby="inquiry-contact"
-            className="flex flex-col gap-4 rounded-10 border border-dark-12 bg-dark-08 p-5"
+            className="flex flex-col gap-4 rounded-10 border border-dark-12 bg-dark-06 p-5"
           >
             <h2 id="inquiry-contact" className="text-h4 text-white">
               {t("detail.contact")}
@@ -120,7 +120,7 @@ export function AdminInquiryDetail({
 
           <section
             aria-labelledby="inquiry-handling"
-            className="flex flex-col gap-4 rounded-10 border border-dark-12 bg-dark-08 p-5"
+            className="flex flex-col gap-4 rounded-10 border border-dark-12 bg-dark-06 p-5"
           >
             <h2 id="inquiry-handling" className="text-h4 text-white">
               {t("detail.handling")}

@@ -57,7 +57,7 @@ export function AdminWorkList({ works, notice }: AdminWorkListProps) {
           {works.map((work) => (
             <li
               key={work.id}
-              className="grid grid-cols-3 items-center gap-4 rounded-10 border border-dark-12 bg-dark-08 p-4 md:grid-cols-6 lg:p-5"
+              className="grid grid-cols-3 items-center gap-4 rounded-10 border border-dark-12 bg-dark-06 p-4 md:grid-cols-6 lg:p-5"
             >
               <div className="relative aspect-4/3 overflow-hidden rounded-lg bg-dark-15">
                 <Image
