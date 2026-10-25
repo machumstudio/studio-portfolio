@@ -44,10 +44,22 @@ Figma 시안을 PC / 태블릿 / 모바일 반응형 웹과 간단한 관리자�
 | 서비스 `/services` | 98 (97~99) | 100 | 100 | 100 | 100 |
 | 문의 `/contact` | 98 | 100 | 100 | 100 | 100 |
 
+이 표는 개발 PC(Apple M5)에서 Lighthouse CLI(`pnpm lighthouse`)로 운영 주소를 잰 값입니다. 의뢰인이 직접 재현할 수 있는 기준은 아래 PageSpeed Insights 입니다.
+
 - 성능은 3회 중앙값(괄호는 회차별 최소~최대, 세 회차가 같으면 생략). 접근성/권장사항/SEO 는 모바일·데스크톱 같음. 페이지마다 첫 회(이미지 최적화 캐시가 처음 만들어지는 회차)는 버림
 - 측정 조건: 2026-10-25, 운영 주소(Vercel Hobby, CDN 엣지 서울 `icn1`, 운영 DB 는 페이지 읽기만), Lighthouse 13.5.0, Playwright Chromium, Apple M5. 모바일은 Lighthouse 기본(느린 4G·CPU 4배 감속 시뮬레이션), 데스크톱은 desktop 설정
 - 로컬 운영 빌드에서는 한글 글꼴 Pretendard 조각이 시뮬레이션에서 첫 화면 앞에 끼는 회차가 있어 모바일 성능이 78~97(회차별 68~99)로 흔들렸습니다 ([ADR 0017](docs/adr/0017-keep-pretendard-and-its-cost.md)). 운영 주소에서는 그런 회차가 없었습니다 (FCP 1.1s~1.6s). 이유는 확인하지 않았고, 한 번 잰 결과입니다
 - 전체 표(LCP/CLS/TBT/FCP), 로컬 값과의 비교, 다시 재는 방법: [docs/performance.md](docs/performance.md)
+
+### PageSpeed Insights (구글 서버, 모바일, 2026-10-25)
+| 페이지 | 모바일 성능 | 접근성 | 권장사항 | SEO |
+|---|---|---|---|---|
+| 홈 `/` | 78 (81/78/78 중앙값) | 100 | 100 | 100 |
+| 포트폴리오 `/portfolio` | 81 (1회) | 100 | 100 | 100 |
+
+- Lighthouse 13.5.0. 실사용자 데이터(CrUX)는 없음
+- 의뢰인이 직접 재현할 수 있는 기준은 이 값이다: https://pagespeed.web.dev 에 운영 주소를 넣는다
+- 위 CLI 표(97~99)보다 낮은 것은 측정 위치와 기기 차이로 보인다 (원인 미확인)
 
 ## 시안 재현도
 `pnpm test:visual`: Playwright 전체 페이지 스크린샷을 Figma 시안 PNG 와 픽셀 비교한 차이율입니다 (낮을수록 시안과 같음, 사진 영역은 양쪽 모두 가리고 비교, [ADR 0004](docs/adr/0004-visual-regression-against-figma.md)). 2026-10-25, 22칸.
