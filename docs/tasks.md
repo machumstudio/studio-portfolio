@@ -28,7 +28,7 @@
 | 20 | SEO/성능 | metadata/OG, sitemap, robots, 301 예시, 이미지 최적화, Lighthouse |
 | 21 | 품질 | 접근성 점검, E2E(문의 제출, 관리자 로그인 → 작업 등록) |
 | 22 | 배포 | Vercel, README(스크린샷, Lighthouse 표, 시안 재현도) + docs/ops-manual.md |
-| 23 | 케이스 스터디 | 요구사항 → 구현 매핑 → 수치 → URL (docs/requirements.md 기반) |
+| 23 | 케이스 스터디 ✅ | 요구사항 → 구현 매핑 → 수치 → URL (docs/requirements.md 기반) |
 
 ## 02칸 프롬프트 (Claude Code에 붙여 넣기)
 ```
