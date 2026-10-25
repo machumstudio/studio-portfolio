@@ -6,7 +6,7 @@ Figma 시안을 PC / 태블릿 / 모바일 반응형 웹과 간단한 관리자�
 가상의 사진 스튜디오 "Machum Studio" 사이트를 시안 그대로, 빠르게, 운영할 수 있게 만드는 과정을 이 레포의 커밋 순서대로 남깁니다.
 
 - 라이브: TODO (22칸 배포 후)
-- Lighthouse (20칸 로컬 운영 빌드, 2026-10-25): 데스크톱 성능 98~100, 모바일 성능 중앙값 78~97(회차별 68~99, 한글 글꼴 Pretendard 때문에 흔들림, [ADR 0017](docs/adr/0017-keep-pretendard-and-its-cost.md)), 접근성 96, 권장사항/SEO 100. 표와 측정 조건은 [docs/performance.md](docs/performance.md) (README 표는 22칸 배포 후)
+- Lighthouse (20칸 로컬 운영 빌드, 2026-10-25): 데스크톱 성능 98~100, 모바일 성능 중앙값 78~97(회차별 68~99, 한글 글꼴 Pretendard 때문에 흔들림, [ADR 0017](docs/adr/0017-keep-pretendard-and-its-cost.md)), 접근성 100(21칸, 20칸 96 에서 색 대비를 고침, [docs/accessibility.md](docs/accessibility.md)), 권장사항/SEO 100. 표와 측정 조건은 [docs/performance.md](docs/performance.md) (README 표는 22칸 배포 후)
 - 시안 재현도: TODO (PR마다 `pnpm test:visual` 차이율 기록, 페이지 완성 후 표로 정리)
 
 ## 스택

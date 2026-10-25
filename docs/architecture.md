@@ -137,11 +137,12 @@ next.config redirects → lib/seo/legacy-redirects toNextRedirects (예전 주�
 | infrastructure | Vitest | 리포지토리/AuthGateway/PhotoStorage 계약 테스트 (인메모리 구현과 Supabase 구현이 같은 테스트를 통과. 문의는 관리자 목록의 정렬/필터/범위/개수/1000건 초과/지우기 포함). Supabase 쪽은 `pnpm test:contract` 로 분리 (클라우드 DB/Storage, 테이블과 버킷 RLS, DB 제약, 공개 가입 차단. Auth 계정과 Storage 파일은 실행마다 임시로 만들고 지운다) |
 | components | Vitest + Testing Library, Storybook | 렌더, 키보드, aria, 변형별 스토리 |
 | 검색 노출 | Vitest, Playwright | 태그/sitemap/robots/301 규칙을 만드는 함수 단위 테스트(301 고리 검사 포함), e2e 로 빌드한 서버의 실제 태그, sitemap, robots, 301 상태와 Location, noindex 헤더 |
-| 화면 흐름 | Playwright | 문의 제출, 관리자 로그인 → 작업 등록(사진 여러 장, 순서, 대표, 공개/비공개, 지우기, 키보드), 문의 처리(제출 → 확인 → 완료 → 다시 열기, 필터와 개수, 두 탭 충돌, 지우기, JS 없이) |
+| 화면 흐름 | Playwright (CI e2e 잡) | 문의 제출, 관리자 로그인 → 작업 등록(사진 여러 장, 순서, 대표, 공개/비공개, 지우기, 키보드), 문의 처리(제출 → 확인 → 완료 → 다시 열기, 필터와 개수, 두 탭 충돌, 지우기, JS 없이). 납품 확인용 두 흐름은 `@delivery` (`pnpm test:delivery`) |
+| 접근성 | Playwright + axe | 공개 ko/en, 관리자 화면과 열린/오류 상태에서 axe 위반 0. 건너뛰기, 포커스 표시, 움직임 멈춤, 320/640px 재배치 (docs/accessibility.md 점검표) |
 | 시안 재현 | Playwright + pixelmatch | 390/1440/1920 차이율 |
 
 ## 서버/클라이언트 경계
-- 기본은 Server Component. 인터랙션이 필요한 말단만 `"use client"` (아코디언, 슬라이더, 폼, 라이트박스, 모바일 메뉴)
+- 기본은 Server Component. 인터랙션이 필요한 말단만 `"use client"` (아코디언, 슬라이더, 폼, 라이트박스, 모바일 메뉴, 띠배너 멈춤)
 - 클라이언트 컴포넌트는 `features/*/ui`나 `components/ui`에만 둔다
 
 ## 작업 방식
