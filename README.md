@@ -2,12 +2,14 @@
 
 [![CI](https://github.com/machumstudio/studio-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/machumstudio/studio-portfolio/actions/workflows/ci.yml)
 
+> **케이스 스터디: [docs/case-study.md](docs/case-study.md)** (요구사항 → 구현 매핑 → 결과 수치 → 라이브 URL). 직접 기획한 데모이고 실제 의뢰인 작업이 아닙니다.
+
 Figma 시안을 PC / 태블릿 / 모바일 반응형 웹과 간단한 관리자로 구현하는 포트폴리오 데모입니다.
 가상의 사진 스튜디오 "Machum Studio" 사이트를 시안 그대로, 빠르게, 운영할 수 있게 만드는 과정을 이 레포의 커밋 순서대로 남깁니다.
 
 - **라이브: https://machum-studio.vercel.app** (영어 `/en`, 관리자 `/admin/login`)
 - 운영 매뉴얼: [docs/ops-manual.md](docs/ops-manual.md) (운영자용 관리자 사용법, 서비스 한도, 개발자 인수인계)
-- 요구사항 → 구현 매핑, 케이스 스터디: TODO (23칸, [docs/requirements.md](docs/requirements.md) 기반)
+- 요구사항 → 구현 매핑, 결과 수치: [docs/case-study.md](docs/case-study.md) (위시켓 공고 요구사항 [docs/requirements.md](docs/requirements.md) 기반)
 
 ## 화면
 | 홈 | 포트폴리오 |
