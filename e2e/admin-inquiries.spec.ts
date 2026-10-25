@@ -91,97 +91,102 @@ test.describe("문의 처리 흐름", () => {
     );
   });
 
-  test("제출 → 목록에 새 문의 → 상세(열어도 그대로) → 확인 → 완료 → 다시 열기, 필터와 개수가 따라온다", async ({
-    page,
-  }) => {
-    const inquiry = await submitInquiry(page);
-    await signIn(page, "/admin/inquiries");
-    await expect(page).toHaveTitle("문의 | Machum Studio 관리자");
-    await expect(
-      page
-        .getByRole("navigation", { name: "관리자 메뉴" })
-        .locator("[aria-current=page]"),
-    ).toHaveText(/^문의/);
+  // 납품 확인용 흐름 ① (pnpm test:delivery): "문의 누락 없이". 방문자가 보낸 문의가 관리자 목록에 새 문의로 오고, 처리 상태가 남는다
+  test(
+    "납품 확인 ① 방문자 문의 제출 → 관리자 로그인 → 목록에 새 문의 → 상세(열어도 그대로) → 확인 → 완료 → 다시 열기, 필터와 개수가 따라온다",
+    {
+      tag: "@delivery",
+    },
+    async ({ page }) => {
+      const inquiry = await submitInquiry(page);
+      await signIn(page, "/admin/inquiries");
+      await expect(page).toHaveTitle("문의 | Machum Studio 관리자");
+      await expect(
+        page
+          .getByRole("navigation", { name: "관리자 메뉴" })
+          .locator("[aria-current=page]"),
+      ).toHaveText(/^문의/);
 
-    // 목록: 상태/이메일/메시지 앞부분(한 줄로)/받은 시각. 순서는 다른 테스트가 문의를 넣어 바뀌므로 저장소 계약 테스트에서 본다
-    const mine = card(page, inquiry);
-    await expect(mine).toContainText("새 문의");
-    await expect(mine).toContainText(inquiry.email);
-    await expect(mine).toContainText(
-      "가족사진 촬영 문의드립니다. - 4명 - 11월 주말",
-    );
-    await expect(mine.locator("time")).toHaveText(
-      /\d{4}\. \d{1,2}\. \d{1,2}\./,
-    );
-    await expectNewCountsAgree(page);
+      // 목록: 상태/이메일/메시지 앞부분(한 줄로)/받은 시각. 순서는 다른 테스트가 문의를 넣어 바뀌므로 저장소 계약 테스트에서 본다
+      const mine = card(page, inquiry);
+      await expect(mine).toContainText("새 문의");
+      await expect(mine).toContainText(inquiry.email);
+      await expect(mine).toContainText(
+        "가족사진 촬영 문의드립니다. - 4명 - 11월 주말",
+      );
+      await expect(mine.locator("time")).toHaveText(
+        /\d{4}\. \d{1,2}\. \d{1,2}\./,
+      );
+      await expectNewCountsAgree(page);
 
-    // 상세: 제목에 이름이 없고, 열어도 자동으로 확인 처리하지 않는다
-    const detailUrl = await openDetail(page, inquiry);
-    await expect(page).toHaveTitle("문의 보기 | Machum Studio 관리자");
-    await page.reload();
-    await expect(statusBadge(page)).toHaveText("새 문의");
-    await expect(
-      handling(page).getByRole("button", { name: "확인으로 바꾸기" }),
-    ).toBeVisible();
-    expect(
+      // 상세: 제목에 이름이 없고, 열어도 자동으로 확인 처리하지 않는다
+      const detailUrl = await openDetail(page, inquiry);
+      await expect(page).toHaveTitle("문의 보기 | Machum Studio 관리자");
+      await page.reload();
+      await expect(statusBadge(page)).toHaveText("새 문의");
+      await expect(
+        handling(page).getByRole("button", { name: "확인으로 바꾸기" }),
+      ).toBeVisible();
+      expect(
+        await page
+          .getByRole("region", { name: "메시지" })
+          .locator("p")
+          .textContent(),
+      ).toBe(inquiry.message);
+      await expect(
+        page.getByRole("link", { name: /메일로 답장/ }),
+      ).toHaveAttribute(
+        "href",
+        `mailto:${inquiry.email}?subject=${encodeURIComponent("[Machum Studio] 문의 주셔서 감사합니다")}`,
+      );
+      await expect(page.getByText("남기지 않음")).toBeVisible();
+
+      // 확인 → 완료 → 다시 열기. 지금 상태에서 허용된 버튼 하나만 보인다
+      for (const [button, done, next, changedLabel] of [
+        [
+          "확인으로 바꾸기",
+          "‘확인’으로 바꿨습니다.",
+          "완료로 바꾸기",
+          "확인한 시각",
+        ],
+        ["완료로 바꾸기", "‘완료’로 바꿨습니다.", "다시 열기", "완료한 시각"],
+        [
+          "다시 열기",
+          "다시 열어 ‘확인’으로 바꿨습니다.",
+          "완료로 바꾸기",
+          "확인한 시각",
+        ],
+      ] as const) {
+        await handling(page).getByRole("button", { name: button }).click();
+        await expect(notice(page)).toHaveText(done);
+        await expect(handling(page).getByRole("button")).toHaveText([next]);
+        await expect(handling(page).getByText(changedLabel)).toBeVisible();
+        // 결과 알림은 주소(?notice=)로 와서, 보여 준 뒤 주소에서 지운다 (docs/adr/0020)
+        await expect(page).toHaveURL(detailUrl);
+      }
+      // 새로 고치면 지난 결과 알림은 다시 나오지 않는다
+      await page.reload();
+      await expect(statusBadge(page)).toHaveText("확인");
+      await expect(notice(page)).toHaveCount(0);
+
+      // 목록: 내 문의는 "확인" 필터에만 있다. 메뉴의 새 문의 수도 같은 화면의 필터와 같다
       await page
-        .getByRole("region", { name: "메시지" })
-        .locator("p")
-        .textContent(),
-    ).toBe(inquiry.message);
-    await expect(
-      page.getByRole("link", { name: /메일로 답장/ }),
-    ).toHaveAttribute(
-      "href",
-      `mailto:${inquiry.email}?subject=${encodeURIComponent("[Machum Studio] 문의 주셔서 감사합니다")}`,
-    );
-    await expect(page.getByText("남기지 않음")).toBeVisible();
-
-    // 확인 → 완료 → 다시 열기. 지금 상태에서 허용된 버튼 하나만 보인다
-    for (const [button, done, next, changedLabel] of [
-      [
-        "확인으로 바꾸기",
-        "‘확인’으로 바꿨습니다.",
-        "완료로 바꾸기",
-        "확인한 시각",
-      ],
-      ["완료로 바꾸기", "‘완료’로 바꿨습니다.", "다시 열기", "완료한 시각"],
-      [
-        "다시 열기",
-        "다시 열어 ‘확인’으로 바꿨습니다.",
-        "완료로 바꾸기",
-        "확인한 시각",
-      ],
-    ] as const) {
-      await handling(page).getByRole("button", { name: button }).click();
-      await expect(notice(page)).toHaveText(done);
-      await expect(handling(page).getByRole("button")).toHaveText([next]);
-      await expect(handling(page).getByText(changedLabel)).toBeVisible();
-      // 결과 알림은 주소(?notice=)로 와서, 보여 준 뒤 주소에서 지운다 (docs/adr/0020)
-      await expect(page).toHaveURL(detailUrl);
-    }
-    // 새로 고치면 지난 결과 알림은 다시 나오지 않는다
-    await page.reload();
-    await expect(statusBadge(page)).toHaveText("확인");
-    await expect(notice(page)).toHaveCount(0);
-
-    // 목록: 내 문의는 "확인" 필터에만 있다. 메뉴의 새 문의 수도 같은 화면의 필터와 같다
-    await page
-      .getByRole("navigation", { name: "관리자 메뉴" })
-      .getByRole("link", { name: /^문의/ })
-      .click();
-    await expect(mine).toContainText("확인");
-    await expectNewCountsAgree(page);
-    await filterBy(page, /^새 문의/);
-    await expect(page).toHaveURL("/admin/inquiries?status=new");
-    await expect(mine).toHaveCount(0);
-    await filterBy(page, /^확인/);
-    await expect(mine).toHaveCount(1);
-    await filterBy(page, /^완료/);
-    await expect(mine).toHaveCount(0);
-    await filterBy(page, /^전체/);
-    await expect(mine).toHaveCount(1);
-  });
+        .getByRole("navigation", { name: "관리자 메뉴" })
+        .getByRole("link", { name: /^문의/ })
+        .click();
+      await expect(mine).toContainText("확인");
+      await expectNewCountsAgree(page);
+      await filterBy(page, /^새 문의/);
+      await expect(page).toHaveURL("/admin/inquiries?status=new");
+      await expect(mine).toHaveCount(0);
+      await filterBy(page, /^확인/);
+      await expect(mine).toHaveCount(1);
+      await filterBy(page, /^완료/);
+      await expect(mine).toHaveCount(0);
+      await filterBy(page, /^전체/);
+      await expect(mine).toHaveCount(1);
+    },
+  );
 
   test("두 탭: 다른 탭이 먼저 바꾼 문의는 친절한 문구와 지금 상태로 다시 보이고, 지운 문의는 목록으로", async ({
     page,
