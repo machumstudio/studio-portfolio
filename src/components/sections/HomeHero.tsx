@@ -108,6 +108,7 @@ export function HomeHero({ photos }: HomeHeroProps) {
       <CategoryMarquee
         itemLang="en"
         label={t("Layout.categories.label")}
+        pauseLabel={t("Layout.categories.pause")}
         items={categories.map((key) => t(`Layout.categories.${key}`))}
       />
 

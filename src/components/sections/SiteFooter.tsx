@@ -114,6 +114,7 @@ export function SiteFooter({ cta, year }: SiteFooterProps) {
           itemLang="en"
           className="w-full"
           label={t("categories.label")}
+          pauseLabel={t("categories.pause")}
           items={categories.map((key) => t(`categories.${key}`))}
         />
       </div>

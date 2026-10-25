@@ -6,6 +6,7 @@ const meta = {
   component: CategoryMarquee,
   args: {
     label: "Photography categories",
+    pauseLabel: "Pause the banner",
     items: [
       "Event Photography",
       "Commercial Photography",

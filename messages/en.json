@@ -29,6 +29,7 @@
     },
     "categories": {
       "label": "Photography categories",
+      "pause": "Pause the banner",
       "event": "Event Photography",
       "commercial": "Commercial Photography",
       "product": "Product Photography",
