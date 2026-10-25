@@ -58,7 +58,7 @@ const singleLine = "h-11.25 3xl:h-14.5";
 const control =
   "w-full rounded-none border-b border-dark-20 bg-transparent pt-2.5 pb-2.25 text-field text-white " +
   "placeholder:text-grey-50 placeholder:uppercase 3xl:pt-3.5 3xl:pb-3.25 " +
-  "outline-none focus-visible:border-purple-70 aria-invalid:border-purple-80 " +
+  "outline-none focus-visible:border-purple-70 focus-visible:focus-underline aria-invalid:border-purple-80 " +
   "disabled:cursor-not-allowed disabled:opacity-50";
 
 export function Input({
