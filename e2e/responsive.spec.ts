@@ -98,6 +98,7 @@ const footerLinks = (page: Page) =>
     };
     const columns = [...ul.children].map((li) => li.getBoundingClientRect());
     return {
+      display: style.display,
       rows: new Set(columns.map((c) => Math.round(c.top))).size,
       // 열 시작 위치 (링크 칸 안쪽 왼쪽 기준)
       lefts: columns.map((c) => Math.round(c.left - inner.left)),
@@ -116,6 +117,19 @@ const footerLinks = (page: Page) =>
     };
   });
 
+test("sm 브레이크포인트는 560 이다 (globals.css @theme, ADR 0022)", async ({
+  page,
+}) => {
+  await page.goto("/");
+  expect(
+    await page.evaluate(() =>
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--breakpoint-sm")
+        .trim(),
+    ),
+  ).toBe("560px");
+});
+
 for (const locale of locales)
   test(`푸터 링크 ${locale || "/ko"}: 560 미만은 반씩 2열, 560~767 은 4열 한 줄`, async ({
     page,
@@ -124,14 +138,18 @@ for (const locale of locales)
       await page.setViewportSize({ width, height: 900 });
       await page.goto(locale || "/");
       const links = await footerLinks(page);
+      expect(links.display, `${width}`).toBe("grid");
       expect(links.rows, `${width}`).toBe(2);
       // 둘째 열이 칸의 절반(열 간격 50 의 가운데 다음)에서 시작한다
       expect(links.lefts, `${width}`).toEqual([0, links.half, 0, links.half]);
     }
-    for (const width of [560, 600, 700, 767]) {
+    // 560~639 는 Tailwind 기본 sm(640)과 갈리는 구간이라 따로 본다 (sm 재정의가 빠지면 여기서 2열이 된다)
+    for (const width of [560, 600, 639, 640, 700, 767]) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(locale || "/");
       const links = await footerLinks(page);
+      expect(links.display, `${width}`).toBe("flex");
+      // 링크 묶음 4개의 top 이 모두 같다 (한 줄)
       expect(links.rows, `${width}`).toBe(1);
       // 양 끝 맞춤: 마지막 열이 오른쪽 끝에 닿는다 (가로 넘침과 줄 꺾임은 problems 로 본다)
       expect(Math.abs(links.lastGap), `${width}`).toBeLessThanOrEqual(1);
