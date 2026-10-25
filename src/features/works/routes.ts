@@ -1,5 +1,6 @@
 import "server-only";
-import { container } from "@/infrastructure/container";
+import { getPublishedWorks } from "@/application/works/get-published-works";
+import { container, dataStore } from "@/infrastructure/container";
 
 // 인메모리 사진 저장소의 HTTP 입구 (DATA_STORE=memory 인 e2e, 로컬). app 의 route handler 가 부른다.
 // Supabase 를 쓰면 브라우저가 Storage 로 바로 올리고 Storage 주소에서 읽으므로 둘 다 404 다.
@@ -39,3 +40,34 @@ export async function serveMemoryPhoto(path: string): Promise<Response> {
     },
   });
 }
+
+type Env = Readonly<Record<string, string | undefined>>;
+
+/**
+ * GET /api/keepalive. Vercel cron(vercel.json)이 하루 한 번 불러 Supabase 무료 플랜의 7일 비활성 일시정지를 막는다.
+ * 캐시를 거치지 않고 공개 작업을 실제로 한 번 읽는다 (작업 수십 개라 가볍다).
+ * CRON_SECRET 이 있으면 Vercel cron 이 붙이는 `Authorization: Bearer <CRON_SECRET>` 만 받는다.
+ * 실패하면 503 이라 Vercel 대시보드의 cron 기록과 함수 로그에서 보인다 (docs/ops-manual.md)
+ */
+export async function keepStoreAwake(
+  request: Request,
+  env: Env = process.env,
+): Promise<Response> {
+  const secret = env.CRON_SECRET?.trim();
+  if (secret && request.headers.get("authorization") !== `Bearer ${secret}`)
+    return json(401, { ok: false });
+  if (dataStore === "memory") return json(200, { ok: true, store: dataStore });
+  try {
+    const works = await getPublishedWorks({ repo: container.workRepository })();
+    return json(200, { ok: true, store: dataStore, works: works.length });
+  } catch (cause) {
+    console.error("[works] keepalive: 저장소를 읽지 못했다", cause);
+    return json(503, { ok: false, store: dataStore });
+  }
+}
+
+const json = (status: number, body: Record<string, unknown>) =>
+  Response.json(body, {
+    status,
+    headers: { "cache-control": "no-store" },
+  });
