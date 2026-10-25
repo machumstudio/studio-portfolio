@@ -55,7 +55,7 @@ describe("AdminWorkList", () => {
     ).toHaveAttribute("href", "/admin/works/work-01");
     expect(
       within(first).getByRole("link", {
-        name: "단단한 얼굴들 공개 화면에서 보기 (새 탭)",
+        name: "단단한 얼굴들 공개 화면 (새 탭)",
       }),
     ).toHaveAttribute("href", "/work/faces-of-resilience");
     // 비공개는 공개 화면 링크가 없다

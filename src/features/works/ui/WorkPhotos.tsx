@@ -337,7 +337,8 @@ export function WorkPhotos({
                           aria-hidden
                           className={cx(isCover && "fill-current")}
                         />
-                        {isCover ? t("cover") : t("makeCover")}
+                        {/* 토글 버튼: 이름은 그대로 두고 눌림(aria-pressed)으로 상태를 알린다. 보이는 글자도 이름과 같게 */}
+                        {t("makeCover")}
                       </button>
                       <IconAction
                         label={t("moveUpLabel", { index: n })}
