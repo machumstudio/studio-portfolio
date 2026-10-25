@@ -47,6 +47,45 @@ test.describe("건너뛰기 링크", () => {
       ).toBe(true);
     });
 
+  // 화면 안 이동 뒤 Next(cacheComponents)는 이전 페이지를 숨겨 둔 채 DOM 에 남긴다.
+  // 본문 틀(<main id="main">)이 페이지마다 있으면 id 가 여러 개가 되므로, 틀은 레이아웃 한 곳에만 둔다
+  const mainAfterClientNavigation = async (page: Page, skipLabel: string) => {
+    // 화면 안 이동이었는지 (새로 불러오면 이 값이 사라진다)
+    expect(
+      await page.evaluate(() => (window as { marker?: number }).marker),
+    ).toBe(1);
+    expect(await page.locator("[id=main]").count()).toBe(1);
+    const skip = page.getByRole("link", { name: skipLabel });
+    await expect(skip).toHaveCount(1);
+    await skip.focus();
+    await page.keyboard.press("Enter");
+    await page.keyboard.press("Tab");
+    return page.evaluate(() => {
+      const active = document.activeElement as HTMLElement;
+      return {
+        inMain: !!active.closest("main#main"),
+        visible: active.checkVisibility(),
+      };
+    });
+  };
+
+  test("화면 안 이동을 두 번 해도 본문(id=main)은 하나이고, 건너뛰기는 지금 페이지 본문으로 간다", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await page.evaluate(() => ((window as { marker?: number }).marker = 1));
+    const nav = page.getByRole("navigation", { name: "주요 메뉴" });
+    await nav.getByRole("link", { name: "포트폴리오" }).click();
+    await expect(page).toHaveURL("/portfolio");
+    await nav.getByRole("link", { name: "소개" }).click();
+    await expect(page).toHaveURL("/about");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+    expect(await mainAfterClientNavigation(page, "본문 바로가기")).toEqual({
+      inMain: true,
+      visible: true,
+    });
+  });
+
   test("관리자: 메뉴를 건너 본문으로", async ({ page }) => {
     await signIn(page, "/admin/inquiries");
     // 주소로 새로 연 화면에서 (로그인 뒤 화면 이동은 포커스가 이어진다)

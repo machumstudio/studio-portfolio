@@ -11,10 +11,7 @@ export default function NotFound() {
   const t = useTranslations("NotFound");
 
   return (
-    <main
-      id="main"
-      className="flex flex-col items-start gap-6 page-x pt-10 pb-20 lg:pt-20 lg:pb-37.5 3xl:gap-7.75 3xl:pt-25 3xl:pb-50"
-    >
+    <div className="flex flex-col items-start gap-6 page-x pt-10 pb-20 lg:pt-20 lg:pb-37.5 3xl:gap-7.75 3xl:pt-25 3xl:pb-50">
       <title>{t("metadata")}</title>
       <SectionHeading
         as="h1"
@@ -34,6 +31,6 @@ export default function NotFound() {
           {t("portfolio")}
         </Link>
       </div>
-    </main>
+    </div>
   );
 }

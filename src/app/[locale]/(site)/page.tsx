@@ -50,10 +50,7 @@ export default function Page({ params }: PageProps<"/[locale]">) {
   const lang = locale as keyof LocalizedText;
 
   return (
-    <main
-      id="main"
-      className="flex flex-col gap-20 pb-20 lg:gap-37.5 lg:pb-37.5 3xl:gap-50 3xl:pb-50"
-    >
+    <div className="flex flex-col gap-20 pb-20 lg:gap-37.5 lg:pb-37.5 3xl:gap-50 3xl:pb-50">
       <HomeHero photos={heroCollage} />
       <HomeAbout
         photo={{ src: pagePhotos.homeAbout, alt: photo("homeAbout") }}
@@ -95,6 +92,6 @@ export default function Page({ params }: PageProps<"/[locale]">) {
           contact: studioContact,
         })}
       />
-    </main>
+    </div>
   );
 }
