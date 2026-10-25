@@ -86,6 +86,34 @@ test.describe("건너뛰기 링크", () => {
     });
   });
 
+  // 관리자 틀은 화면마다 그려서, 숨겨진 화면의 main 에서 id 를 뗐다가 다시 보이면 붙인다 (admin-main.tsx)
+  test("관리자: 화면 안 이동을 두 번 해도, 뒤로 가도 본문(id=main)은 하나", async ({
+    page,
+  }) => {
+    await signIn(page, "/admin");
+    await page.evaluate(() => ((window as { marker?: number }).marker = 1));
+    const nav = page.getByRole("navigation", { name: "관리자 메뉴" });
+    await nav.getByRole("link", { name: /^문의/ }).click();
+    await expect(page).toHaveURL("/admin/inquiries");
+    await nav.getByRole("link", { name: /^작업/ }).click();
+    await expect(page).toHaveURL("/admin");
+    expect(await mainAfterClientNavigation(page, "본문 바로가기")).toEqual({
+      inMain: true,
+      visible: true,
+    });
+    // 숨겨 둔 문의 목록이 다시 보이면 id 가 그쪽으로 간다
+    // (첫 뒤로 가기는 건너뛰기 링크가 붙인 #main 만 지운다)
+    await page.goBack();
+    await expect(page).toHaveURL("/admin");
+    await page.goBack();
+    await expect(page).toHaveURL("/admin/inquiries");
+    expect(await mainAfterClientNavigation(page, "본문 바로가기")).toEqual({
+      inMain: true,
+      visible: true,
+    });
+    await expect(page.locator("main#main")).toBeVisible();
+  });
+
   test("관리자: 메뉴를 건너 본문으로", async ({ page }) => {
     await signIn(page, "/admin/inquiries");
     // 주소로 새로 연 화면에서 (로그인 뒤 화면 이동은 포커스가 이어진다)
