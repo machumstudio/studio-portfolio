@@ -41,17 +41,16 @@ const check = async (page: Page, path: string) => {
 };
 
 for (const path of pages)
-  test(`en 레이아웃: ${path} 가 넘치지 않는다`, async ({ page }) => {
-    await check(page, path);
-  });
-
-test("en 레이아웃: 태블릿 768 에서도 넘치지 않는다", async ({
-  page,
-}, testInfo) => {
-  test.skip(
-    testInfo.project.name !== "mobile",
-    "뷰포트를 직접 바꾸므로 한 번만",
+  test(
+    `en 레이아웃: ${path} 가 넘치지 않는다`,
+    { tag: "@responsive" },
+    async ({ page }) => {
+      await check(page, path);
+    },
   );
+
+test("en 레이아웃: 태블릿 768 에서도 넘치지 않는다", async ({ page }) => {
+  // 뷰포트를 직접 바꾸므로 기본 프로젝트(laptop)에서 한 번만 돈다
   await page.setViewportSize({ width: 768, height: 1024 });
   for (const path of pages) await check(page, path);
 });

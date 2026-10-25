@@ -100,47 +100,48 @@ const check = async (page: Page, path: string) => {
 };
 
 for (const path of pages)
-  test(`사진 칸: ${path} 는 어떤 비율의 사진이 와도 그대로다`, async ({
-    page,
-  }) => {
-    await check(page, path);
-  });
-
-test("사진 칸: 태블릿 768 에서도 그대로다", async ({ page }, testInfo) => {
-  test.skip(
-    testInfo.project.name !== "mobile",
-    "뷰포트를 직접 바꾸므로 한 번만",
+  test(
+    `사진 칸: ${path} 는 어떤 비율의 사진이 와도 그대로다`,
+    { tag: "@responsive" },
+    async ({ page }) => {
+      await check(page, path);
+    },
   );
+
+// 뷰포트를 직접 바꾸므로 기본 프로젝트(laptop)에서 한 번만 돈다
+test("사진 칸: 태블릿 768 에서도 그대로다", async ({ page }) => {
   await page.setViewportSize({ width: 768, height: 1024 });
   for (const path of pages) await check(page, path);
 });
 
 // Lightbox 는 사진 전체를 보여 주려고 object-contain 이다. 상자(화면 - 위/아래 줄)와 버튼 위치가 사진과 상관없이 같아야 한다
-test("사진 칸: Lightbox 상자와 버튼은 사진 비율과 상관없이 같은 자리다", async ({
-  page,
-}) => {
-  const open = async () => {
-    await visit(page, "/work/a-wedding-tale");
-    await page.getByRole("button", { name: /^사진 1 크게 보기/ }).click();
-    const dialog = page.getByRole("dialog");
-    await expect(dialog).toBeVisible();
-    return dialog.evaluate((el) => {
-      const img = el.querySelector("img")!;
-      const rect = (node: Element) =>
-        [...Object.values(node.getBoundingClientRect().toJSON())]
-          .slice(0, 4)
-          .map((v) => Math.round(v as number));
-      return {
-        box: rect(img.parentElement!),
-        buttons: [...el.querySelectorAll("button")].map(rect),
-        fit: getComputedStyle(img).objectFit,
-      };
-    });
-  };
-  const base = await open();
-  for (const { width, height } of fixtures) {
-    await servePhoto(page, png(width, height));
-    expect(await open()).toEqual({ ...base, fit: "contain" });
-    await page.unrouteAll();
-  }
-});
+test(
+  "사진 칸: Lightbox 상자와 버튼은 사진 비율과 상관없이 같은 자리다",
+  { tag: "@responsive" },
+  async ({ page }) => {
+    const open = async () => {
+      await visit(page, "/work/a-wedding-tale");
+      await page.getByRole("button", { name: /^사진 1 크게 보기/ }).click();
+      const dialog = page.getByRole("dialog");
+      await expect(dialog).toBeVisible();
+      return dialog.evaluate((el) => {
+        const img = el.querySelector("img")!;
+        const rect = (node: Element) =>
+          [...Object.values(node.getBoundingClientRect().toJSON())]
+            .slice(0, 4)
+            .map((v) => Math.round(v as number));
+        return {
+          box: rect(img.parentElement!),
+          buttons: [...el.querySelectorAll("button")].map(rect),
+          fit: getComputedStyle(img).objectFit,
+        };
+      });
+    };
+    const base = await open();
+    for (const { width, height } of fixtures) {
+      await servePhoto(page, png(width, height));
+      expect(await open()).toEqual({ ...base, fit: "contain" });
+      await page.unrouteAll();
+    }
+  },
+);

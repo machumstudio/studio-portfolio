@@ -14,37 +14,39 @@ const pages = [
 ];
 
 for (const path of pages) {
-  test(`${path}: 사진, 띠배너, 슬라이더가 레이아웃을 밀지 않는다 (CLS < 0.01)`, async ({
-    page,
-  }) => {
-    await page.addInitScript(() => {
-      const shifts: number[] = [];
-      (window as unknown as { __shifts: number[] }).__shifts = shifts;
-      new PerformanceObserver((list) => {
-        for (const entry of list.getEntries() as (PerformanceEntry & {
-          value: number;
-          hadRecentInput: boolean;
-        })[])
-          if (!entry.hadRecentInput) shifts.push(entry.value);
-      }).observe({ type: "layout-shift", buffered: true });
-    });
-    await page.goto(path, { waitUntil: "load" });
-    // 지연 로드 사진이 들어오도록 끝까지 내렸다가 올라온다 (스크롤은 입력이 아니라 이동에 잡힌다)
-    await page.evaluate(async () => {
-      for (let y = 0; y < document.body.scrollHeight; y += 500) {
-        window.scrollTo(0, y);
-        await new Promise((resolve) => setTimeout(resolve, 50));
-      }
-      window.scrollTo(0, 0);
-    });
-    // 띠배너가 몇 바퀴 도는 동안
-    await page.waitForTimeout(1500);
-    const cls = await page.evaluate(() =>
-      (window as unknown as { __shifts: number[] }).__shifts.reduce(
-        (sum, value) => sum + value,
-        0,
-      ),
-    );
-    expect(cls).toBeLessThan(0.01);
-  });
+  test(
+    `${path}: 사진, 띠배너, 슬라이더가 레이아웃을 밀지 않는다 (CLS < 0.01)`,
+    { tag: "@responsive" },
+    async ({ page }) => {
+      await page.addInitScript(() => {
+        const shifts: number[] = [];
+        (window as unknown as { __shifts: number[] }).__shifts = shifts;
+        new PerformanceObserver((list) => {
+          for (const entry of list.getEntries() as (PerformanceEntry & {
+            value: number;
+            hadRecentInput: boolean;
+          })[])
+            if (!entry.hadRecentInput) shifts.push(entry.value);
+        }).observe({ type: "layout-shift", buffered: true });
+      });
+      await page.goto(path, { waitUntil: "load" });
+      // 지연 로드 사진이 들어오도록 끝까지 내렸다가 올라온다 (스크롤은 입력이 아니라 이동에 잡힌다)
+      await page.evaluate(async () => {
+        for (let y = 0; y < document.body.scrollHeight; y += 500) {
+          window.scrollTo(0, y);
+          await new Promise((resolve) => setTimeout(resolve, 50));
+        }
+        window.scrollTo(0, 0);
+      });
+      // 띠배너가 몇 바퀴 도는 동안
+      await page.waitForTimeout(1500);
+      const cls = await page.evaluate(() =>
+        (window as unknown as { __shifts: number[] }).__shifts.reduce(
+          (sum, value) => sum + value,
+          0,
+        ),
+      );
+      expect(cls).toBeLessThan(0.01);
+    },
+  );
 }

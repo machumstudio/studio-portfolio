@@ -47,8 +47,7 @@ test.describe("건너뛰기 링크", () => {
       ).toBe(true);
     });
 
-  test("관리자: 메뉴를 건너 본문으로", async ({ page }, info) => {
-    test.skip(info.project.name !== "laptop", "화면 크기와 무관");
+  test("관리자: 메뉴를 건너 본문으로", async ({ page }) => {
     await signIn(page, "/admin/inquiries");
     // 주소로 새로 연 화면에서 (로그인 뒤 화면 이동은 포커스가 이어진다)
     await page.reload();
@@ -75,8 +74,7 @@ test.describe("포커스 표시", () => {
 
   test("관리자 문의 카드: 카드 링크에 포커스가 가면 카드 둘레에 바깥 선", async ({
     page,
-  }, info) => {
-    test.skip(info.project.name !== "laptop", "화면 크기와 무관");
+  }) => {
     // 목록에 카드가 하나는 있게 문의를 보낸다
     await page.goto("/contact");
     await page.getByLabel("이름", { exact: true }).fill("포커스");
@@ -158,11 +156,8 @@ test.describe("확대(좁은 폭) 재배치", () => {
   for (const width of [320, 640])
     test(`${width}px: 공개 화면과 관리자 화면이 가로로 넘치지 않는다`, async ({
       page,
-    }, info) => {
-      test.skip(
-        info.project.name !== "mobile",
-        "뷰포트를 직접 바꾸므로 한 번만",
-      );
+    }) => {
+      // 뷰포트를 직접 바꾸므로 기본 프로젝트(laptop)에서 한 번만 돈다
       await page.setViewportSize({ width, height: 800 });
       for (const path of [
         "/",

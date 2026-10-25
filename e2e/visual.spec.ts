@@ -256,7 +256,7 @@ function compare(actual: PNG, expected: PNG) {
 }
 
 for (const { name, path } of pages) {
-  test(`${name} 시각 비교 @visual`, async ({ page }, testInfo) => {
+  test(`${name} 시각 비교 @visual @responsive`, async ({ page }, testInfo) => {
     const refPath = `docs/design/reference/${name}-${testInfo.project.name}.png`;
     test.skip(!existsSync(refPath), `${refPath} 없음`);
 

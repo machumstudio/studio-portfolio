@@ -5,7 +5,7 @@ import { PNG } from "pngjs";
 
 // 관리자 작업 관리 (DATA_STORE=memory: 인메모리 작업 저장소 + 인메모리 사진 저장소, 테스트 계정).
 // 공개 화면과 같은 서버 메모리를 쓰므로, 공개로 만든 작업은 다른 e2e 와 겹치지 않게 한다:
-// - 한 화면 크기(project)에서만 돌리고, 실행마다 다른 slug
+// - 기본 프로젝트(laptop)에서만 돌고(playwright.config.ts), 실행마다 다른 slug
 // - 분야는 이벤트, 촬영 연월은 2001-01: 홈 미리보기(최신 6개), 광고 갤러리 수, 결혼식 상세의 이전/다음에 끼지 않는다
 // - 끝에 지운다
 const admin = { email: "admin@example.com", password: "memory-admin-password" };
@@ -109,11 +109,7 @@ test(
   {
     tag: "@delivery",
   },
-  async ({ page }, testInfo) => {
-    test.skip(
-      testInfo.project.name !== "laptop",
-      "같은 서버의 공개 화면을 잠깐 바꾸므로 한 화면 크기에서만",
-    );
+  async ({ page }) => {
     test.setTimeout(120_000);
     const run = Date.now().toString(36);
     const work = {
@@ -258,89 +254,94 @@ test(
   },
 );
 
-test("키보드만으로 사진 순서를 바꾸고 대표를 지정한다 (스크린리더 안내 포함)", async ({
-  page,
-}, testInfo) => {
-  test.skip(
-    testInfo.project.name !== "mobile",
-    "작은 화면에서 버튼으로 (터치 기기는 끌어서 놓기를 못 쓴다)",
-  );
-  test.setTimeout(90_000);
-  const run = Date.now().toString(36);
-  const work = {
-    ko: `키보드 작업 ${run}`,
-    en: `Keyboard Work ${run}`,
-    slug: `keyboard-work-${run}`,
-  };
+test(
+  "키보드만으로 사진 순서를 바꾸고 대표를 지정한다 (스크린리더 안내 포함)",
+  { tag: "@responsive" },
+  async ({ page }, testInfo) => {
+    test.skip(
+      testInfo.project.name !== "mobile",
+      "작은 화면에서 버튼으로 (터치 기기는 끌어서 놓기를 못 쓴다)",
+    );
+    test.setTimeout(90_000);
+    const run = Date.now().toString(36);
+    const work = {
+      ko: `키보드 작업 ${run}`,
+      en: `Keyboard Work ${run}`,
+      slug: `keyboard-work-${run}`,
+    };
 
-  await signIn(page, "/admin/works/new");
-  await fillBasics(page, work);
-  await page
-    .locator('input[type="file"]')
-    .setInputFiles([
-      seedPhoto("a-wedding-tale-1.jpg"),
-      seedPhoto("a-wedding-tale-2.jpg"),
-      seedPhoto("a-wedding-tale-3.jpg"),
-    ]);
-  await expect(photoList(page)).toHaveCount(3, { timeout: 60_000 });
-  const [a, b, c] = await photoSrcs(page);
+    await signIn(page, "/admin/works/new");
+    await fillBasics(page, work);
+    await page
+      .locator('input[type="file"]')
+      .setInputFiles([
+        seedPhoto("a-wedding-tale-1.jpg"),
+        seedPhoto("a-wedding-tale-2.jpg"),
+        seedPhoto("a-wedding-tale-3.jpg"),
+      ]);
+    await expect(photoList(page)).toHaveCount(3, { timeout: 60_000 });
+    const [a, b, c] = await photoSrcs(page);
 
-  const announce = page.locator("section").getByRole("status");
-  await page.getByRole("button", { name: "사진 1 뒤로" }).focus();
-  await page.keyboard.press("Enter");
-  await expect.poll(() => photoSrcs(page)).toEqual([b, a, c]);
-  await expect(announce).toHaveText("사진을 2번째로 옮겼습니다.");
-  // 포커스는 옮긴 사진의 같은 버튼에 남아 한 번 더 누를 수 있다
-  await expect(page.getByRole("button", { name: "사진 2 뒤로" })).toBeFocused();
-  await page.keyboard.press("Enter");
-  await expect.poll(() => photoSrcs(page)).toEqual([b, c, a]);
-  // 끝에서는 막히지만 포커스를 잃지 않는다
-  const last = page.getByRole("button", { name: "사진 3 뒤로" });
-  await expect(last).toBeFocused();
-  await expect(last).toHaveAttribute("aria-disabled", "true");
+    const announce = page.locator("section").getByRole("status");
+    await page.getByRole("button", { name: "사진 1 뒤로" }).focus();
+    await page.keyboard.press("Enter");
+    await expect.poll(() => photoSrcs(page)).toEqual([b, a, c]);
+    await expect(announce).toHaveText("사진을 2번째로 옮겼습니다.");
+    // 포커스는 옮긴 사진의 같은 버튼에 남아 한 번 더 누를 수 있다
+    await expect(
+      page.getByRole("button", { name: "사진 2 뒤로" }),
+    ).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect.poll(() => photoSrcs(page)).toEqual([b, c, a]);
+    // 끝에서는 막히지만 포커스를 잃지 않는다
+    const last = page.getByRole("button", { name: "사진 3 뒤로" });
+    await expect(last).toBeFocused();
+    await expect(last).toHaveAttribute("aria-disabled", "true");
 
-  // Shift+Tab 으로 같은 사진의 앞으로/대표 지정 버튼으로 돌아간다. 대표(처음 첫 사진)는 사진을 따라왔다
-  await page.keyboard.press("Shift+Tab");
-  await expect(
-    page.getByRole("button", { name: "사진 3 앞으로" }),
-  ).toBeFocused();
-  await page.keyboard.press("Shift+Tab");
-  const coverOf3 = page.getByRole("button", { name: "사진 3 대표로 지정" });
-  await expect(coverOf3).toBeFocused();
-  await expect(coverOf3).toHaveAttribute("aria-pressed", "true");
+    // Shift+Tab 으로 같은 사진의 앞으로/대표 지정 버튼으로 돌아간다. 대표(처음 첫 사진)는 사진을 따라왔다
+    await page.keyboard.press("Shift+Tab");
+    await expect(
+      page.getByRole("button", { name: "사진 3 앞으로" }),
+    ).toBeFocused();
+    await page.keyboard.press("Shift+Tab");
+    const coverOf3 = page.getByRole("button", { name: "사진 3 대표로 지정" });
+    await expect(coverOf3).toBeFocused();
+    await expect(coverOf3).toHaveAttribute("aria-pressed", "true");
 
-  // 첫 사진을 대표로 (Space)
-  const coverOf1 = page.getByRole("button", { name: "사진 1 대표로 지정" });
-  await coverOf1.focus();
-  await page.keyboard.press("Space");
-  await expect(coverOf1).toHaveAttribute("aria-pressed", "true");
-  await expect(coverOf3).toHaveAttribute("aria-pressed", "false");
-  await expect(announce).toHaveText("1번째 사진을 대표 사진으로 지정했습니다.");
+    // 첫 사진을 대표로 (Space)
+    const coverOf1 = page.getByRole("button", { name: "사진 1 대표로 지정" });
+    await coverOf1.focus();
+    await page.keyboard.press("Space");
+    await expect(coverOf1).toHaveAttribute("aria-pressed", "true");
+    await expect(coverOf3).toHaveAttribute("aria-pressed", "false");
+    await expect(announce).toHaveText(
+      "1번째 사진을 대표 사진으로 지정했습니다.",
+    );
 
-  await page.getByRole("button", { name: "저장", exact: true }).focus();
-  await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/\/admin\/works\/[0-9a-f-]{36}$/);
-  await page.reload();
-  expect(await photoSrcs(page)).toEqual([b, c, a]);
-  await expect(
-    page.getByRole("button", { name: "사진 1 대표로 지정" }),
-  ).toHaveAttribute("aria-pressed", "true");
+    await page.getByRole("button", { name: "저장", exact: true }).focus();
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(/\/admin\/works\/[0-9a-f-]{36}$/);
+    await page.reload();
+    expect(await photoSrcs(page)).toEqual([b, c, a]);
+    await expect(
+      page.getByRole("button", { name: "사진 1 대표로 지정" }),
+    ).toHaveAttribute("aria-pressed", "true");
 
-  // 지우기 확인도 키보드로: 처음 포커스는 취소, Tab 으로 지우기
-  await page.getByRole("button", { name: "작업 지우기" }).focus();
-  await page.keyboard.press("Enter");
-  const dialog = page.getByRole("dialog", { name: "이 작업을 지울까요?" });
-  await expect(dialog.getByRole("button", { name: "취소" })).toBeFocused();
-  await page.keyboard.press("Tab");
-  await expect(dialog.getByRole("button", { name: "지우기" })).toBeFocused();
-  await page.keyboard.press("Enter");
-  await expect(page).toHaveURL("/admin");
-});
+    // 지우기 확인도 키보드로: 처음 포커스는 취소, Tab 으로 지우기
+    await page.getByRole("button", { name: "작업 지우기" }).focus();
+    await page.keyboard.press("Enter");
+    const dialog = page.getByRole("dialog", { name: "이 작업을 지울까요?" });
+    await expect(dialog.getByRole("button", { name: "취소" })).toBeFocused();
+    await page.keyboard.press("Tab");
+    await expect(dialog.getByRole("button", { name: "지우기" })).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL("/admin");
+  },
+);
 
 test("사진 저장소 입구: 모르는 업로드 주소는 404, 관리자 화면은 로그인이 필요하다", async ({
   page,
-}, testInfo) => {
-  test.skip(testInfo.project.name !== "laptop", "화면 크기와 무관");
+}) => {
   const put = await page.request.put(
     "/admin/uploads/00000000-0000-4000-8000-000000000000",
     { headers: { "content-type": "image/jpeg" }, data: Buffer.from([1, 2]) },

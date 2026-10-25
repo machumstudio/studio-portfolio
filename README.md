@@ -161,7 +161,7 @@ secret 키가 브라우저로 가는 파일에 없는지는 `pnpm build && pnpm 
 | `pnpm typecheck` | 라우트 타입 생성 후 `tsc --noEmit` |
 | `pnpm test` | Vitest 단위 테스트 (클라우드 DB 를 쓰지 않음) |
 | `pnpm test:contract` | Supabase 계약/RLS/제약 테스트 (env 없으면 건너뜀) |
-| `pnpm test:e2e` | Playwright E2E (390 / 1440 / 1920 뷰포트) |
+| `pnpm test:e2e` | Playwright E2E. 화면 크기와 상관없는 테스트는 1440 하나, `@responsive` 만 390 / 1440 / 1920 (기준은 `playwright.config.ts` 주석) |
 | `pnpm test:delivery` | 납품 확인용 핵심 흐름 2개만 (`@delivery`): 방문자 문의 → 관리자 처리, 관리자 작업 등록(사진) → 공개 → 포트폴리오/sitemap |
 | `pnpm test:visual` | Figma 시안 PNG와 픽셀 비교해 차이율 출력 (로컬 전용, [ADR 0004](docs/adr/0004-visual-regression-against-figma.md)) |
 | `pnpm storybook` / `pnpm build-storybook` | Storybook 개발 서버 / 정적 빌드 |
