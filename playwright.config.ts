@@ -19,6 +19,9 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
+  // CI: GitHub 러너(4코어)에서 3개. 서버(webServer 하나, 빌드 한 번)와 사진 최적화가 같은 코어를 쓰므로 한 코어는 남긴다.
+  // 4개는 빨라지지 않고(4.8분) 페이지를 여러 개 도는 테스트가 30초를 넘겼다 (22칸). 로컬은 기본값(코어 절반)
+  workers: process.env.CI ? 3 : undefined,
   // CI: 실패한 테스트의 스크린샷, trace, HTML 보고서를 아티팩트로 올린다 (.github/workflows/ci.yml e2e)
   reporter: process.env.CI ? [["github"], ["html", { open: "never" }]] : "list",
   use: {
