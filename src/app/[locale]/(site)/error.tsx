@@ -22,7 +22,10 @@ export default function SiteError({
   }, [error]);
 
   return (
-    <main className="flex flex-col items-start gap-6 page-x pt-10 pb-20 lg:pt-20 lg:pb-37.5 3xl:gap-7.75 3xl:pt-25 3xl:pb-50">
+    <main
+      id="main"
+      className="flex flex-col items-start gap-6 page-x pt-10 pb-20 lg:pt-20 lg:pb-37.5 3xl:gap-7.75 3xl:pt-25 3xl:pb-50"
+    >
       <title>{t("metadata")}</title>
       <SectionHeading
         as="h1"

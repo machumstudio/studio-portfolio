@@ -37,7 +37,10 @@ export default function AboutPage({ params }: PageProps<"/[locale]/about">) {
   const photo = useTranslations("Photos");
 
   return (
-    <main className="flex flex-col gap-20 pt-10 pb-20 lg:gap-37.5 lg:pt-20 lg:pb-37.5 3xl:gap-50 3xl:pt-25 3xl:pb-50">
+    <main
+      id="main"
+      className="flex flex-col gap-20 pt-10 pb-20 lg:gap-37.5 lg:pt-20 lg:pb-37.5 3xl:gap-50 3xl:pt-25 3xl:pb-50"
+    >
       <div className="flex flex-col gap-15 lg:gap-20 3xl:gap-25">
         <AboutHero
           image={{ src: pagePhotos.aboutHero, alt: photo("aboutHero") }}

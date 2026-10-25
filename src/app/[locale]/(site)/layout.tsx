@@ -1,8 +1,10 @@
 import { use } from "react";
+import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { SiteCta } from "@/components/sections/SiteCta";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { SiteHeader } from "@/components/sections/SiteHeader";
+import { SkipLink } from "@/components/ui/SkipLink";
 import { getCopyrightYear } from "@/lib/copyright-year";
 
 // 공개 사이트 공통 틀: 헤더 + 페이지 + CTA 가 든 푸터 (docs/adr/0006).
@@ -14,8 +16,12 @@ export default function SiteLayout({
   const { locale } = use(params);
   setRequestLocale(locale);
 
+  const t = useTranslations("Layout");
+
+  // 건너뛰기 링크는 페이지마다 <main id="main"> 으로 간다
   return (
     <>
+      <SkipLink>{t("skipToContent")}</SkipLink>
       <SiteHeader />
       {children}
       <SiteFooter cta={<SiteCta />} year={use(getCopyrightYear())} />
