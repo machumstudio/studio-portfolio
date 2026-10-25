@@ -1,6 +1,6 @@
 # check: install → 레지스트리 검사 → commitlint(PR 커밋) → lint → typecheck → test → build → 번들 비밀 검사 (ADR 0005)
 # e2e: Playwright E2E (접근성 axe 검사, 납품 확인 흐름 @delivery 포함). 인메모리 서버(playwright.config.ts)로 돈다.
-#      실패하면 스크린샷, trace, HTML 보고서를 아티팩트로 올린다
+#      실패하면 스크린샷, trace, HTML 보고서를 아티팩트로 올린다. 문서(docs/**, *.md)만 바뀌면 단계를 건너뛰고 성공 (scripts/e2e-needed.sh)
 # Supabase secrets 는 이 워크플로에 주지 않는다: 빌드는 인메모리 저장소로 하고, 클라우드 DB 는 contract.yml 만 쓴다
 # Playwright 시각 비교(@visual)는 시안 PNG 가 레포에 없어서 로컬에서만 돌린다 (ADR 0004)
 name: CI
@@ -67,42 +67,66 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v7
+        with:
+          # 바뀐 경로를 base 와 비교하려면 히스토리가 필요하다
+          fetch-depth: 0
+
+      # 문서(docs/**, *.md)만 바뀌었으면 아래 단계를 건너뛰고 잡은 성공으로 끝난다.
+      # 워크플로 paths-ignore 를 쓰면 e2e 가 필수 체크일 때 "대기"로 남아서 잡 안에서 판단한다
+      - name: 바뀐 경로 확인
+        id: changes
+        env:
+          BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+          HEAD: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: |
+          bash scripts/e2e-needed.sh "$BASE" "$HEAD" >> "$GITHUB_OUTPUT"
+          if grep -q '^run=false' "$GITHUB_OUTPUT"; then
+            echo "문서만 바뀌어 e2e 를 건너뛰었다" >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - uses: pnpm/action-setup@v6 # 버전은 package.json packageManager
+        if: steps.changes.outputs.run == 'true'
 
       - uses: actions/setup-node@v7
+        if: steps.changes.outputs.run == 'true'
         with:
           node-version: 22
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+        if: steps.changes.outputs.run == 'true'
 
       - name: Playwright 버전
+        if: steps.changes.outputs.run == 'true'
         id: playwright
         run: echo "version=$(pnpm exec playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
 
       - uses: actions/cache@v6
+        if: steps.changes.outputs.run == 'true'
         id: browsers
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
 
       - name: Chromium 설치
-        if: steps.browsers.outputs.cache-hit != 'true'
+        if: steps.changes.outputs.run == 'true' && steps.browsers.outputs.cache-hit != 'true'
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Chromium 시스템 의존성
-        if: steps.browsers.outputs.cache-hit == 'true'
+        if: steps.changes.outputs.run == 'true' && steps.browsers.outputs.cache-hit == 'true'
         run: pnpm exec playwright install-deps chromium
 
       - uses: actions/cache@v6
+        if: steps.changes.outputs.run == 'true'
         with:
           path: .next/cache
           key: next-e2e-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('src/**', 'messages/**') }}
           restore-keys: next-e2e-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
 
-      # webServer 가 DATA_STORE=memory 로 build + start 한다
+      # webServer 가 DATA_STORE=memory 로 build + start 한다.
+      # 화면 크기와 상관없는 테스트는 laptop 하나, @responsive 만 세 화면 크기 (playwright.config.ts)
       - run: pnpm test:e2e
+        if: steps.changes.outputs.run == 'true'
 
       - name: 실패한 테스트의 스크린샷, trace, 보고서
         if: failure()
