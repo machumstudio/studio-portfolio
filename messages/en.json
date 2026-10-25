@@ -608,7 +608,7 @@
       "edit": "Edit",
       "editLabel": "Edit {title}",
       "view": "Public page",
-      "viewLabel": "View {title} on the public site (new tab)"
+      "viewLabel": "{title} public page (new tab)"
     },
     "editor": {
       "newTitle": "New work",

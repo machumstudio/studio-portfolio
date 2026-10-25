@@ -608,7 +608,7 @@
       "edit": "고치기",
       "editLabel": "{title} 고치기",
       "view": "공개 화면",
-      "viewLabel": "{title} 공개 화면에서 보기 (새 탭)"
+      "viewLabel": "{title} 공개 화면 (새 탭)"
     },
     "editor": {
       "newTitle": "새 작업",
