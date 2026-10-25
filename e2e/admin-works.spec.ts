@@ -102,153 +102,161 @@ const eventsCard = (page: Page, title: string) =>
     name: new RegExp(`^프로젝트 보기.*${title}`),
   });
 
-test("작업 만들기 → 사진 여러 장 → 순서 변경 → 대표 지정 → 공개하면 /portfolio 에 보이고, 비공개면 사라지고, 지우면 상세가 404", async ({
-  page,
-}, testInfo) => {
-  test.skip(
-    testInfo.project.name !== "laptop",
-    "같은 서버의 공개 화면을 잠깐 바꾸므로 한 화면 크기에서만",
-  );
-  test.setTimeout(120_000);
-  const run = Date.now().toString(36);
-  const work = {
-    ko: `이벤트 기록 ${run}`,
-    en: `Event Record ${run}`,
-    slug: `event-record-${run}`,
-  };
+// 납품 확인용 흐름 ② (pnpm test:delivery): "비개발자 관리자". 로그인해서 사진과 함께 작업을 올리고 공개하면
+// 포트폴리오, 작업 상세, sitemap 에 보이고, 비공개/지우기도 공개 화면에 바로 반영된다
+test(
+  "납품 확인 ② 관리자 로그인 → 작업 등록(사진 여러 장, 순서 변경, 대표 지정) → 공개하면 /portfolio, 상세, sitemap 에 보이고, 비공개면 사라지고, 지우면 상세가 404",
+  {
+    tag: "@delivery",
+  },
+  async ({ page }, testInfo) => {
+    test.skip(
+      testInfo.project.name !== "laptop",
+      "같은 서버의 공개 화면을 잠깐 바꾸므로 한 화면 크기에서만",
+    );
+    test.setTimeout(120_000);
+    const run = Date.now().toString(36);
+    const work = {
+      ko: `이벤트 기록 ${run}`,
+      en: `Event Record ${run}`,
+      slug: `event-record-${run}`,
+    };
 
-  await signIn(page, "/admin");
-  await page.getByRole("link", { name: "새 작업 만들기" }).click();
-  await expect(page).toHaveURL("/admin/works/new");
-  await fillBasics(page, work);
+    await signIn(page, "/admin");
+    await page.getByRole("link", { name: "새 작업 만들기" }).click();
+    await expect(page).toHaveURL("/admin/works/new");
+    await fillBasics(page, work);
 
-  // 여러 장을 한 번에 고른다 (드래그 앤 드롭과 같은 경로로 들어간다)
-  await page
-    .locator('input[type="file"]')
-    .setInputFiles([
-      seedPhoto("festival-of-colors-1.jpg"),
-      seedPhoto("festival-of-colors-2.jpg"),
-      bigPng(),
-      jpegWithExif(),
-    ]);
-  await expect(photoList(page)).toHaveCount(4, { timeout: 60_000 });
-  const uploaded = await photoSrcs(page);
-  expect(uploaded.every((src) => src.startsWith("/media/work-photos/"))).toBe(
-    true,
-  );
+    // 여러 장을 한 번에 고른다 (드래그 앤 드롭과 같은 경로로 들어간다)
+    await page
+      .locator('input[type="file"]')
+      .setInputFiles([
+        seedPhoto("festival-of-colors-1.jpg"),
+        seedPhoto("festival-of-colors-2.jpg"),
+        bigPng(),
+        jpegWithExif(),
+      ]);
+    await expect(photoList(page)).toHaveCount(4, { timeout: 60_000 });
+    const uploaded = await photoSrcs(page);
+    expect(uploaded.every((src) => src.startsWith("/media/work-photos/"))).toBe(
+      true,
+    );
 
-  // 브라우저에서 긴 변 2400 으로 줄이고 JPEG 로 다시 인코딩했다
-  const big = await page.request.get(uploaded[2]!);
-  expect(big.headers()["content-type"]).toBe("image/jpeg");
-  expect(
-    await page.evaluate(
-      (src) =>
-        new Promise<number[]>((resolve) => {
-          const image = new Image();
-          image.onload = () =>
-            resolve([image.naturalWidth, image.naturalHeight]);
-          image.src = src;
-        }),
-      uploaded[2]!,
-    ),
-  ).toEqual([2400, 1600]);
-  // EXIF 가 남지 않는다
-  const exif = await (await page.request.get(uploaded[3]!)).body();
-  expect(exif.includes("Exif")).toBe(false);
-  expect(exif.includes("machum-gps-marker")).toBe(false);
+    // 브라우저에서 긴 변 2400 으로 줄이고 JPEG 로 다시 인코딩했다
+    const big = await page.request.get(uploaded[2]!);
+    expect(big.headers()["content-type"]).toBe("image/jpeg");
+    expect(
+      await page.evaluate(
+        (src) =>
+          new Promise<number[]>((resolve) => {
+            const image = new Image();
+            image.onload = () =>
+              resolve([image.naturalWidth, image.naturalHeight]);
+            image.src = src;
+          }),
+        uploaded[2]!,
+      ),
+    ).toEqual([2400, 1600]);
+    // EXIF 가 남지 않는다
+    const exif = await (await page.request.get(uploaded[3]!)).body();
+    expect(exif.includes("Exif")).toBe(false);
+    expect(exif.includes("machum-gps-marker")).toBe(false);
 
-  // 첫 사진이 대표. 두 번째 사진을 끌어서 맨 앞으로
-  await expect(
-    page.getByRole("button", { name: "사진 1 대표로 지정" }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await photoList(page)
-    .nth(1)
-    .locator("img")
-    .dragTo(photoList(page).nth(0).locator("img"));
-  const reordered = [uploaded[1], uploaded[0], uploaded[2], uploaded[3]];
-  await expect.poll(() => photoSrcs(page)).toEqual(reordered);
-  // 대표는 사진을 따라간다 (이제 2번째). 네 번째 사진(EXIF 를 지운 사진)을 대표로
-  await expect(
-    page.getByRole("button", { name: "사진 2 대표로 지정" }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("button", { name: "사진 4 대표로 지정" }).click();
-  const cover = uploaded[3]!;
+    // 첫 사진이 대표. 두 번째 사진을 끌어서 맨 앞으로
+    await expect(
+      page.getByRole("button", { name: "사진 1 대표로 지정" }),
+    ).toHaveAttribute("aria-pressed", "true");
+    await photoList(page)
+      .nth(1)
+      .locator("img")
+      .dragTo(photoList(page).nth(0).locator("img"));
+    const reordered = [uploaded[1], uploaded[0], uploaded[2], uploaded[3]];
+    await expect.poll(() => photoSrcs(page)).toEqual(reordered);
+    // 대표는 사진을 따라간다 (이제 2번째). 네 번째 사진(EXIF 를 지운 사진)을 대표로
+    await expect(
+      page.getByRole("button", { name: "사진 2 대표로 지정" }),
+    ).toHaveAttribute("aria-pressed", "true");
+    await page.getByRole("button", { name: "사진 4 대표로 지정" }).click();
+    const cover = uploaded[3]!;
 
-  await page.getByLabel("공개하기").check();
-  await save(page);
-  await expect(page).toHaveURL(/\/admin\/works\/[0-9a-f-]{36}$/);
-  await expect(saveStatus(page)).toHaveText("작업을 만들었습니다.");
-  const editUrl = new URL(page.url()).pathname;
-  // 저장한 순서와 대표가 그대로 다시 그려진다
-  expect(await photoSrcs(page)).toEqual(reordered);
-  await expect(
-    page.getByRole("button", { name: "사진 4 대표로 지정" }),
-  ).toHaveAttribute("aria-pressed", "true");
+    await page.getByLabel("공개하기").check();
+    await save(page);
+    await expect(page).toHaveURL(/\/admin\/works\/[0-9a-f-]{36}$/);
+    await expect(saveStatus(page)).toHaveText("작업을 만들었습니다.");
+    const editUrl = new URL(page.url()).pathname;
+    // 저장한 순서와 대표가 그대로 다시 그려진다
+    expect(await photoSrcs(page)).toEqual(reordered);
+    await expect(
+      page.getByRole("button", { name: "사진 4 대표로 지정" }),
+    ).toHaveAttribute("aria-pressed", "true");
 
-  // 공개: 포트폴리오(이벤트)에 대표 사진으로 보이고, 상세에 사진 4장
-  await page.goto("/portfolio?category=events");
-  await expect(eventsCard(page, work.ko)).toBeVisible();
-  await expect(
-    gallery(page).locator(`img[src*="${encodeURIComponent(cover)}"]`),
-  ).toHaveCount(1);
-  await page.goto(`/work/${work.slug}`);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(work.ko);
-  await expect(
-    page
-      .getByRole("article", { name: work.ko })
-      .getByRole("region", { name: "사진 4장" })
-      .getByRole("button"),
-  ).toHaveCount(4);
-  expect(await sitemapLists(page, work.slug)).toBe(true);
+    // 공개: 포트폴리오(이벤트)에 대표 사진으로 보이고, 상세에 사진 4장
+    await page.goto("/portfolio?category=events");
+    await expect(eventsCard(page, work.ko)).toBeVisible();
+    await expect(
+      gallery(page).locator(`img[src*="${encodeURIComponent(cover)}"]`),
+    ).toHaveCount(1);
+    await page.goto(`/work/${work.slug}`);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(work.ko);
+    await expect(
+      page
+        .getByRole("article", { name: work.ko })
+        .getByRole("region", { name: "사진 4장" })
+        .getByRole("button"),
+    ).toHaveCount(4);
+    expect(await sitemapLists(page, work.slug)).toBe(true);
 
-  // 목록에 공개로 보인다
-  await page.goto("/admin");
-  const row = page
-    .getByRole("list", { name: "작업 목록" })
-    .getByRole("listitem")
-    .filter({ hasText: work.ko });
-  await expect(row).toContainText("공개2001년 1월·사진 4장");
+    // 목록에 공개로 보인다
+    await page.goto("/admin");
+    const row = page
+      .getByRole("list", { name: "작업 목록" })
+      .getByRole("listitem")
+      .filter({ hasText: work.ko });
+    await expect(row).toContainText("공개2001년 1월·사진 4장");
 
-  // 비공개로 바꾸면 공개 화면에서 사라진다
-  await page.goto(editUrl);
-  await page.getByLabel("공개하기").uncheck();
-  await save(page);
-  await expect(saveStatus(page)).toHaveText("저장했습니다.");
-  await page.goto("/portfolio?category=events");
-  await expect(gallery(page)).toBeVisible();
-  await expect(eventsCard(page, work.ko)).toHaveCount(0);
-  expect((await page.goto(`/work/${work.slug}`))?.status()).toBe(404);
-  expect(await sitemapLists(page, work.slug)).toBe(false);
+    // 비공개로 바꾸면 공개 화면에서 사라진다
+    await page.goto(editUrl);
+    await page.getByLabel("공개하기").uncheck();
+    await save(page);
+    await expect(saveStatus(page)).toHaveText("저장했습니다.");
+    await page.goto("/portfolio?category=events");
+    await expect(gallery(page)).toBeVisible();
+    await expect(eventsCard(page, work.ko)).toHaveCount(0);
+    expect((await page.goto(`/work/${work.slug}`))?.status()).toBe(404);
+    expect(await sitemapLists(page, work.slug)).toBe(false);
 
-  // 다시 공개한 뒤 지우면 상세가 404, 사진 파일도 지워진다
-  await page.goto(editUrl);
-  await page.getByLabel("공개하기").check();
-  await save(page);
-  await expect(saveStatus(page)).toHaveText("저장했습니다.");
-  expect((await page.goto(`/work/${work.slug}`))?.status()).toBe(200);
+    // 다시 공개한 뒤 지우면 상세가 404, 사진 파일도 지워진다
+    await page.goto(editUrl);
+    await page.getByLabel("공개하기").check();
+    await save(page);
+    await expect(saveStatus(page)).toHaveText("저장했습니다.");
+    expect((await page.goto(`/work/${work.slug}`))?.status()).toBe(200);
 
-  await page.goto(editUrl);
-  await page.getByRole("button", { name: "작업 지우기" }).click();
-  const dialog = page.getByRole("dialog", { name: "이 작업을 지울까요?" });
-  await expect(dialog).toContainText(
-    `‘${work.ko}’ 작업과 사진 4장을 지웁니다.`,
-  );
-  await dialog.getByRole("button", { name: "지우기" }).click();
-  await expect(page).toHaveURL("/admin");
-  await expect(page.getByRole("status").first()).toHaveText(
-    "작업을 지웠습니다.",
-  );
-  expect((await page.goto(`/work/${work.slug}`))?.status()).toBe(404);
-  expect(await sitemapLists(page, work.slug)).toBe(false);
-  // 지운 작업의 편집 주소도 상태 코드 404 (proxy 가 있는지 확인, docs/adr/0019)
-  expect((await page.goto(editUrl))?.status()).toBe(404);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "작업을 찾을 수 없습니다",
-  );
-  await expect(page).toHaveTitle("작업을 찾을 수 없음 | Machum Studio 관리자");
-  for (const src of uploaded)
-    expect((await page.request.get(src)).status(), src).toBe(404);
-});
+    await page.goto(editUrl);
+    await page.getByRole("button", { name: "작업 지우기" }).click();
+    const dialog = page.getByRole("dialog", { name: "이 작업을 지울까요?" });
+    await expect(dialog).toContainText(
+      `‘${work.ko}’ 작업과 사진 4장을 지웁니다.`,
+    );
+    await dialog.getByRole("button", { name: "지우기" }).click();
+    await expect(page).toHaveURL("/admin");
+    await expect(page.getByRole("status").first()).toHaveText(
+      "작업을 지웠습니다.",
+    );
+    expect((await page.goto(`/work/${work.slug}`))?.status()).toBe(404);
+    expect(await sitemapLists(page, work.slug)).toBe(false);
+    // 지운 작업의 편집 주소도 상태 코드 404 (proxy 가 있는지 확인, docs/adr/0019)
+    expect((await page.goto(editUrl))?.status()).toBe(404);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      "작업을 찾을 수 없습니다",
+    );
+    await expect(page).toHaveTitle(
+      "작업을 찾을 수 없음 | Machum Studio 관리자",
+    );
+    for (const src of uploaded)
+      expect((await page.request.get(src)).status(), src).toBe(404);
+  },
+);
 
 test("키보드만으로 사진 순서를 바꾸고 대표를 지정한다 (스크린리더 안내 포함)", async ({
   page,

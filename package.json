@@ -12,6 +12,7 @@
     "test:contract": "vitest run --config vitest.contract.config.mts",
     "test:e2e": "playwright test --grep-invert @visual",
     "test:visual": "playwright test --grep @visual",
+    "test:delivery": "playwright test --grep @delivery --project laptop",
     "og:image": "tsx scripts/og-image.mts",
     "lighthouse": "node scripts/lighthouse.mjs",
     "db:seed": "tsx --conditions=react-server --env-file-if-exists=.env.local scripts/seed-works.mts",
