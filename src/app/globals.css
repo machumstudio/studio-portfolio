@@ -441,6 +441,11 @@
 /* 위 매핑은 출발점이다. 섹션 구현 때 docs/design/nodes/*.json 의 fs/font/lh 와 다르면 노드 값을 따르고 이 표를 고친다. */
 
 @layer base {
+  /* 어두운 화면만 있다. 브라우저 기본 컨트롤(연월 칸의 달력 아이콘, 체크박스, 스크롤바, 자동 완성)도 어두운 모양으로 그린다.
+     없으면 관리자 "촬영 연월" 칸의 달력 아이콘이 검정으로 그려져 배경에 묻힌다 */
+  html {
+    color-scheme: dark;
+  }
   body {
     @apply bg-dark-03 font-sans text-white antialiased;
   }
