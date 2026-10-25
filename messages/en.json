@@ -460,6 +460,14 @@
     "home": "Go home",
     "portfolio": "Browse works"
   },
+  "ErrorPage": {
+    "metadata": "Something went wrong | Machum Studio",
+    "eyebrow": "Error",
+    "title": "Something went wrong",
+    "body": "A temporary problem kept us from showing this page. Please try again in a moment. If it keeps happening, reach us by the email or phone on the contact page.",
+    "retry": "Try again",
+    "home": "Home"
+  },
   "ContactPage": {
     "metadata": {
       "title": "Contact | Machum Studio",
@@ -811,6 +819,15 @@
     "notFound": {
       "title": "Inquiry not found",
       "body": "It was deleted or the address is wrong. Pick one from the inquiry list."
+    }
+  },
+  "AdminErrors": {
+    "error": {
+      "metadata": "Couldn't load the page | Machum Studio Admin",
+      "title": "Couldn't load the page",
+      "body": "The database or sign-in service may be having a temporary problem. Please try again in a moment. Anything you already saved is still there.",
+      "retry": "Try again",
+      "works": "Back to works"
     }
   }
 }
