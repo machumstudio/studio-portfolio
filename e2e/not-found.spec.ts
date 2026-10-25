@@ -27,8 +27,7 @@ test("404 화면에서 홈과 작업 목록으로 간다", async ({ page }) => {
 
 test("관리자: 없는 관리자 주소는 한국어 404 화면 (Next 기본 영어 404 가 아니다)", async ({
   page,
-}, info) => {
-  test.skip(info.project.name !== "laptop", "화면 크기와 무관");
+}) => {
   await page.goto("/admin/login");
   await page.getByLabel("이메일").fill("admin@example.com");
   await page.getByLabel("비밀번호").fill("memory-admin-password");

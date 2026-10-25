@@ -23,21 +23,29 @@ test("제목과 설명 메타데이터, h1", async ({ page }) => {
   );
 });
 
-test("헤더: 데스크톱은 문의하기 버튼만 현재 페이지", async ({ page }, info) => {
-  test.skip(info.project.name === "mobile", "데스크톱 메뉴는 lg 부터");
-  await page.goto("/contact");
-  await expect(
-    page.getByRole("banner").locator("[aria-current=page]:visible"),
-  ).toHaveText(["문의하기"]);
-});
+test(
+  "헤더: 데스크톱은 문의하기 버튼만 현재 페이지",
+  { tag: "@responsive" },
+  async ({ page }, info) => {
+    test.skip(info.project.name === "mobile", "데스크톱 메뉴는 lg 부터");
+    await page.goto("/contact");
+    await expect(
+      page.getByRole("banner").locator("[aria-current=page]:visible"),
+    ).toHaveText(["문의하기"]);
+  },
+);
 
-test("헤더: 모바일 메뉴도 문의하기만 현재 페이지", async ({ page }, info) => {
-  test.skip(info.project.name !== "mobile", "모바일 메뉴는 lg 미만");
-  await page.goto("/contact");
-  await page.getByRole("button", { name: "메뉴 열기" }).click();
-  const nav = page.getByRole("navigation", { name: "주요 메뉴" });
-  await expect(nav.locator("[aria-current]")).toHaveText(["문의하기"]);
-});
+test(
+  "헤더: 모바일 메뉴도 문의하기만 현재 페이지",
+  { tag: "@responsive" },
+  async ({ page }, info) => {
+    test.skip(info.project.name !== "mobile", "모바일 메뉴는 lg 미만");
+    await page.goto("/contact");
+    await page.getByRole("button", { name: "메뉴 열기" }).click();
+    const nav = page.getByRole("navigation", { name: "주요 메뉴" });
+    await expect(nav.locator("[aria-current]")).toHaveText(["문의하기"]);
+  },
+);
 
 test("연락처 정보와 후기가 함께 있다", async ({ page }) => {
   await page.goto("/contact");

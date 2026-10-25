@@ -76,33 +76,37 @@ test.describe("후기 슬라이더", () => {
       .poll(async () => Math.abs((await scrollLeft(page)) - target))
       .toBeLessThanOrEqual(1);
 
-  test("다음/이전 화살표로 한 장씩 움직이고, 끝에서 다음이 꺼진다", async ({
-    page,
-  }) => {
-    await page.goto("/");
-    const previous = carousel(page).getByRole("button", { name: "이전 후기" });
-    const next = carousel(page).getByRole("button", { name: "다음 후기" });
-    await next.scrollIntoViewIfNeeded();
-    await expect(previous).toHaveAttribute("aria-disabled", "true");
-    const width = await slideWidth(page);
+  test(
+    "다음/이전 화살표로 한 장씩 움직이고, 끝에서 다음이 꺼진다",
+    { tag: "@responsive" },
+    async ({ page }) => {
+      await page.goto("/");
+      const previous = carousel(page).getByRole("button", {
+        name: "이전 후기",
+      });
+      const next = carousel(page).getByRole("button", { name: "다음 후기" });
+      await next.scrollIntoViewIfNeeded();
+      await expect(previous).toHaveAttribute("aria-disabled", "true");
+      const width = await slideWidth(page);
 
-    await next.click();
-    await expectScrolledTo(page, width);
-    await expect(previous).toHaveAttribute("aria-disabled", "false");
-
-    await previous.click();
-    await expectScrolledTo(page, 0);
-
-    // 6장 중 한 화면에 보이는 수만큼 남을 때까지 넘기면 다음이 꺼진다
-    const perView = Math.round(
-      (await track(page).evaluate((el) => el.clientWidth)) / width,
-    );
-    for (let i = 0; i < 6 - perView; i++) {
       await next.click();
-      await expectScrolledTo(page, width * (i + 1));
-    }
-    await expect(next).toHaveAttribute("aria-disabled", "true");
-  });
+      await expectScrolledTo(page, width);
+      await expect(previous).toHaveAttribute("aria-disabled", "false");
+
+      await previous.click();
+      await expectScrolledTo(page, 0);
+
+      // 6장 중 한 화면에 보이는 수만큼 남을 때까지 넘기면 다음이 꺼진다
+      const perView = Math.round(
+        (await track(page).evaluate((el) => el.clientWidth)) / width,
+      );
+      for (let i = 0; i < 6 - perView; i++) {
+        await next.click();
+        await expectScrolledTo(page, width * (i + 1));
+      }
+      await expect(next).toHaveAttribute("aria-disabled", "true");
+    },
+  );
 
   test("가로 스크롤(스와이프)은 slide 단위로 맞춰 멈춘다 (scroll-snap)", async ({
     page,

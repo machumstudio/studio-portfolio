@@ -3,7 +3,7 @@ import { expect, test, type Page } from "@playwright/test";
 // 관리자 문의 관리 (DATA_STORE=memory: 공개 문의 폼과 관리자 화면이 같은 인메모리 저장소, 테스트 계정).
 // 다른 e2e(문의 제출)도 같은 서버에 문의를 넣으므로 테스트마다 실행별로 다른 이름의 문의를 만들고 그 문의만 본다.
 // 개수는 다른 테스트가 언제 문의를 넣을지 몰라 절대값 대신 "같은 화면 안에서 메뉴와 필터가 같은지"와
-// "내 문의가 어느 필터에 있는지"로 본다. 상태를 바꾸는 흐름은 한 화면 크기에서만 돌린다
+// "내 문의가 어느 필터에 있는지"로 본다. 상태를 바꾸는 흐름은 기본 프로젝트(laptop)에서만 돈다 (playwright.config.ts)
 const admin = { email: "admin@example.com", password: "memory-admin-password" };
 
 const signIn = async (page: Page, path: string) => {
@@ -84,13 +84,6 @@ const openDetail = async (page: Page, inquiry: Submitted) => {
 };
 
 test.describe("문의 처리 흐름", () => {
-  test.beforeEach(({}, testInfo) => {
-    test.skip(
-      testInfo.project.name !== "laptop",
-      "같은 서버의 문의 상태를 바꾸므로 한 화면 크기에서만",
-    );
-  });
-
   // 납품 확인용 흐름 ① (pnpm test:delivery): "문의 누락 없이". 방문자가 보낸 문의가 관리자 목록에 새 문의로 오고, 처리 상태가 남는다
   test(
     "납품 확인 ① 방문자 문의 제출 → 관리자 로그인 → 목록에 새 문의 → 상세(열어도 그대로) → 확인 → 완료 → 다시 열기, 필터와 개수가 따라온다",
@@ -291,8 +284,7 @@ test.describe("문의 처리 흐름", () => {
 
 test("관리자 문의 화면은 로그인이 필요하고 검색에서 빠진다", async ({
   page,
-}, testInfo) => {
-  test.skip(testInfo.project.name !== "laptop", "화면 크기와 무관");
+}) => {
   await page.goto("/admin/inquiries?status=done&page=2");
   await expect(page).toHaveURL(
     `/admin/login?next=${encodeURIComponent("/admin/inquiries?status=done&page=2")}`,
@@ -318,18 +310,20 @@ test("관리자 문의 화면은 로그인이 필요하고 검색에서 빠진�
   ).toHaveAttribute("aria-current", "page");
 });
 
-test("모바일/데스크톱: 메뉴와 목록, 상세가 가로로 넘치지 않는다", async ({
-  page,
-}, testInfo) => {
-  test.skip(testInfo.project.name === "laptop", "laptop 은 위 흐름에서 본다");
-  const inquiry = await submitInquiry(page);
-  await signIn(page, "/admin/inquiries");
-  const noOverflow = () =>
-    page.evaluate(
-      () => document.documentElement.scrollWidth <= window.innerWidth,
-    );
-  await expect(menuInquiries(page)).toBeVisible();
-  expect(await noOverflow()).toBe(true);
-  await openDetail(page, inquiry);
-  expect(await noOverflow()).toBe(true);
-});
+test(
+  "모바일/데스크톱: 메뉴와 목록, 상세가 가로로 넘치지 않는다",
+  { tag: "@responsive" },
+  async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name === "laptop", "laptop 은 위 흐름에서 본다");
+    const inquiry = await submitInquiry(page);
+    await signIn(page, "/admin/inquiries");
+    const noOverflow = () =>
+      page.evaluate(
+        () => document.documentElement.scrollWidth <= window.innerWidth,
+      );
+    await expect(menuInquiries(page)).toBeVisible();
+    expect(await noOverflow()).toBe(true);
+    await openDetail(page, inquiry);
+    expect(await noOverflow()).toBe(true);
+  },
+);

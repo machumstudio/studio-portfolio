@@ -42,7 +42,7 @@ const publicPages = [
 for (const locale of ["ko", "en"] as const) {
   const prefix = locale === "ko" ? "" : "/en";
 
-  test.describe(`공개 화면 ${locale}`, () => {
+  test.describe(`공개 화면 ${locale}`, { tag: "@responsive" }, () => {
     for (const path of publicPages)
       test(`${prefix}${path}`, async ({ page }) => {
         await page.goto(`${prefix}${path}`);
@@ -91,7 +91,7 @@ for (const locale of ["ko", "en"] as const) {
 
 const admin = { email: "admin@example.com", password: "memory-admin-password" };
 
-test.describe("관리자 화면", () => {
+test.describe("관리자 화면", { tag: "@responsive" }, () => {
   test("로그인 (빈 칸 오류 포함)", async ({ page }) => {
     await page.goto("/admin/login");
     await expectNoViolations(page, "로그인");

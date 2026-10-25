@@ -1,11 +1,8 @@
 import { expect, test, type Page } from "@playwright/test";
 
 // 검색/공유 태그, sitemap, robots, 예전 주소 301 (DATA_STORE=memory 시드).
-// 화면 크기와 상관없는 응답이라 한 화면 크기(mobile)에서만 돌린다.
+// 화면 크기와 상관없는 응답이라 기본 프로젝트(laptop)에서만 돈다 (playwright.config.ts).
 // e2e 서버는 NEXT_PUBLIC_SITE_URL 이 이 서버 주소이고 VERCEL_ENV 가 없다 (미리보기처럼 noindex)
-test.beforeEach(({}, testInfo) => {
-  test.skip(testInfo.project.name !== "mobile", "응답 검사는 한 번만");
-});
 
 const site = "http://localhost:3100";
 // head 태그의 절대 주소. Next 는 루트 주소의 끝 / 를 뗀다 (http://x 와 http://x/ 는 같은 주소, sitemap 은 / 를 붙인다)

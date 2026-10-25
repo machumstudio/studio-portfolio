@@ -13,20 +13,28 @@ test("제목과 설명 메타데이터, h1", async ({ page }) => {
   );
 });
 
-test("헤더: 데스크톱 메뉴의 서비스만 현재 페이지", async ({ page }, info) => {
-  test.skip(info.project.name === "mobile", "데스크톱 메뉴는 lg 부터");
-  await page.goto("/services");
-  const nav = page.getByRole("banner").getByRole("navigation");
-  await expect(nav.locator("[aria-current]")).toHaveText(["서비스"]);
-});
+test(
+  "헤더: 데스크톱 메뉴의 서비스만 현재 페이지",
+  { tag: "@responsive" },
+  async ({ page }, info) => {
+    test.skip(info.project.name === "mobile", "데스크톱 메뉴는 lg 부터");
+    await page.goto("/services");
+    const nav = page.getByRole("banner").getByRole("navigation");
+    await expect(nav.locator("[aria-current]")).toHaveText(["서비스"]);
+  },
+);
 
-test("헤더: 모바일 메뉴의 서비스만 현재 페이지", async ({ page }, info) => {
-  test.skip(info.project.name !== "mobile", "모바일 메뉴는 lg 미만");
-  await page.goto("/services");
-  await page.getByRole("button", { name: "메뉴 열기" }).click();
-  const nav = page.getByRole("navigation", { name: "주요 메뉴" });
-  await expect(nav.locator("[aria-current]")).toHaveText(["서비스"]);
-});
+test(
+  "헤더: 모바일 메뉴의 서비스만 현재 페이지",
+  { tag: "@responsive" },
+  async ({ page }, info) => {
+    test.skip(info.project.name !== "mobile", "모바일 메뉴는 lg 미만");
+    await page.goto("/services");
+    await page.getByRole("button", { name: "메뉴 열기" }).click();
+    const nav = page.getByRole("navigation", { name: "주요 메뉴" });
+    await expect(nav.locator("[aria-current]")).toHaveText(["서비스"]);
+  },
+);
 
 test("서비스 셋에 패키지 카드가 셋씩, 포함 항목은 목록", async ({ page }) => {
   await page.goto("/services");
@@ -52,17 +60,19 @@ test("서비스 셋에 패키지 카드가 셋씩, 포함 항목은 목록", asy
   await expect(page.getByRole("article")).toHaveCount(9);
 });
 
-test("lg 부터 패키지 이름/가격 칸과 포함 항목이 한 줄", async ({
-  page,
-}, info) => {
-  await page.goto("/services");
-  const card = page.getByRole("article", { name: "개인 촬영" });
-  const price = await card.getByText("₩25만").boundingBox();
-  const list = await card.getByRole("list").boundingBox();
-  if (info.project.name === "mobile")
-    expect(list!.y).toBeGreaterThan(price!.y + price!.height);
-  else expect(list!.x).toBeGreaterThan(price!.x + price!.width);
-});
+test(
+  "lg 부터 패키지 이름/가격 칸과 포함 항목이 한 줄",
+  { tag: "@responsive" },
+  async ({ page }, info) => {
+    await page.goto("/services");
+    const card = page.getByRole("article", { name: "개인 촬영" });
+    const price = await card.getByText("₩25만").boundingBox();
+    const list = await card.getByRole("list").boundingBox();
+    if (info.project.name === "mobile")
+      expect(list!.y).toBeGreaterThan(price!.y + price!.height);
+    else expect(list!.x).toBeGreaterThan(price!.x + price!.width);
+  },
+);
 
 test("가격 표기: ko 는 ₩25만, 가격이 없으면 맞춤 견적", async ({ page }) => {
   await page.goto("/services");

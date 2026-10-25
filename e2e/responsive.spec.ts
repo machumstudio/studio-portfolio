@@ -74,11 +74,8 @@ const problems = (page: Page) =>
 for (const locale of locales)
   test(`반응형 ${locale || "/ko"}: 768/1024/1180/1280 에서 넘치거나 겹치지 않는다`, async ({
     page,
-  }, testInfo) => {
-    test.skip(
-      testInfo.project.name !== "mobile",
-      "뷰포트를 직접 바꾸므로 한 번만",
-    );
+  }) => {
+    // 뷰포트를 직접 바꾸므로 기본 프로젝트(laptop)에서 한 번만 돈다
     for (const width of widths) {
       await page.setViewportSize({ width, height: 900 });
       for (const path of paths) {
