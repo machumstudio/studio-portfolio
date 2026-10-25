@@ -94,7 +94,10 @@ export default function WorkPage({
     work && { slug: work.slug, title: work.title[lang] };
 
   return (
-    <main className="flex flex-col gap-20 pt-10 pb-20 lg:gap-25 lg:pt-20 lg:pb-37.5 3xl:gap-37.5 3xl:pt-25 3xl:pb-50">
+    <main
+      id="main"
+      className="flex flex-col gap-20 pt-10 pb-20 lg:gap-25 lg:pt-20 lg:pb-37.5 3xl:gap-37.5 3xl:pt-25 3xl:pb-50"
+    >
       <WorkDetail
         title={title[lang]}
         category={category}

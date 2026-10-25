@@ -30,7 +30,10 @@ export default function ContactPage({
   const photo = useTranslations("Photos");
 
   return (
-    <main className="flex flex-col pt-10 pb-20 lg:pt-20 lg:pb-37.5 3xl:pt-25 3xl:pb-50">
+    <main
+      id="main"
+      className="flex flex-col pt-10 pb-20 lg:pt-20 lg:pb-37.5 3xl:pt-25 3xl:pb-50"
+    >
       <ContactHero
         image={{ src: pagePhotos.contactHero, alt: photo("contactHero") }}
       />
