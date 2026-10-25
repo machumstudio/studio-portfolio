@@ -84,3 +84,57 @@ for (const locale of locales)
       }
     }
   });
+
+// 푸터 링크 4열 (시안은 390 의 2x2 와 768 이상의 한 줄뿐, ADR 0022).
+// 560 미만은 2열이 링크 칸 폭을 반씩 나누고, 560~767 은 4열 한 줄 양 끝 맞춤
+const footerLinks = (page: Page) =>
+  page.evaluate(() => {
+    const ul = document.querySelector("footer nav > ul")!;
+    const box = ul.getBoundingClientRect();
+    const style = getComputedStyle(ul);
+    const inner = {
+      left: box.left + parseFloat(style.paddingLeft),
+      right: box.right - parseFloat(style.paddingRight),
+    };
+    const columns = [...ul.children].map((li) => li.getBoundingClientRect());
+    return {
+      rows: new Set(columns.map((c) => Math.round(c.top))).size,
+      // 열 시작 위치 (링크 칸 안쪽 왼쪽 기준)
+      lefts: columns.map((c) => Math.round(c.left - inner.left)),
+      half: Math.round((inner.right - inner.left + 50) / 2),
+      // 마지막 열 글자의 오른쪽 끝과 링크 칸 안쪽 오른쪽의 차이
+      lastGap: Math.round(
+        inner.right -
+          Math.max(
+            ...[...ul.lastElementChild!.querySelectorAll("h2, a")].map((el) => {
+              const range = document.createRange();
+              range.selectNodeContents(el);
+              return range.getBoundingClientRect().right;
+            }),
+          ),
+      ),
+    };
+  });
+
+for (const locale of locales)
+  test(`푸터 링크 ${locale || "/ko"}: 560 미만은 반씩 2열, 560~767 은 4열 한 줄`, async ({
+    page,
+  }) => {
+    for (const width of [390, 480, 559]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(locale || "/");
+      const links = await footerLinks(page);
+      expect(links.rows, `${width}`).toBe(2);
+      // 둘째 열이 칸의 절반(열 간격 50 의 가운데 다음)에서 시작한다
+      expect(links.lefts, `${width}`).toEqual([0, links.half, 0, links.half]);
+    }
+    for (const width of [560, 600, 700, 767]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(locale || "/");
+      const links = await footerLinks(page);
+      expect(links.rows, `${width}`).toBe(1);
+      // 양 끝 맞춤: 마지막 열이 오른쪽 끝에 닿는다 (가로 넘침과 줄 꺾임은 problems 로 본다)
+      expect(Math.abs(links.lastGap), `${width}`).toBeLessThanOrEqual(1);
+      expect(await problems(page), `${width} ${locale}`).toEqual([]);
+    }
+  });
