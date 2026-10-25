@@ -176,7 +176,7 @@ test("작업 만들기 → 사진 여러 장 → 순서 변경 → 대표 지정
 
   await page.getByLabel("공개하기").check();
   await save(page);
-  await expect(page).toHaveURL(/\/admin\/works\/[0-9a-f-]{36}\?created=1$/);
+  await expect(page).toHaveURL(/\/admin\/works\/[0-9a-f-]{36}$/);
   await expect(saveStatus(page)).toHaveText("작업을 만들었습니다.");
   const editUrl = new URL(page.url()).pathname;
   // 저장한 순서와 대표가 그대로 다시 그려진다
@@ -234,7 +234,7 @@ test("작업 만들기 → 사진 여러 장 → 순서 변경 → 대표 지정
     `‘${work.ko}’ 작업과 사진 4장을 지웁니다.`,
   );
   await dialog.getByRole("button", { name: "지우기" }).click();
-  await expect(page).toHaveURL("/admin?deleted=1");
+  await expect(page).toHaveURL("/admin");
   await expect(page.getByRole("status").first()).toHaveText(
     "작업을 지웠습니다.",
   );
@@ -311,7 +311,7 @@ test("키보드만으로 사진 순서를 바꾸고 대표를 지정한다 (스�
 
   await page.getByRole("button", { name: "저장", exact: true }).focus();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/\/admin\/works\/[0-9a-f-]{36}\?created=1$/);
+  await expect(page).toHaveURL(/\/admin\/works\/[0-9a-f-]{36}$/);
   await page.reload();
   expect(await photoSrcs(page)).toEqual([b, c, a]);
   await expect(
@@ -326,7 +326,7 @@ test("키보드만으로 사진 순서를 바꾸고 대표를 지정한다 (스�
   await page.keyboard.press("Tab");
   await expect(dialog.getByRole("button", { name: "지우기" })).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL("/admin?deleted=1");
+  await expect(page).toHaveURL("/admin");
 });
 
 test("사진 저장소 입구: 모르는 업로드 주소는 404, 관리자 화면은 로그인이 필요하다", async ({

@@ -11,6 +11,7 @@ import { toWorkFormValues } from "@/features/works/admin-view";
 import { getAdminWork } from "@/features/works/queries";
 import { WorkEditor } from "@/features/works/ui/WorkEditor";
 import { AdminShell } from "../../_components/admin-shell";
+import { ForgetResultParam } from "../../_components/forget-result-param";
 
 export async function generateMetadata({
   params,
@@ -47,6 +48,7 @@ export default async function EditWorkPage({
         }}
         notice={created === "1" ? "created" : undefined}
       />
+      {created !== undefined && <ForgetResultParam name="created" />}
     </AdminShell>
   );
 }

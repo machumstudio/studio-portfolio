@@ -5,6 +5,7 @@ import { toAdminWorkRow } from "@/features/works/admin-view";
 import { listAdminWorks } from "@/features/works/queries";
 import { AdminWorkList } from "@/features/works/ui/AdminWorkList";
 import { AdminShell } from "./_components/admin-shell";
+import { ForgetResultParam } from "./_components/forget-result-param";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations({ locale: "ko", namespace: "AdminWorks" });
@@ -25,6 +26,7 @@ export default async function AdminWorksPage({
         works={works.map(toAdminWorkRow)}
         notice={deleted === "1" ? "deleted" : undefined}
       />
+      {deleted !== undefined && <ForgetResultParam name="deleted" />}
     </AdminShell>
   );
 }

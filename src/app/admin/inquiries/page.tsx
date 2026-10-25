@@ -9,6 +9,7 @@ import {
 import { listAdminInquiries } from "@/features/inquiry/queries";
 import { AdminInquiryList } from "@/features/inquiry/ui/AdminInquiryList";
 import { AdminShell } from "../_components/admin-shell";
+import { ForgetResultParam } from "../_components/forget-result-param";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations({
@@ -28,9 +29,11 @@ export default async function AdminInquiriesPage({
   const returnTo = inquiryListHref(query);
   const admin = await requireAdmin(returnTo);
   const list = await listAdminInquiries(query, returnTo);
+  const notice = parseListNotice(params.notice);
   return (
     <AdminShell email={admin.email} section="inquiries">
-      <AdminInquiryList list={list} notice={parseListNotice(params.notice)} />
+      <AdminInquiryList list={list} notice={notice} />
+      {params.notice !== undefined && <ForgetResultParam name="notice" />}
     </AdminShell>
   );
 }
