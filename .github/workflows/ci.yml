@@ -1,6 +1,8 @@
-# install → 레지스트리 검사 → commitlint(PR 커밋) → lint → typecheck → test → build → 번들 비밀 검사 (ADR 0005)
+# check: install → 레지스트리 검사 → commitlint(PR 커밋) → lint → typecheck → test → build → 번들 비밀 검사 (ADR 0005)
+# e2e: Playwright E2E (접근성 axe 검사, 납품 확인 흐름 @delivery 포함). 인메모리 서버(playwright.config.ts)로 돈다.
+#      실패하면 스크린샷, trace, HTML 보고서를 아티팩트로 올린다
 # Supabase secrets 는 이 워크플로에 주지 않는다: 빌드는 인메모리 저장소로 하고, 클라우드 DB 는 contract.yml 만 쓴다
-# Playwright 시각 비교는 시안 PNG 가 레포에 없어서 로컬에서만 돌린다 (ADR 0004)
+# Playwright 시각 비교(@visual)는 시안 PNG 가 레포에 없어서 로컬에서만 돌린다 (ADR 0004)
 name: CI
 
 on:
@@ -59,3 +61,55 @@ jobs:
 
       - name: 클라이언트 번들 비밀 검사
         run: pnpm check:bundle
+
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6 # 버전은 package.json packageManager
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Playwright 버전
+        id: playwright
+        run: echo "version=$(pnpm exec playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/cache@v6
+        id: browsers
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+
+      - name: Chromium 설치
+        if: steps.browsers.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Chromium 시스템 의존성
+        if: steps.browsers.outputs.cache-hit == 'true'
+        run: pnpm exec playwright install-deps chromium
+
+      - uses: actions/cache@v6
+        with:
+          path: .next/cache
+          key: next-e2e-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('src/**', 'messages/**') }}
+          restore-keys: next-e2e-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
+
+      # webServer 가 DATA_STORE=memory 로 build + start 한다
+      - run: pnpm test:e2e
+
+      - name: 실패한 테스트의 스크린샷, trace, 보고서
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
