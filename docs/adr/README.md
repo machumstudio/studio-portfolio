@@ -22,5 +22,6 @@
 | [0019](0019-admin-detail-404-in-proxy.md) | 관리자 상세 화면의 "없음"은 proxy 가 확인해 상태 코드 404 로 돌려준다 | 채택 |
 | [0020](0020-forget-result-param-after-showing.md) | 관리자 결과 알림 주소(`?notice=` 등)는 보여 준 뒤 JS 로 주소창에서만 지운다 | 채택 |
 | [0021](0021-free-tier-operations.md) | 무료 플랜 안에서 운영한다: Supabase 일시정지는 Vercel cron 으로 막고, 사진은 WebP 만, 최적화 캐시는 7일 | 채택 |
+| [0022](0022-sm-breakpoint-for-footer-links.md) | sm 브레이크포인트를 560 으로 두고, 모바일 2열 묶음이 한 줄로 펴지는 폭으로만 쓴다 (푸터 링크) | 채택 |
 
 형식: 배경 / 결정 / 대안 / 결과(트레이드오프). 바꾸면 새 ADR을 쓰고 이전 것을 "대체됨"으로 표시한다.
