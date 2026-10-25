@@ -35,6 +35,8 @@ const files = [
     pattern: "src/infrastructure/admin-auth/proxy-session.ts",
   },
   { category: "return-to", pattern: "src/features/admin-auth/return-to.ts" },
+  // proxy 가 관리자 상세 주소의 문의/작업이 있는지 묻는 입구 (docs/adr/0019)
+  { category: "proxy-check", pattern: "src/features/*/proxy-check.ts" },
 ];
 
 const allow = (from, ...types) => ({
@@ -54,11 +56,11 @@ const layerPolicies = [
   allow("infrastructure", "shared", "domain", "application", "infrastructure"),
   allow("features", "shared", "application", "features", "ui", "config"),
   allowTypes("features", "domain"),
-  // features 는 actions.ts / queries.ts / routes.ts 에서만 infrastructure/container.ts 를 쓴다
+  // features 는 actions.ts / queries.ts / routes.ts / proxy-check.ts 에서만 infrastructure/container.ts 를 쓴다
   {
     from: {
       element: { type: "features" },
-      file: { categories: "server-entry" },
+      file: { categories: ["server-entry", "proxy-check"] },
     },
     allow: {
       to: {
@@ -72,7 +74,7 @@ const layerPolicies = [
   allow("app", "shared", "features", "ui", "sections", "app", "config"),
   allowTypes("app", "domain"),
   allow("config", "config"),
-  // proxy 는 i18n 설정, 관리자 세션 빠른 확인(infrastructure), 돌아올 주소 규칙(features)만 쓴다
+  // proxy 는 i18n 설정, 관리자 세션 빠른 확인(infrastructure), 돌아올 주소 규칙과 상세 존재 확인(features)만 쓴다
   {
     from: { file: { categories: "proxy" } },
     allow: {
@@ -83,7 +85,10 @@ const layerPolicies = [
           element: { type: "infrastructure" },
           file: { categories: "proxy-session" },
         },
-        { element: { type: "features" }, file: { categories: "return-to" } },
+        {
+          element: { type: "features" },
+          file: { categories: ["return-to", "proxy-check"] },
+        },
       ],
     },
   },

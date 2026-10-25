@@ -42,10 +42,10 @@ src/
 
 - `i18n/`(next-intl 설정, 로케일 Link, 날짜/가격 형식 훅)과 `lib/`(글꼴 등)은 ESLint 의 `config` 요소다. ui/sections 가 i18n 을 쓰는 것(`Link`, `useTranslations`, 형식 훅)은 허용이고, domain/application/infrastructure 는 쓰지 않는다
 - `@supabase/*`, `resend` 같은 외부 SDK import는 `infrastructure/` 안에서만 허용
-- `infrastructure/`, `features/*/queries.ts`, `features/*/actions.ts`, `features/*/routes.ts`는 `server-only`. features 에서 `container.ts` 를 쓸 수 있는 곳도 이 세 파일뿐이다
+- `infrastructure/`, `features/*/queries.ts`, `features/*/actions.ts`, `features/*/routes.ts`, `features/*/proxy-check.ts`는 `server-only`. features 에서 `container.ts` 를 쓸 수 있는 곳도 이 네 종류 파일뿐이다
 - `domain/`은 React, Next, zod 등 어떤 라이브러리도 import하지 않는다
 - `application/`도 외부 패키지를 import하지 않는다 (포트와 domain, shared만). 테스트의 `vitest`만 예외
-- `src/proxy.ts` 는 폴더가 아니라 파일 하나라 ESLint 파일 분류 `proxy` 로 둔다. i18n 설정, `infrastructure/admin-auth/proxy-session.ts`(관리자 세션 빠른 확인), `features/admin-auth/return-to.ts`(돌아갈 주소 규칙)만 쓴다
+- `src/proxy.ts` 는 폴더가 아니라 파일 하나라 ESLint 파일 분류 `proxy` 로 둔다. i18n 설정, `infrastructure/admin-auth/proxy-session.ts`(관리자 세션 빠른 확인), `features/admin-auth/return-to.ts`(돌아갈 주소 규칙), `features/*/proxy-check.ts`(관리자 상세의 문의/작업이 있는지, docs/adr/0019)만 쓴다
 
 ## 도메인 모델링 규칙
 - ID는 브랜드 타입: `type InquiryId = Brand<string, "InquiryId">`

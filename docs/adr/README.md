@@ -19,5 +19,6 @@
 | [0016](0016-admin-inquiries-url-state-and-post-redirect.md) | 관리자 문의 화면: 필터와 페이지는 주소에, 상태 바꾸기와 지우기는 폼 POST + redirect 로 두고, 상세를 열어도 자동으로 확인하지 않는다 | 채택 |
 | [0017](0017-keep-pretendard-and-its-cost.md) | 한글 글꼴은 Pretendard 를 유지한다 (OS 글꼴 전환은 기각) | 채택 |
 | [0018](0018-seo-site-url-and-preview-noindex.md) | 검색 노출: 주소 기준은 환경 변수, 운영 배포만 색인, 태그는 `src/lib/seo` 한 곳에서 만든다 | 채택 |
+| [0019](0019-admin-detail-404-in-proxy.md) | 관리자 상세 화면의 "없음"은 proxy 가 확인해 상태 코드 404 로 돌려준다 | 채택 |
 
 형식: 배경 / 결정 / 대안 / 결과(트레이드오프). 바꾸면 새 ADR을 쓰고 이전 것을 "대체됨"으로 표시한다.
