@@ -7,7 +7,13 @@ const items = ["웨딩 촬영", "인물 촬영", "제품 촬영"];
 
 describe("CategoryMarquee", () => {
   it("이름 붙은 목록 하나로 항목을 한 번씩만 읽힌다 (반복과 두 번째 벌은 숨김)", () => {
-    render(<CategoryMarquee items={items} label="촬영 분야" />);
+    render(
+      <CategoryMarquee
+        items={items}
+        label="촬영 분야"
+        pauseLabel="띠배너 멈추기"
+      />,
+    );
     const list = screen.getByRole("list", { name: "촬영 분야" });
     expect(
       within(list)
@@ -21,7 +27,13 @@ describe("CategoryMarquee", () => {
   });
 
   it("움직임은 motion-safe 에서만 켠다 (prefers-reduced-motion: reduce 이면 정지)", () => {
-    render(<CategoryMarquee items={items} label="촬영 분야" />);
+    render(
+      <CategoryMarquee
+        items={items}
+        label="촬영 분야"
+        pauseLabel="띠배너 멈추기"
+      />,
+    );
     const track = screen.getByTestId("marquee-track");
     const classes = track.className.split(" ");
     expect(classes).toContain("motion-safe:animate-marquee");
@@ -29,11 +41,15 @@ describe("CategoryMarquee", () => {
     expect(classes.filter((c) => c.startsWith("animate-"))).toEqual([]);
   });
 
-  it("장식 아이콘은 숨기고 Tab 포커스를 받지 않는다", async () => {
+  it("장식 아이콘은 숨기고, Tab 포커스는 멈춤 버튼 하나만 받는다", async () => {
     const user = userEvent.setup();
     render(
       <>
-        <CategoryMarquee items={items} label="촬영 분야" />
+        <CategoryMarquee
+          items={items}
+          label="촬영 분야"
+          pauseLabel="띠배너 멈추기"
+        />
         <button type="button">다음</button>
       </>,
     );
@@ -41,7 +57,47 @@ describe("CategoryMarquee", () => {
       expect(svg).toHaveAttribute("aria-hidden", "true");
     }
     await user.tab();
+    expect(screen.getByRole("button", { name: "띠배너 멈추기" })).toHaveFocus();
+    await user.tab();
     expect(screen.getByRole("button", { name: "다음" })).toHaveFocus();
+  });
+
+  it("멈춤 토글: 누르면 그 자리에 멈추고(aria-pressed) 다시 누르면 움직인다. 마우스를 올려도 멈춘다", async () => {
+    const user = userEvent.setup();
+    render(
+      <CategoryMarquee
+        items={items}
+        label="촬영 분야"
+        pauseLabel="띠배너 멈추기"
+      />,
+    );
+    const toggle = screen.getByRole("button", { name: "띠배너 멈추기" });
+    const track = screen.getByTestId("marquee-track");
+    expect(toggle).toHaveAttribute("aria-pressed", "false");
+    expect(track).toHaveClass("group-hover:animation-paused!");
+    expect(track).not.toHaveClass("animation-paused!");
+
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute("aria-pressed", "true");
+    expect(track).toHaveClass("animation-paused!");
+
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute("aria-pressed", "false");
+    expect(track).not.toHaveClass("animation-paused!");
+  });
+
+  it("멈춤 버튼은 평소에 보이지 않고 키보드 포커스에서만 나타난다 (시안 모양 그대로)", () => {
+    render(
+      <CategoryMarquee
+        items={items}
+        label="촬영 분야"
+        pauseLabel="띠배너 멈추기"
+      />,
+    );
+    expect(screen.getByRole("button", { name: "띠배너 멈추기" })).toHaveClass(
+      "sr-only",
+      "focus-visible:not-sr-only",
+    );
   });
 
   it("itemLang 을 주면 항목에 lang 을 붙이고 목록 이름은 화면 언어 그대로다", () => {
@@ -49,6 +105,7 @@ describe("CategoryMarquee", () => {
       <CategoryMarquee
         items={["Wedding Photography"]}
         label="촬영 분야"
+        pauseLabel="띠배너 멈추기"
         itemLang="en"
       />,
     );

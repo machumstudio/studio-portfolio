@@ -29,6 +29,7 @@
     },
     "categories": {
       "label": "촬영 분야",
+      "pause": "띠배너 멈추기",
       "event": "Event Photography",
       "commercial": "Commercial Photography",
       "product": "Product Photography",
