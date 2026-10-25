@@ -41,6 +41,6 @@
   - Pedro Pulido ([@pedropulidophotography](https://unsplash.com/@pedropulidophotography)): [LdpSdMmy29E](https://unsplash.com/photos/LdpSdMmy29E)
   - Harshit Suryawanshi ([@harshit_suryawanshi](https://unsplash.com/@harshit_suryawanshi)): [McrcNjB3WdA](https://unsplash.com/photos/McrcNjB3WdA), [0M9wB84qeFw](https://unsplash.com/photos/0M9wB84qeFw)
   - Olga Serjantu ([@olgaserjantu](https://unsplash.com/@olgaserjantu)): [qu2JENeCaE4](https://unsplash.com/photos/qu2JENeCaE4)
-- Font: Manrope (SIL Open Font License)
+- Font: Manrope by Mikhail Sharanda and The Manrope Project Authors (SIL Open Font License 1.1) — https://github.com/googlefonts/manrope . 저장소의 가변 woff2(4.505)를 라틴 범위로 서브셋해 `src/assets/fonts/manrope/` 에 둔다 (윤곽선 수정 없음). 라이선스 전문과 만드는 법은 같은 폴더의 `OFL.txt`, `README.md`
 - Font: Pretendard by Kil Hyung-jin (SIL Open Font License 1.1, Reserved Font Name Pretendard) — https://github.com/orioncactus/pretendard . 한글 대체 글꼴. npm `pretendard` 패키지의 가변 다이나믹 서브셋을 수정 없이 사용 (공유 카드 이미지 `public/og` 도 같은 글꼴로 그림)
 - Brand icons: Simple Icons (CC0 1.0) — https://simpleicons.org . 소셜 아이콘(Instagram, Facebook, X) path 를 사용. 각 상표는 해당 소유자의 것이다
