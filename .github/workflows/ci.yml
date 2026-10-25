@@ -72,7 +72,8 @@ jobs:
           fetch-depth: 0
 
       # 문서(docs/**, *.md)만 바뀌었으면 아래 단계를 건너뛰고 잡은 성공으로 끝난다.
-      # 워크플로 paths-ignore 를 쓰면 e2e 가 필수 체크일 때 "대기"로 남아서 잡 안에서 판단한다
+      # 워크플로 paths-ignore 를 쓰면 e2e 가 필수 체크일 때 "대기"로 남아서 잡 안에서 판단한다.
+      # 아래 조건은 run != 'false': 출력이 없거나 이상하면 건너뛰지 않고 돈다 (건너뛰기는 확실히 문서만일 때만)
       - name: 바뀐 경로 확인
         id: changes
         env:
@@ -85,39 +86,39 @@ jobs:
           fi
 
       - uses: pnpm/action-setup@v6 # 버전은 package.json packageManager
-        if: steps.changes.outputs.run == 'true'
+        if: steps.changes.outputs.run != 'false'
 
       - uses: actions/setup-node@v7
-        if: steps.changes.outputs.run == 'true'
+        if: steps.changes.outputs.run != 'false'
         with:
           node-version: 22
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-        if: steps.changes.outputs.run == 'true'
+        if: steps.changes.outputs.run != 'false'
 
       - name: Playwright 버전
-        if: steps.changes.outputs.run == 'true'
+        if: steps.changes.outputs.run != 'false'
         id: playwright
         run: echo "version=$(pnpm exec playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
 
       - uses: actions/cache@v6
-        if: steps.changes.outputs.run == 'true'
+        if: steps.changes.outputs.run != 'false'
         id: browsers
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
 
       - name: Chromium 설치
-        if: steps.changes.outputs.run == 'true' && steps.browsers.outputs.cache-hit != 'true'
+        if: steps.changes.outputs.run != 'false' && steps.browsers.outputs.cache-hit != 'true'
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Chromium 시스템 의존성
-        if: steps.changes.outputs.run == 'true' && steps.browsers.outputs.cache-hit == 'true'
+        if: steps.changes.outputs.run != 'false' && steps.browsers.outputs.cache-hit == 'true'
         run: pnpm exec playwright install-deps chromium
 
       - uses: actions/cache@v6
-        if: steps.changes.outputs.run == 'true'
+        if: steps.changes.outputs.run != 'false'
         with:
           path: .next/cache
           key: next-e2e-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('src/**', 'messages/**') }}
@@ -126,7 +127,7 @@ jobs:
       # webServer 가 DATA_STORE=memory 로 build + start 한다.
       # 화면 크기와 상관없는 테스트는 laptop 하나, @responsive 만 세 화면 크기 (playwright.config.ts)
       - run: pnpm test:e2e
-        if: steps.changes.outputs.run == 'true'
+        if: steps.changes.outputs.run != 'false'
 
       - name: 실패한 테스트의 스크린샷, trace, 보고서
         if: failure()
