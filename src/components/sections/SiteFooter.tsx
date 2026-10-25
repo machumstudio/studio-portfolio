@@ -103,12 +103,13 @@ export function SiteFooter({ cta, year }: SiteFooterProps) {
   return (
     <footer className="flex flex-col">
       <div className="flex flex-col items-end gap-5 overflow-hidden lg:gap-15 3xl:gap-25">
+        {/* 브랜드 로고타입 장식 (Dark/15, 1.28:1). 글자는 CSS content 로 그려 화면 낭독기와 명도 대비 검사에서 본문으로 보지 않는다
+            (WCAG 1.4.3 로고타입 예외, docs/accessibility.md). 스튜디오 이름은 아래 저작권 줄에 글자로 있다 */}
         <p
           aria-hidden
-          className="pr-4 text-wordmark whitespace-nowrap text-dark-15 uppercase lg:pr-20 3xl:pr-40.5"
-        >
-          {t("wordmark")}
-        </p>
+          data-text={t("wordmark")}
+          className="pr-4 text-wordmark whitespace-nowrap text-dark-15 uppercase decorative-text lg:pr-20 3xl:pr-40.5"
+        />
         <CategoryMarquee
           itemLang="en"
           className="w-full"
