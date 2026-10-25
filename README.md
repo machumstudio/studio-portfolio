@@ -5,9 +5,62 @@
 Figma 시안을 PC / 태블릿 / 모바일 반응형 웹과 간단한 관리자로 구현하는 포트폴리오 데모입니다.
 가상의 사진 스튜디오 "Machum Studio" 사이트를 시안 그대로, 빠르게, 운영할 수 있게 만드는 과정을 이 레포의 커밋 순서대로 남깁니다.
 
-- 라이브: TODO (22칸 배포 후)
-- Lighthouse (20칸 로컬 운영 빌드, 2026-10-25): 데스크톱 성능 98~100, 모바일 성능 중앙값 78~97(회차별 68~99, 한글 글꼴 Pretendard 때문에 흔들림, [ADR 0017](docs/adr/0017-keep-pretendard-and-its-cost.md)), 접근성 100(21칸, 20칸 96 에서 색 대비를 고침, [docs/accessibility.md](docs/accessibility.md)), 권장사항/SEO 100. 표와 측정 조건은 [docs/performance.md](docs/performance.md) (README 표는 22칸 배포 후)
-- 시안 재현도: TODO (PR마다 `pnpm test:visual` 차이율 기록, 페이지 완성 후 표로 정리)
+- **라이브: https://machum-studio.vercel.app** (영어 `/en`, 관리자 `/admin/login`)
+- 운영 매뉴얼: [docs/ops-manual.md](docs/ops-manual.md) (운영자용 관리자 사용법, 서비스 한도, 개발자 인수인계)
+- 요구사항 → 구현 매핑, 케이스 스터디: TODO (23칸, [docs/requirements.md](docs/requirements.md) 기반)
+
+## 화면
+| 홈 | 포트폴리오 |
+|---|---|
+| ![홈 1440](docs/screenshots/home-desktop.jpg) | ![포트폴리오 1440](docs/screenshots/portfolio-desktop.jpg) |
+| **작업 상세** | **문의** |
+| ![작업 상세 1440](docs/screenshots/work-desktop.jpg) | ![문의 1440](docs/screenshots/contact-desktop.jpg) |
+
+| 모바일 390 홈 | 포트폴리오 | 작업 상세 | 문의 |
+|---|---|---|---|
+| ![홈 390](docs/screenshots/home-mobile.jpg) | ![포트폴리오 390](docs/screenshots/portfolio-mobile.jpg) | ![작업 상세 390](docs/screenshots/work-mobile.jpg) | ![문의 390](docs/screenshots/contact-mobile.jpg) |
+
+관리자 (작업 목록, 사진 편집, 문의 목록, 문의 상세)
+
+| 작업 목록 | 사진 편집 |
+|---|---|
+| ![관리자 작업 목록](docs/screenshots/admin-works.jpg) | ![관리자 사진 편집](docs/screenshots/admin-work-edit.jpg) |
+| **문의 목록** | **문의 상세** |
+| ![관리자 문의 목록](docs/screenshots/admin-inquiries.jpg) | ![관리자 문의 상세](docs/screenshots/admin-inquiry.jpg) |
+
+스크린샷은 로컬 운영 빌드(인메모리 저장소, 시드 작업)에서 찍었습니다. 관리자 화면은 테스트 계정과 가상 문의입니다 (실제 관리자 계정과 운영 데이터는 쓰지 않음).
+
+## Lighthouse
+> **로컬 운영 빌드 기준(20칸, 2026-10-25). 운영 주소 측정은 배포 후** 이 표를 바꿉니다.
+
+| 페이지 | 모바일 성능 | 데스크톱 성능 | 접근성 | 권장사항 | SEO |
+|---|---|---|---|---|---|
+| 홈 `/` | 94 (68~96) | 99 (98~100) | 100 | 100 | 100 |
+| 포트폴리오 `/portfolio` | 97 (84~97) | 100 | 100 | 100 | 100 |
+| 작업 상세 `/work/a-wedding-tale` | 85 (81~98) | 99 (99~100) | 100 | 100 | 100 |
+| 소개 `/about` | 78 (78~99) | 100 | 100 | 100 | 100 |
+| 서비스 `/services` | 97 (97~99) | 100 (99~100) | 100 | 100 | 100 |
+| 문의 `/contact` | 95 (81~97) | 100 | 100 | 100 | 100 |
+
+- 성능은 3회 중앙값(괄호는 회차별 최소~최대). 접근성/권장사항/SEO 는 모바일·데스크톱 같음. 접근성은 20칸 표에서 96(색 대비)이었고 21칸에서 고쳐 12개 모두 100 ([docs/accessibility.md](docs/accessibility.md))
+- 측정 조건: Lighthouse 13.5.0, Playwright Chromium, Apple M5. 모바일은 Lighthouse 기본(느린 4G·CPU 4배 감속 시뮬레이션), 데스크톱은 desktop 설정. 서버는 `VERCEL_ENV=production pnpm build && pnpm start`(색인 허용), 저장소는 개발 DB. 페이지마다 첫 회(사진 최적화 캐시 데우기)는 버림
+- **모바일 성능은 흔들립니다.** 원인은 한글 글꼴 Pretendard 조각이 시뮬레이션에서 첫 화면 앞에 끼는 회차가 있어서입니다 (FCP 0.9s ↔ 4.2s). 같은 빌드에서 Pretendard 를 빼면 96~99 로 안정되지만, OS 와 상관없이 같은 모양을 위해 유지합니다 ([ADR 0017](docs/adr/0017-keep-pretendard-and-its-cost.md))
+- 전체 표(LCP/CLS/TBT/FCP)와 다시 재는 방법: [docs/performance.md](docs/performance.md)
+
+## 시안 재현도
+`pnpm test:visual`: Playwright 전체 페이지 스크린샷을 Figma 시안 PNG 와 픽셀 비교한 차이율입니다 (낮을수록 시안과 같음, 사진 영역은 양쪽 모두 가리고 비교, [ADR 0004](docs/adr/0004-visual-regression-against-figma.md)). 2026-10-25, 22칸.
+
+| 페이지 | 모바일 390 | 노트북 1440 | 데스크톱 1920 |
+|---|---|---|---|
+| 홈 | 7.22% | 4.26% | 3.11% |
+| 포트폴리오 | 10.19% | 3.80% | 2.91% |
+| 소개 | 16.28% | 8.83% | 8.16% |
+| 서비스 | 13.32% | 3.30% | 3.16% |
+| 문의 | 10.10% | 6.14% | 5.45% |
+
+- 시안은 영어 문구, 비교는 한국어 기본 페이지라 글자 모양과 줄바꿈이 다르고, 그만큼 페이지 높이가 달라져 아래 섹션이 밀립니다. 모바일이 높은 이유도 대부분 이것입니다 (좁은 폭에서 줄 수 차이가 큼)
+- 시안에서 바꾼 것도 차이에 들어갑니다: 접근성 색 대비(Grey/40 → Grey/50), 포트폴리오 브랜드 띠 자리의 카테고리 필터
+- 섹션별 차이율과 칸마다의 변화는 각 PR 본문에 있습니다
 
 ## 스택
 Next.js 16 (App Router) · TypeScript strict · Tailwind CSS v4 · next-intl (ko/en) · Supabase (Auth/DB/Storage) · zod (문의 폼은 react-hook-form 없이 서버 액션 + domain 검증, ADR 0009) · Vitest · Playwright · Storybook · GitHub Actions · Vercel
@@ -152,6 +205,12 @@ secret 키가 브라우저로 가는 파일에 없는지는 `pnpm build && pnpm 
 - 예전 사이트 주소의 301: `src/lib/seo/legacy-redirects.ts` 목록에 `{ from, to }` 한 줄을 더합니다 (언어 경로는 자동). 도착지가 없는 페이지이거나 다른 규칙을 다시 타면 `pnpm test` 가 실패합니다
 - 공유 카드 기본 이미지: `public/og/machum-studio-<ko|en>.jpg` (1200x630). 문구를 바꾸면 `pnpm og:image` 로 다시 그립니다. 작업 상세는 대표 사진이 카드입니다
 
+## 배포와 운영
+- Vercel(Hobby): main 에 머지하면 운영 배포(운영 Supabase, 색인 허용), PR 은 미리보기 배포(개발 Supabase, noindex, Vercel 로그인 보호)
+- 운영 빌드는 운영 DB 의 공개 작업을 읽어 페이지를 미리 그립니다. 그래서 DB 가 멈춰 있으면 빌드가 실패하고 직전 배포가 계속 나갑니다. 새 테이블/컬럼은 머지 전에 운영 DB 에 먼저 적용합니다
+- Supabase 무료 플랜의 7일 비활성 일시정지는 Vercel cron 이 매일 `GET /api/keepalive` 로 저장소를 한 번 읽어 막습니다 ([ADR 0021](docs/adr/0021-free-tier-operations.md))
+- 환경 변수 목록, 마이그레이션 적용, 키 교체, 관리자 추가, 서비스 한도: [docs/ops-manual.md](docs/ops-manual.md)
+
 ## 스크립트
 | 명령 | 내용 |
 |---|---|
@@ -186,6 +245,8 @@ main 은 보호 브랜치입니다: PR 필수(승인 0), CI 통과 필수, 최�
 | [0004](docs/adr/0004-visual-regression-against-figma.md) | Figma 시안과 픽셀 비교로 재현도 측정 |
 | [0005](docs/adr/0005-issue-pr-ci-workflow.md) | 칸 단위 이슈 → PR → CI |
 | [0006](docs/adr/0006-site-route-group.md) | 공개 사이트 공통 틀은 `(site)` 라우트 그룹 레이아웃 |
+
+0007~0021(문의 알림, 관리자, SEO, 무료 플랜 운영 등)은 [docs/adr/README.md](docs/adr/README.md) 에 전체 목록이 있습니다.
 
 ## 크레딧
 - Design by [Produce UI](https://www.figma.com/community/file/1324089527430438614) (CC BY 4.0) — "Photographer Portfolio Website UI Template - Dark Theme". 반응형 구현, 태블릿 레이아웃, 작업 상세, 관리자, 다국어를 추가했고 문구와 사진을 바꿨습니다.
