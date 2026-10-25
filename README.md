@@ -31,21 +31,21 @@ Figma 시안을 PC / 태블릿 / 모바일 반응형 웹과 간단한 관리자�
 스크린샷은 로컬 운영 빌드(인메모리 저장소, 시드 작업)에서 찍었습니다. 관리자 화면은 테스트 계정과 가상 문의입니다 (실제 관리자 계정과 운영 데이터는 쓰지 않음).
 
 ## Lighthouse
-> **로컬 운영 빌드 기준(20칸, 2026-10-25). 운영 주소 측정은 배포 후** 이 표를 바꿉니다.
+> **운영 주소 https://machum-studio.vercel.app 기준 (2026-10-25, 첫 운영 배포 뒤).**
 
 | 페이지 | 모바일 성능 | 데스크톱 성능 | 접근성 | 권장사항 | SEO |
 |---|---|---|---|---|---|
-| 홈 `/` | 94 (68~96) | 99 (98~100) | 100 | 100 | 100 |
-| 포트폴리오 `/portfolio` | 97 (84~97) | 100 | 100 | 100 | 100 |
-| 작업 상세 `/work/a-wedding-tale` | 85 (81~98) | 99 (99~100) | 100 | 100 | 100 |
-| 소개 `/about` | 78 (78~99) | 100 | 100 | 100 | 100 |
-| 서비스 `/services` | 97 (97~99) | 100 (99~100) | 100 | 100 | 100 |
-| 문의 `/contact` | 95 (81~97) | 100 | 100 | 100 | 100 |
+| 홈 `/` | 99 (98~100) | 100 | 100 | 100 | 100 |
+| 포트폴리오 `/portfolio` | 98 (98~99) | 100 | 100 | 100 | 100 |
+| 작업 상세 `/work/a-wedding-tale` | 97 (94~99) | 100 (99~100) | 100 | 100 | 100 |
+| 소개 `/about` | 98 (98~99) | 100 | 100 | 100 | 100 |
+| 서비스 `/services` | 98 (97~99) | 100 | 100 | 100 | 100 |
+| 문의 `/contact` | 98 | 100 | 100 | 100 | 100 |
 
-- 성능은 3회 중앙값(괄호는 회차별 최소~최대). 접근성/권장사항/SEO 는 모바일·데스크톱 같음. 접근성은 20칸 표에서 96(색 대비)이었고 21칸에서 고쳐 12개 모두 100 ([docs/accessibility.md](docs/accessibility.md))
-- 측정 조건: Lighthouse 13.5.0, Playwright Chromium, Apple M5. 모바일은 Lighthouse 기본(느린 4G·CPU 4배 감속 시뮬레이션), 데스크톱은 desktop 설정. 서버는 `VERCEL_ENV=production pnpm build && pnpm start`(색인 허용), 저장소는 개발 DB. 페이지마다 첫 회(사진 최적화 캐시 데우기)는 버림
-- **모바일 성능은 흔들립니다.** 원인은 한글 글꼴 Pretendard 조각이 시뮬레이션에서 첫 화면 앞에 끼는 회차가 있어서입니다 (FCP 0.9s ↔ 4.2s). 같은 빌드에서 Pretendard 를 빼면 96~99 로 안정되지만, OS 와 상관없이 같은 모양을 위해 유지합니다 ([ADR 0017](docs/adr/0017-keep-pretendard-and-its-cost.md))
-- 전체 표(LCP/CLS/TBT/FCP)와 다시 재는 방법: [docs/performance.md](docs/performance.md)
+- 성능은 3회 중앙값(괄호는 회차별 최소~최대, 세 회차가 같으면 생략). 접근성/권장사항/SEO 는 모바일·데스크톱 같음. 페이지마다 첫 회(이미지 최적화 캐시가 처음 만들어지는 회차)는 버림
+- 측정 조건: 2026-10-25, 운영 주소(Vercel Hobby, CDN 엣지 서울 `icn1`, 운영 DB 는 페이지 읽기만), Lighthouse 13.5.0, Playwright Chromium, Apple M5. 모바일은 Lighthouse 기본(느린 4G·CPU 4배 감속 시뮬레이션), 데스크톱은 desktop 설정
+- 로컬 운영 빌드에서는 한글 글꼴 Pretendard 조각이 시뮬레이션에서 첫 화면 앞에 끼는 회차가 있어 모바일 성능이 78~97(회차별 68~99)로 흔들렸습니다 ([ADR 0017](docs/adr/0017-keep-pretendard-and-its-cost.md)). 운영 주소에서는 그런 회차가 없었습니다 (FCP 1.1s~1.6s). 이유는 확인하지 않았고, 한 번 잰 결과입니다
+- 전체 표(LCP/CLS/TBT/FCP), 로컬 값과의 비교, 다시 재는 방법: [docs/performance.md](docs/performance.md)
 
 ## 시안 재현도
 `pnpm test:visual`: Playwright 전체 페이지 스크린샷을 Figma 시안 PNG 와 픽셀 비교한 차이율입니다 (낮을수록 시안과 같음, 사진 영역은 양쪽 모두 가리고 비교, [ADR 0004](docs/adr/0004-visual-regression-against-figma.md)). 2026-10-25, 22칸.
@@ -226,7 +226,7 @@ secret 키가 브라우저로 가는 파일에 없는지는 `pnpm build && pnpm 
 | `pnpm storybook` / `pnpm build-storybook` | Storybook 개발 서버 / 정적 빌드 |
 | `pnpm db:seed` | Supabase works 를 코드 시드로 되돌림 |
 | `pnpm og:image` | 공유 카드 기본 이미지(1200x630, ko/en)를 다시 그림 |
-| `pnpm lighthouse` | 공개 페이지 6개 × 모바일/데스크톱 Lighthouse 표 (중앙값, 회차별 성능, FCP 범위. 운영 빌드를 띄운 뒤, [docs/performance.md](docs/performance.md)) |
+| `pnpm lighthouse` | 공개 페이지 6개 × 모바일/데스크톱 Lighthouse 표 (중앙값, 회차별 성능, FCP 범위. 로컬 운영 빌드를 띄운 뒤, 또는 `--base https://machum-studio.vercel.app`, [docs/performance.md](docs/performance.md)) |
 | `pnpm check:bundle` | 빌드 결과의 클라이언트 번들에 서버 비밀이 없는지 검사 |
 | `pnpm format` | Prettier |
 
