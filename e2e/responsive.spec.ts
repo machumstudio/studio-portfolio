@@ -61,9 +61,8 @@ const problems = (page: Page) =>
     // 푸터 워드마크가 화면 안에 다 들어온다
     const wordmark = document.querySelector("footer p[aria-hidden]");
     if (wordmark) {
-      const range = document.createRange();
-      range.selectNodeContents(wordmark);
-      const box = range.getBoundingClientRect();
+      // 글자는 ::before 로 그린다. 요소 상자가 글자 폭(+ 오른쪽 여백)이다 (flex items-end)
+      const box = wordmark.getBoundingClientRect();
       if (box.left < 0 || box.right > innerWidth)
         found.push(
           `워드마크 잘림 ${Math.round(box.left)}~${Math.round(box.right)}`,

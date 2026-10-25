@@ -75,8 +75,11 @@ describe("SiteFooter", () => {
     );
   });
 
-  it("큰 워드마크는 장식이라 보조기기에서 숨긴다", () => {
-    renderFooter();
-    expect(screen.getByText("Machum")).toHaveAttribute("aria-hidden", "true");
+  it("큰 워드마크는 장식이라 보조기기에서 숨기고, 글자는 CSS content 로 그린다", () => {
+    const { container } = renderFooter();
+    const wordmark = container.querySelector('[data-text="Machum"]');
+    expect(wordmark).toHaveAttribute("aria-hidden", "true");
+    expect(wordmark).toHaveClass("decorative-text");
+    expect(wordmark).toBeEmptyDOMElement();
   });
 });

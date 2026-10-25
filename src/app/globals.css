@@ -346,6 +346,13 @@
     font-size: 296px;
   }
 }
+/* 장식 글자: 글자를 DOM 텍스트가 아니라 CSS content(data-text)로 그린다. 화면 낭독기(aria-hidden 과 같이 쓴다)와
+   명도 대비 검사(axe, Lighthouse)가 본문 글자로 보지 않는다. 푸터 워드마크처럼 브랜드 로고타입 장식에만 쓴다 (docs/accessibility.md) */
+@utility decorative-text {
+  &::before {
+    content: attr(data-text);
+  }
+}
 /* h4: FAQ 질문 (SemiBold, 행간 auto). lead 와 크기는 같지만 굵기/행간이 달라 따로 둔다.
    eyebrow: 섹션 제목 위 라벨 (SemiBold). button: 버튼/링크 글자 (노트북도 14). field: 입력값/placeholder. label: 폼 라벨.
    caption: 푸터 링크/열 제목 (노트북도 14, 굵기는 사용처에서 font-medium/semibold).
