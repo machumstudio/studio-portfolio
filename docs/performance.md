@@ -70,4 +70,4 @@ CI 에는 넣지 않았다: GitHub 러너는 CPU 를 나눠 써서 점수가 흔
 ## 남긴 것
 - 모바일 성능 90 미만 회차: 원인은 한글 글꼴. Pretendard 를 유지하는 한 남는다 (ADR 0017)
 - ~~접근성 96: `color-contrast`~~ → 21칸에서 해결. Grey/40 글자는 Grey/50 으로(4.83:1), 푸터 워드마크는 로고타입 장식으로 CSS content 에 그린다. 접근성 100 ([docs/accessibility.md](accessibility.md) "색 대비")
-- 이미지 형식은 WebP 만 (AVIF 를 켜면 더 작아지지만 Vercel 무료 범위의 이미지 변환 횟수를 형식마다 쓴다). 22칸 배포 뒤 사용량을 보고 정한다
+- ~~이미지 형식은 WebP 만, 22칸 배포 뒤 정한다~~ → 22칸에서 **WebP 유지**로 정했다. AVIF 는 약 20% 작아지지만 형식이 Vercel 이미지 캐시 키라 형식마다 변환 횟수(Hobby 월 5,000)를 쓰고 첫 요청 인코딩이 느리다. 지금 병목은 사진이 아니라 글꼴이다. 같이 `images.minimumCacheTTL` 을 7일로 늘려 Storage 사진의 재변환을 줄였다 ([ADR 0021](adr/0021-free-tier-operations.md))
