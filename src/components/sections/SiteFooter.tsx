@@ -92,10 +92,11 @@ type SiteFooterProps = {
 //   링크 열은 시안의 양끝 정렬 대신 왼쪽부터 일정한 간격 100/111 (시안 en 글자 폭에서 양끝 정렬이 만든 간격).
 //   한국어는 글자가 짧아 양끝 정렬이면 열 사이가 벌어지고 마지막 열이 오른쪽 끝에 붙는다.
 //   1024~1439(시안 없음): 링크 4열이 CTA 옆에 들어가지 않아(en 최소 약 760) CTA 위 / 링크 아래로 쌓는다.
-//   링크 배치 (391~767 은 시안 없음, ADR 0022):
+//   링크 배치 (391~1439 는 시안 없음, ADR 0022):
 //   - 560 미만: 2x2. 시안 390 은 왼쪽부터 쌓는 2열이지만 넓어지면 오른쪽이 비어 보여서, 링크 칸 폭을 같은 비율 2열로 나눈다
-//   - sm(560)~767: 4열 한 줄, 양 끝 맞춤 (최소 간격 24. 560 에서 en 은 약 32)
-//   - md 부터: 4열 한 줄, 왼쪽부터 간격 50 (lg 100)
+//   - sm(560)~1439: 4열 한 줄, 양 끝 맞춤 (최소 간격 24. 560 에서 en 은 약 32). 링크가 CTA 아래 칸 폭을 다 쓰므로
+//     왼쪽 정렬이면 오른쪽이 비어 보인다
+//   - xl(1440) 부터: 시안. CTA 옆에서 왼쪽부터 간격 100/111
 //   열 제목과 링크는 줄을 바꾸지 않는다 (한국어가 글자 단위로 꺾이지 않게).
 // 링크 열: 제목(14/14/18 SemiBold Grey/50) → 16/16/20 → 링크(14/14/18 Medium Grey/95, pad 6 0,
 //   아래 테두리 Dark/20) 간격 4/4/6.
@@ -132,7 +133,7 @@ export function SiteFooter({ cta, year }: SiteFooterProps) {
           aria-label={t("footer.label")}
           className="border-x border-dark-12 px-5 py-10 lg:px-15 lg:py-20 xl:flex-1 xl:border-l-0 xl:px-12.5 3xl:px-20 3xl:py-25"
         >
-          <ul className="grid w-full grid-cols-2 gap-x-12.5 gap-y-10 px-5 sm:flex sm:justify-between sm:gap-x-6 md:w-fit md:justify-start md:gap-x-12.5 lg:gap-x-25 lg:px-0 3xl:gap-x-27.75">
+          <ul className="grid w-full grid-cols-2 gap-x-12.5 gap-y-10 px-5 sm:flex sm:justify-between sm:gap-x-6 lg:px-0 xl:w-fit xl:justify-start xl:gap-x-25 3xl:gap-x-27.75">
             {columns.map((column) => (
               <li
                 key={column.key}
