@@ -828,6 +828,13 @@
       "body": "The database or sign-in service may be having a temporary problem. Please try again in a moment. Anything you already saved is still there.",
       "retry": "Try again",
       "works": "Back to works"
+    },
+    "notFound": {
+      "metadata": "Page not found | Machum Studio Admin",
+      "title": "Page not found",
+      "body": "The address is wrong or the admin page doesn't exist. Pick one from the menu.",
+      "works": "Back to works",
+      "inquiries": "Back to inquiries"
     }
   }
 }
