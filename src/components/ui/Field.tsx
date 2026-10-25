@@ -57,7 +57,7 @@ const singleLine = "h-11.25 3xl:h-14.5";
 
 const control =
   "w-full rounded-none border-b border-dark-20 bg-transparent pt-2.5 pb-2.25 text-field text-white " +
-  "placeholder:text-grey-40 placeholder:uppercase 3xl:pt-3.5 3xl:pb-3.25 " +
+  "placeholder:text-grey-50 placeholder:uppercase 3xl:pt-3.5 3xl:pb-3.25 " +
   "outline-none focus-visible:border-purple-70 aria-invalid:border-purple-80 " +
   "disabled:cursor-not-allowed disabled:opacity-50";
 
@@ -112,7 +112,7 @@ export function Select({
           singleLine,
           "cursor-pointer appearance-none pr-8 [&_option]:bg-dark-08 [&_option]:text-white [&_option]:normal-case",
           // 빈 값(placeholder)이 선택돼 있으면 Input 의 placeholder 와 같은 모양
-          "has-[option[value='']:checked]:text-grey-40 has-[option[value='']:checked]:uppercase",
+          "has-[option[value='']:checked]:text-grey-50 has-[option[value='']:checked]:uppercase",
           className,
         )}
         defaultValue={initial}

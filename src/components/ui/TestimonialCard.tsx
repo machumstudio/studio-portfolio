@@ -51,7 +51,7 @@ export function TestimonialCard({
       <div className="relative flex flex-wrap items-center justify-between gap-x-2.5 gap-y-4 lg:gap-x-6.5">
         <div className="max-w-full">
           <h3 className="text-lead text-grey-90">{name}</h3>
-          <p className="text-body text-grey-40">{location}</p>
+          <p className="text-body text-grey-50">{location}</p>
         </div>
         <ul className="flex shrink-0 gap-2 rounded-full border border-dark-12 bg-dark-03 p-1.75 3xl:gap-2.5 3xl:p-2.25">
           {socials.map((social) => (

@@ -90,7 +90,7 @@ export function HomeHero({ photos }: HomeHeroProps) {
       <div className="relative flex flex-col gap-5 overflow-hidden border-y border-dark-12 page-x py-9.75 lg:flex-row lg:items-center lg:justify-between lg:py-14.75 3xl:py-19.75">
         <Rings className="absolute top-1/2 left-1/2 hidden size-65.5 -translate-1/2 lg:block 3xl:size-86.5" />
         <hgroup className="relative flex flex-col gap-1 3xl:gap-2.5">
-          <p className="text-tagline text-grey-40 uppercase">
+          <p className="text-tagline text-grey-50 uppercase">
             {t("Hero.tagline")}
           </p>
           <h1

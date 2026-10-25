@@ -20,7 +20,7 @@
   --color-dark-20: #2f2f37;
   --color-dark-25: #3b3b45;
   --color-dark-30: #474752;
-  --color-grey-40: #62646c; /* 텍스트 계열 */
+  --color-grey-40: #62646c; /* 텍스트 계열. 어두운 배경 위 글자로는 쓰지 않는다: Dark/03 위 3.41:1 로 WCAG AA(4.5:1) 미달. 흐린 글자는 grey-50 (docs/accessibility.md) */
   --color-grey-50: #797c86;
   --color-grey-70: #afb0b6;
   --color-grey-80: #cacace;

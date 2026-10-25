@@ -140,6 +140,12 @@ const eslintConfig = defineConfig([
           message:
             "Tailwind 임의값 금지. docs/design/tokens.css 의 토큰을 쓴다 (ADR 0001)",
         })),
+        // Grey/40 글자는 어두운 배경(Dark/03~)에서 3.41:1 이하라 WCAG AA(4.5:1) 미달 (docs/accessibility.md)
+        ...["Literal", "TemplateElement"].map((node) => ({
+          selector: `${node}[${node === "Literal" ? "value" : "value.raw"}=/\\btext-grey-40\\b/]`,
+          message:
+            "Grey/40 글자는 어두운 배경에서 명도 대비 미달. 흐린 글자는 text-grey-50 을 쓴다 (docs/accessibility.md)",
+        })),
       ],
     },
   },
