@@ -24,3 +24,23 @@ test("404 화면에서 홈과 작업 목록으로 간다", async ({ page }) => {
   await page.getByRole("link", { name: "작업 둘러보기" }).click();
   await expect(page).toHaveURL(/\/portfolio$/);
 });
+
+test("관리자: 없는 관리자 주소는 한국어 404 화면 (Next 기본 영어 404 가 아니다)", async ({
+  page,
+}, info) => {
+  test.skip(info.project.name !== "laptop", "화면 크기와 무관");
+  await page.goto("/admin/login");
+  await page.getByLabel("이메일").fill("admin@example.com");
+  await page.getByLabel("비밀번호").fill("memory-admin-password");
+  await page.getByRole("button", { name: "로그인" }).click();
+  await expect(page).toHaveURL("/admin");
+
+  expect((await page.goto("/admin/no-such/page"))?.status()).toBe(404);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "화면을 찾을 수 없습니다",
+  );
+  await expect(page).toHaveTitle("화면을 찾을 수 없음 | Machum Studio 관리자");
+  await expect(page.locator("html")).toHaveAttribute("lang", "ko");
+  await page.getByRole("link", { name: "문의 목록으로" }).click();
+  await expect(page).toHaveURL("/admin/inquiries");
+});
