@@ -248,7 +248,7 @@ main 은 보호 브랜치입니다: PR 필수(승인 0), CI 통과 필수, 최�
 | [0005](docs/adr/0005-issue-pr-ci-workflow.md) | 칸 단위 이슈 → PR → CI |
 | [0006](docs/adr/0006-site-route-group.md) | 공개 사이트 공통 틀은 `(site)` 라우트 그룹 레이아웃 |
 
-0007~0021(문의 알림, 관리자, SEO, 무료 플랜 운영 등)은 [docs/adr/README.md](docs/adr/README.md) 에 전체 목록이 있습니다.
+0007~0022(문의 알림, 관리자, SEO, 무료 플랜 운영, 브레이크포인트 등)은 [docs/adr/README.md](docs/adr/README.md) 에 전체 목록이 있습니다.
 
 ## 크레딧
 - Design by [Produce UI](https://www.figma.com/community/file/1324089527430438614) (CC BY 4.0) — "Photographer Portfolio Website UI Template - Dark Theme". 반응형 구현, 태블릿 레이아웃, 작업 상세, 관리자, 다국어를 추가했고 문구와 사진을 바꿨습니다.
