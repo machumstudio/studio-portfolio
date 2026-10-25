@@ -201,9 +201,10 @@ export function WorkPhotos({
       <div
         className={cx(
           "flex flex-col items-center gap-4 rounded-10 border border-dashed px-5 py-10 text-center transition-colors",
+          // 끌어 놓는 중에는 테두리 색과 실선으로 알린다. 배경은 그대로 둬 안내 글(grey-50)의 대비를 지킨다
           fileOver
-            ? "border-purple-70 bg-dark-15"
-            : "border-dark-30 bg-dark-08",
+            ? "border-solid border-purple-70 bg-dark-06"
+            : "border-dark-30 bg-dark-06",
         )}
       >
         <ImagePlus aria-hidden className="size-8 text-grey-50" />
@@ -290,7 +291,7 @@ export function WorkPhotos({
                   }}
                   onDragEnd={endDrag}
                   className={cx(
-                    "grid cursor-grab grid-cols-1 gap-4 rounded-10 border bg-dark-08 p-4 md:grid-cols-3 lg:p-5",
+                    "grid cursor-grab grid-cols-1 gap-4 rounded-10 border bg-dark-06 p-4 md:grid-cols-3 lg:p-5",
                     dropTarget === index && dragging !== index
                       ? "border-purple-70"
                       : "border-dark-12",
@@ -458,7 +459,7 @@ function UploadRow({
       : 0;
   if (item.problem)
     return (
-      <li className="flex items-center gap-4 rounded-lg border border-dark-12 bg-dark-08 px-4 py-3">
+      <li className="flex items-center gap-4 rounded-lg border border-dark-12 bg-dark-06 px-4 py-3">
         <p className="mr-auto text-body text-purple-80">
           {t("failed", { name: item.name, reason: problemText(item.problem) })}
         </p>
@@ -477,7 +478,7 @@ function UploadRow({
       ? t("uploading", { name: item.name, percent })
       : t("processing", { name: item.name });
   return (
-    <li className="flex flex-col gap-2 rounded-lg border border-dark-12 bg-dark-08 px-4 py-3">
+    <li className="flex flex-col gap-2 rounded-lg border border-dark-12 bg-dark-06 px-4 py-3">
       <p className="text-body text-grey-70">{label}</p>
       <div
         role="progressbar"

@@ -92,7 +92,7 @@ export function AdminInquiryList({ list, notice }: AdminInquiryListProps) {
             <li
               key={item.id}
               className={cx(
-                "relative flex flex-col gap-2.5 rounded-10 border bg-dark-08 p-4 lg:p-5",
+                "relative flex flex-col gap-2.5 rounded-10 border bg-dark-06 p-4 lg:p-5",
                 "focus-within:border-purple-70 hover:border-dark-30",
                 item.status === "New" ? "border-purple-55" : "border-dark-12",
               )}
