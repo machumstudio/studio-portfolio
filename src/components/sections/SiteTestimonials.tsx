@@ -48,7 +48,7 @@ export function SiteTestimonials({ total, items }: SiteTestimonialsProps) {
             divider={false}
           />
           <p className="flex flex-col gap-0.5 3xl:gap-1.5">
-            <span className="text-body text-grey-40">{t("total")}</span>
+            <span className="text-body text-grey-50">{t("total")}</span>
             <span className="text-h3 text-grey-80">{format.number(total)}</span>
           </p>
         </div>
