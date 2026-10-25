@@ -13,6 +13,7 @@ import {
 import { getAdminInquiry } from "@/features/inquiry/queries";
 import { AdminInquiryDetail } from "@/features/inquiry/ui/AdminInquiryDetail";
 import { AdminShell } from "../../_components/admin-shell";
+import { ForgetResultParam } from "../../_components/forget-result-param";
 
 // 제목에 이름을 넣지 않는다: 브라우저 방문 기록과 탭 제목에 개인정보가 남지 않게.
 // 문의는 요청 하나에 한 번만 읽는다 (페이지와 같이 getAdminInquiry)
@@ -50,6 +51,7 @@ export default async function AdminInquiryPage({
           remove: deleteInquiryAction,
         }}
       />
+      {notice !== undefined && <ForgetResultParam name="notice" />}
     </AdminShell>
   );
 }

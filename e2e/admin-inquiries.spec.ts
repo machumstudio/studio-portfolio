@@ -157,8 +157,13 @@ test.describe("문의 처리 흐름", () => {
       await expect(notice(page)).toHaveText(done);
       await expect(handling(page).getByRole("button")).toHaveText([next]);
       await expect(handling(page).getByText(changedLabel)).toBeVisible();
+      // 결과 알림은 주소(?notice=)로 와서, 보여 준 뒤 주소에서 지운다 (docs/adr/0020)
+      await expect(page).toHaveURL(detailUrl);
     }
-    expect(page.url().startsWith(detailUrl)).toBe(true);
+    // 새로 고치면 지난 결과 알림은 다시 나오지 않는다
+    await page.reload();
+    await expect(statusBadge(page)).toHaveText("확인");
+    await expect(notice(page)).toHaveCount(0);
 
     // 목록: 내 문의는 "확인" 필터에만 있다. 메뉴의 새 문의 수도 같은 화면의 필터와 같다
     await page
@@ -210,11 +215,11 @@ test.describe("문의 처리 흐름", () => {
       .getByRole("dialog", { name: "이 문의를 지울까요?" })
       .getByRole("button", { name: "지우기" })
       .click();
-    await expect(page).toHaveURL("/admin/inquiries?notice=deleted");
+    await expect(page).toHaveURL("/admin/inquiries");
     await handling(other)
       .getByRole("button", { name: "완료로 바꾸기" })
       .click();
-    await expect(other).toHaveURL("/admin/inquiries?notice=notFound");
+    await expect(other).toHaveURL("/admin/inquiries");
     await expect(notice(other)).toHaveText(
       /문의를 찾을 수 없습니다. 다른 탭이나 기기에서 이미 지웠을 수 있습니다/,
     );
@@ -241,8 +246,8 @@ test.describe("문의 처리 흐름", () => {
 
     await open.click();
     await dialog.getByRole("button", { name: "지우기" }).click();
-    await expect(page).toHaveURL("/admin/inquiries?notice=deleted");
     await expect(notice(page)).toHaveText("문의를 지웠습니다.");
+    await expect(page).toHaveURL("/admin/inquiries");
     await expect(card(page, inquiry)).toHaveCount(0);
 
     // 주소로 다시 열면 상태 코드도 404 (proxy 가 있는지 확인, docs/adr/0019). 주소는 그대로다
@@ -273,6 +278,8 @@ test.describe("문의 처리 흐름", () => {
       await expect(handling(page).getByRole("button")).toHaveText([
         "완료로 바꾸기",
       ]);
+      // JS 가 없으면 결과 알림 주소가 그대로 남는다 (redirect 된 화면이 결과를 보여 주는 방식, docs/adr/0016)
+      await expect(page).toHaveURL(/\?notice=markRead$/);
     });
   });
 });
