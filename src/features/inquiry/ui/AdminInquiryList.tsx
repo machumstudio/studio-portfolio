@@ -93,7 +93,8 @@ export function AdminInquiryList({ list, notice }: AdminInquiryListProps) {
               key={item.id}
               className={cx(
                 "relative flex flex-col gap-2.5 rounded-10 border bg-dark-06 p-4 lg:p-5",
-                "focus-within:border-purple-70 hover:border-dark-30",
+                // 카드 전체가 링크라 포커스는 카드 둘레에 보인다. 새 문의의 보라 테두리와 구분되게 바깥 선으로
+                "hover:border-dark-30 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-purple-70",
                 item.status === "New" ? "border-purple-55" : "border-dark-12",
               )}
             >
