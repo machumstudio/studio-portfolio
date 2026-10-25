@@ -18,12 +18,13 @@ export default function SiteLayout({
 
   const t = useTranslations("Layout");
 
-  // 건너뛰기 링크는 페이지마다 <main id="main"> 으로 간다
+  // 본문 틀 <main id="main">(건너뛰기 링크가 가는 곳)은 여기 한 곳에 둔다. 페이지(404, 오류 포함)는 그 안의 내용만 그린다.
+  // 페이지마다 두면 화면 안 이동 뒤 Next(cacheComponents)가 숨겨 둔 이전 페이지(최대 3개)와 함께 id 가 여러 개가 된다
   return (
     <>
       <SkipLink>{t("skipToContent")}</SkipLink>
       <SiteHeader />
-      {children}
+      <main id="main">{children}</main>
       <SiteFooter cta={<SiteCta />} year={use(getCopyrightYear())} />
     </>
   );

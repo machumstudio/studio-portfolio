@@ -63,10 +63,7 @@ export default function ServicesPage({
   );
 
   return (
-    <main
-      id="main"
-      className="flex flex-col pt-10 pb-20 lg:pt-20 lg:pb-37.5 3xl:pt-25 3xl:pb-50"
-    >
+    <div className="flex flex-col pt-10 pb-20 lg:pt-20 lg:pb-37.5 3xl:pt-25 3xl:pb-50">
       <ServicesHero
         image={{ src: pagePhotos.servicesHero, alt: photo("servicesHero") }}
       />
@@ -76,6 +73,6 @@ export default function ServicesPage({
       <div className="mt-20 lg:mt-37.5 3xl:mt-50">
         <Faq />
       </div>
-    </main>
+    </div>
   );
 }
